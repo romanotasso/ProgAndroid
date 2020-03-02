@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="#f2f5df">
 
     <EditText
         android:id="@+id/edittext_email_login"
@@ -49,7 +50,6 @@
             android:textStyle="bold"
             android:text="@string/crea_nuovo_account"/>
     </LinearLayout>
-
 
 
 </LinearLayout>
