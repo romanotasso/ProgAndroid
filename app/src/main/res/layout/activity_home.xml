@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,30 +11,58 @@
     android:gravity="center_horizontal"
     android:background="#f2f5df">
 
-    <Button
-        android:id="@+id/button_esplora"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="100dp"
-        android:gravity="center_horizontal"
-        android:textStyle="bold"
-        android:text="ESPLORA" />
+    <LinearLayout
 
-    <Button
-        android:id="@+id/button_viaggi"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="100dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".HomeActivity"
+        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:text="I MIEI VIAGGI"
-        android:textStyle="bold" />
+        android:background="#f2f5df">
 
-    <Button
-        android:id="@+id/button_coupon"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="100dp"
-        android:gravity="center_horizontal"
-        android:text="I MIEI COUPON"
-        android:textStyle="bold" />
-</LinearLayout>
+        <Button
+            android:id="@+id/button_esplora"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="100dp"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:text="ESPLORA" />
+
+        <Button
+            android:id="@+id/button_viaggi"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="100dp"
+            android:gravity="center_horizontal"
+            android:text="I MIEI VIAGGI"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_coupon"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="100dp"
+            android:gravity="center_horizontal"
+            android:text="I MIEI COUPON"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/menu_laterale"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/drawer_top"
+        app:menu="@menu/drawer_menu"
+
+    ></com.google.android.material.navigation.NavigationView>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+

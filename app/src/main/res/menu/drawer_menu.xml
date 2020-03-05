@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/profilo"
+            android:checked="false"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Profilo"/>
+
+        <item
+            android:id="@+id/miei_viaggi"
+            android:checked="false"
+            android:icon="@drawable/ic_place_black_24dp"
+            android:title="I miei Viaggi" />
+
+        <item
+            android:id="@+id/logout"
+            android:checked="false"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Logout"/>
+
+</menu>
