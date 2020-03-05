@@ -15,4 +15,7 @@
     <string name="regiatrati">Registrati</string>
     <string name="registrati">registrati</string>
     <string name="Registrati">Registrati</string>
+    <string name= "open">open</string>
+    <string name= "close">close</string>
+
 </resources>
