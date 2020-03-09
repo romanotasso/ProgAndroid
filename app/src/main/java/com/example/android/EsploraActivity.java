@@ -33,29 +33,6 @@ public class EsploraActivity extends AppCompatActivity {
                 startActivity(indietroIntent);
             }
         });
-      /* mEditData = findViewById(R.id.textView);
 
-        mEditData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                int anno = cal.get(Calendar.YEAR);
-                int mese = cal.get(Calendar.MONTH);
-                int giorno = cal.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(EsploraActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDataSetListner, anno, mese, giorno);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        mDataSetListner = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int giorno, int mese, int anno) {
-                Log.d(TAG,"onDataSet: dd/mm//aaaa: " + giorno + "/" + mese + "/" + anno);
-                mese = mese + 1;
-                String date = giorno + "/" + mese + "/" + anno;
-                mEditData.setText(date);
-            }
-        };*/
     }
 }

@@ -14,7 +14,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="45dp"
         android:gravity="center_horizontal"
-        android:hint="@string/nome"/>
+        android:hint="@string/nome"
+        android:importantForAutofill="no"
+        android:inputType="none" />
 
     <EditText
         android:id="@+id/edittext_cognome"
@@ -22,7 +24,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:hint="@string/cognome" />
+        android:hint="@string/cognome"
+        android:importantForAutofill="no"
+        android:inputType="none" />
 
     <EditText
         android:id="@+id/edittext_email"
@@ -30,7 +34,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:hint="@string/email"/>
+        android:hint="@string/email"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress" />
 
 
     <EditText
@@ -40,7 +46,8 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/edittext_data"
@@ -48,7 +55,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:hint="@string/data_nascita" />
+        android:hint="@string/data_nascita"
+        android:importantForAutofill="no"
+        android:inputType="date" />
 
     <EditText
         android:id="@+id/edittext_citta"
@@ -56,7 +65,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:hint="@string/citta"/>
+        android:hint="@string/citta"
+        android:importantForAutofill="no"
+        android:inputType="none" />
 
     <EditText
         android:id="@+id/edittext_sesso"
@@ -64,7 +75,9 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:hint="@string/sesso" />
+        android:hint="@string/sesso"
+        android:importantForAutofill="no"
+        android:inputType="none" />
 
     <Button
         android:id="@+id/button_register"
