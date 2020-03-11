@@ -15,14 +15,16 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProfiloFragment.onFragmentBtnSelected {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProfiloFragment.onFragmentBtnSelected,LogoutFragment.onFragmentBtnSelected {
+
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
-    //DatabaseHelper db;
+    DatabaseHelper db;
     NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.container_fragment, new ProfiloFragment());
+        fragmentTransaction.add(R.id.container_fragment, new CercaFragment());
         fragmentTransaction.commit();
     }
 
