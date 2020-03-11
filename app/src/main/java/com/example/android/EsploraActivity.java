@@ -34,5 +34,7 @@ public class EsploraActivity extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "onCreate: Started");
+
     }
 }
