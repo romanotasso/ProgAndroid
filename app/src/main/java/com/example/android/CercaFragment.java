@@ -35,18 +35,16 @@ public class CercaFragment extends Fragment {
 
         list = new ArrayList<String>();
 
-
-        list.add("milano");
-        list.add("roma");
         list.add("altamura");
-        list.add("torino");
+        list.add("bari");
         list.add("bologna");
         list.add("firenze");
-        list.add("bari");
-        list.add("palermo");
         list.add("messina");
+        list.add("milano");
+        list.add("palermo");
+        list.add("roma");
+        list.add("torino");
         list.add("venezia");
-
 
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,list);
         myList.setAdapter(adapter);

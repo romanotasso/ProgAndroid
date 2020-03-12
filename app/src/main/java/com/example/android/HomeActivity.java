@@ -8,19 +8,18 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProfiloFragment.onFragmentBtnSelected,LogoutFragment.onFragmentBtnSelected {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
-    DatabaseHelper db;
     NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -52,26 +51,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
+
         if(menuItem.getItemId() == R.id.profilo){
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new ProfiloFragment());
             fragmentTransaction.commit();
         }
-        if(menuItem.getItemId() == R.id.logout){
+        if(menuItem.getItemId() == R.id.impostazioni){
             fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new LogoutFragment());
+            fragmentTransaction.replace(R.id.container_fragment, new SettingFragment());
             fragmentTransaction.commit();
+        }
+        if(menuItem.getItemId() == R.id.condividi){
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container_fragment, new ShareFragment());
+            fragmentTransaction.commit();
+        }
+        if(menuItem.getItemId() == R.id.logout){
+            Intent h = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(h);
+        }
+        if(menuItem.getItemId() == R.id.home){
+            Intent h = new Intent(HomeActivity.this,HomeActivity.class);
+            startActivity(h);
         }
         return true;
     }
 
-    @Override
-    public void onButtonSelected() {
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container_fragment, new LogoutFragment());
-        fragmentTransaction.commit();
-    }
+
 }

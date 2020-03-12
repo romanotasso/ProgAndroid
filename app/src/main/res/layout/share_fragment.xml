@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="250dp"
-        android:text="ProfiloFragment"
+        android:text="SHARE FRAG"
         android:textSize="50sp" />
+
+
 
 </LinearLayout>

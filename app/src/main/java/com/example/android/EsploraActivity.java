@@ -25,7 +25,7 @@ public class EsploraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_esplora);
-       mButtonIndietro = findViewById(R.id.button_indietro);
+        mButtonIndietro = findViewById(R.id.button_indietro);
         mButtonIndietro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
