@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AmministatoreActivity"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+
+    <Button
+        android:id="@+id/button_dati"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="100dp"
+        android:hint="Vedi dati"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/button_modifica"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Modifica dati"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/button_cancella"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Cancella"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

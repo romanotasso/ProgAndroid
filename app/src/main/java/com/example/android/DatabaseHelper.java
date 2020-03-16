@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.Date;
-
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -23,9 +21,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS utente");
+        onCreate(db);
     }
 
-    //inserimento dati nel database
+    //inserimento dati nella tabella utente
     public boolean inserisci(String email, String password, String nome, String cognome, String citta, String sesso){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -54,4 +53,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.getCount()>0) return true;
         else return false;
     }
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM utente", null);
+        return res;
+    }
+
+    public boolean updateDati(String nome, String cognome, String citta, String sesso){
+         SQLiteDatabase db = getWritableDatabase();
+         ContentValues contentValues = new ContentValues();
+        contentValues.put("nome",nome);
+        contentValues.put("cognome",cognome);
+        contentValues.put("citta",citta);
+        contentValues.put("sesso",sesso);
+        db.update("utente",contentValues, null, null);
+        return true;
+    }
+
+    public Integer deleteDati(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return  db.delete("utente", "email = ?", new String[]{email});
+    }
+
 }

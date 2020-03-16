@@ -24,7 +24,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +79,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return true;
     }
-
 
 }

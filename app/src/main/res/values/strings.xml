@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android</string>
+    <string name="app_name">ExperienceTrip</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="login">LOGIN</string>
@@ -15,6 +15,8 @@
     <string name="esplora">ESPLORA</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="cerca">Cerca</string>
+    <string name="citt_pi_cercate">Città più cercate:</string>
 
 
 </resources>

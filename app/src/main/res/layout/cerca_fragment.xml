@@ -3,13 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="30dp">
-
 
     <SearchView
         android:layout_width="match_parent"
@@ -19,11 +17,18 @@
         android:id="@+id/searchView">
     </SearchView>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/citt_pi_cercate"
+        android:textStyle="bold"
+        android:textSize="15sp"/>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:id="@+id/listView"
-        android:layout_marginTop="10dp"></ListView>
-
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
