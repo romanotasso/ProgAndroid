@@ -17,11 +17,11 @@
         android:layout_gravity="center_horizontal"/>
 
     <Button
-        android:id="@+id/button_modifica"
+        android:id="@+id/button_dati_citta"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:hint="Modifica dati"
+        android:hint="Vedi dati delle città"
         android:layout_gravity="center_horizontal"/>
 
     <Button
@@ -30,6 +30,14 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:hint="Cancella"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/button_inserisci"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="Inserisci città"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

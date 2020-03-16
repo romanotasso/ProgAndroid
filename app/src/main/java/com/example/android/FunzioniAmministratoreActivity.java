@@ -10,12 +10,9 @@ import android.widget.Toast;
 
 public class FunzioniAmministratoreActivity extends AppCompatActivity {
     DatabaseHelper db;
-    Button mButtonAggiorna;
+    Button mButtonInserisci;
     Button mButtonCancella;
-    EditText mEditNome;
-    EditText mEditCognome;
     EditText mEditCitta;
-    EditText mEditSesso;
     EditText mEditEmail;
 
     @Override
@@ -23,23 +20,19 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_funzioni_amministratore);
         db = new DatabaseHelper(this);
-        mEditNome = findViewById(R.id.edittext_nome);
-        mEditCognome = findViewById(R.id.edittext_cognome);
         mEditCitta = findViewById(R.id.edittext_citta);
-        mEditSesso = findViewById(R.id.edittext_sesso);
         mEditEmail = findViewById(R.id.edittext_email);
-        mButtonAggiorna = findViewById(R.id.button_modifica);
+        mButtonInserisci = findViewById(R.id.button_inserisci);
         mButtonCancella = findViewById(R.id.button_cancella);
 
-
-        mButtonAggiorna.setOnClickListener(new View.OnClickListener() {
+        mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isUpdate = db.updateDati(mEditNome.getText().toString(), mEditCognome.getText().toString(), mEditCitta.getText().toString(), mEditSesso.getText().toString());
-                if (isUpdate) {
-                    Toast.makeText(FunzioniAmministratoreActivity.this, "Dati aggiornati", Toast.LENGTH_SHORT).show();
+                boolean isInsert = db.inserisciCitta(mEditCitta.getText().toString());
+                if (isInsert) {
+                    Toast.makeText(FunzioniAmministratoreActivity.this, "Città aggiuntai", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(FunzioniAmministratoreActivity.this, "Dati non aggiornati", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FunzioniAmministratoreActivity.this, "Città non aggiunta", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -56,7 +49,4 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

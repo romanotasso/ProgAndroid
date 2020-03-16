@@ -22,7 +22,6 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "Login";
     private static final String PASSWORD = "admin";
     private static final String USERNAME = "admin";
     EditText mTextEmail;

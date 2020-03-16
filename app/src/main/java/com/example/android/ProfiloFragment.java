@@ -18,10 +18,4 @@ public class ProfiloFragment extends Fragment {
         View view = inflater.inflate(R.layout.profilo_fragment, container, false);
         return view;
     }
-
-
-
-
-
-
 }

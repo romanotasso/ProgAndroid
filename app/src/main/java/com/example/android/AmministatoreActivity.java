@@ -13,8 +13,9 @@ import android.widget.Button;
 public class AmministatoreActivity extends AppCompatActivity {
     DatabaseHelper db;
     Button mButtonDati;
-    Button mButtonAggiorna;
     Button mButtonCancella;
+    Button mButtonInserisci;
+    Button mButtonCitta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,8 @@ public class AmministatoreActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         mButtonDati = findViewById(R.id.button_dati);
         mButtonCancella = findViewById(R.id.button_cancella);
-        mButtonAggiorna = findViewById(R.id.button_modifica);
+        mButtonInserisci = findViewById(R.id.button_inserisci);
+        mButtonCitta = findViewById(R.id.button_dati_citta);
 
         mButtonDati.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +47,24 @@ public class AmministatoreActivity extends AppCompatActivity {
                 showMessage("Dati:",buffer.toString());
             }
         });
-        mButtonAggiorna.setOnClickListener(new View.OnClickListener() {
+
+        mButtonCitta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res = db.getAllDataCitta();
+                if(res.getCount() == 0){
+                    showMessage("Errore", "Nessun record trovato");
+                    return;
+                }
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()){
+                    buffer.append("NOME: " + res.getString(1) + "\n\n");
+                }
+                showMessage("Dati:",buffer.toString());
+            }
+        });
+
+        mButtonCancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AmministatoreActivity.this, FunzioniAmministratoreActivity.class);
@@ -53,7 +72,7 @@ public class AmministatoreActivity extends AppCompatActivity {
             }
         });
 
-        mButtonCancella.setOnClickListener(new View.OnClickListener() {
+        mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AmministatoreActivity.this, FunzioniAmministratoreActivity.class);
