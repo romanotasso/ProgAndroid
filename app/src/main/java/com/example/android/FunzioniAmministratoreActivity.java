@@ -31,6 +31,7 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
         mButtonAggiorna = findViewById(R.id.button_modifica);
         mButtonCancella = findViewById(R.id.button_cancella);
 
+
         mButtonAggiorna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
