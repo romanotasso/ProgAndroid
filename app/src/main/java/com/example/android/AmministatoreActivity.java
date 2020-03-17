@@ -16,6 +16,7 @@ public class AmministatoreActivity extends AppCompatActivity {
     Button mButtonCancella;
     Button mButtonInserisci;
     Button mButtonCitta;
+    Button mButtonCancellaCitta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class AmministatoreActivity extends AppCompatActivity {
         mButtonCancella = findViewById(R.id.button_cancella);
         mButtonInserisci = findViewById(R.id.button_inserisci);
         mButtonCitta = findViewById(R.id.button_dati_citta);
+        mButtonCancellaCitta = findViewById(R.id.button_cancella_citta);
 
         mButtonDati.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +40,7 @@ public class AmministatoreActivity extends AppCompatActivity {
                 StringBuffer buffer = new StringBuffer();
                 while (res.moveToNext()){
                     buffer.append("EMAIL: " + res.getString(0) + "\n");
-                    buffer.append("PASSWORD: " + res.getString(1) + "\n");
+                    //buffer.append("PASSWORD: " + res.getString(1) + "\n");
                     buffer.append("NOME: " + res.getString(2) + "\n");
                     buffer.append("COGNOME: " + res.getString(3) + "\n");
                     buffer.append("CITTA': " + res.getString(4) + "\n");
@@ -73,6 +75,14 @@ public class AmministatoreActivity extends AppCompatActivity {
         });
 
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AmministatoreActivity.this, FunzioniAmministratoreActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mButtonCancellaCitta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AmministatoreActivity.this, FunzioniAmministratoreActivity.class);

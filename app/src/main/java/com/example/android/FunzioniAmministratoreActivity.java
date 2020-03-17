@@ -2,6 +2,7 @@ package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
     Button mButtonCancella;
     EditText mEditCitta;
     EditText mEditEmail;
+    Button mButtonCancellaCitta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +26,25 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
         mEditEmail = findViewById(R.id.edittext_email);
         mButtonInserisci = findViewById(R.id.button_inserisci);
         mButtonCancella = findViewById(R.id.button_cancella);
+        mButtonCancellaCitta = findViewById(R.id.button_cancella_citta);
 
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isInsert = db.inserisciCitta(mEditCitta.getText().toString());
-                if (isInsert) {
-                    Toast.makeText(FunzioniAmministratoreActivity.this, "Città aggiuntai", Toast.LENGTH_SHORT).show();
+                if(mEditCitta.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"Il campo è vuoto",Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(FunzioniAmministratoreActivity.this, "Città non aggiunta", Toast.LENGTH_SHORT).show();
+                    boolean checkCitta = db.checkCitta(mEditCitta.getText().toString());
+                    if (checkCitta) {
+                        boolean isInsert = db.inserisciCitta(mEditCitta.getText().toString());
+                        if (isInsert) {
+                            Toast.makeText(FunzioniAmministratoreActivity.this, "Città aggiunta", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(FunzioniAmministratoreActivity.this, AmministatoreActivity.class);
+                            startActivity(intent);
+                        }
+                    } else {
+                        Toast.makeText(FunzioniAmministratoreActivity.this, "Città già presente", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -40,11 +52,24 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
         mButtonCancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer cancellaRiga = db.deleteDati(mEditEmail.getText().toString());
-                if(cancellaRiga>0){
-                    Toast.makeText(FunzioniAmministratoreActivity.this, "Dati cancellati", Toast.LENGTH_SHORT).show();
+                if(mEditCitta.getText().toString().equals("")) {
+                    Integer cancellaRigaUtente = db.deleteDati(mEditEmail.getText().toString());
+                    if (cancellaRigaUtente > 0) {
+                        Toast.makeText(FunzioniAmministratoreActivity.this, "Dati cancellati", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(FunzioniAmministratoreActivity.this, AmministatoreActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(FunzioniAmministratoreActivity.this, "Dati non cancellati ", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(FunzioniAmministratoreActivity.this, "Dati non cancellati ", Toast.LENGTH_SHORT).show();
+                    Integer cancellaRigaCitta = db.deleteCitta(mEditCitta.getText().toString());
+                    if (cancellaRigaCitta > 0) {
+                        Toast.makeText(FunzioniAmministratoreActivity.this, "Dati cancellati", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(FunzioniAmministratoreActivity.this, AmministatoreActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(FunzioniAmministratoreActivity.this, "Dati non cancellati ", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

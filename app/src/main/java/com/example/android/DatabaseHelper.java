@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //inserimento dati nella tabella utente
+    /*SEZIONE UTENTE*/
     public boolean inserisci(String email, String password, String nome, String cognome, String citta, String sesso){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -46,16 +46,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    public boolean inserisciCitta(String nome){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues1 = new ContentValues();
-        contentValues1.put("nome",nome);
-        long ins = db.insert(TABELLA_CITTA, null, contentValues1);
-        if(ins==-1) return  false;
-        else return true;
-    }
-
-    //controllo della mail esistente
     public Boolean checkEmail(String email){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT email FROM utente WHERE email=?", new String[]{email});
@@ -76,26 +66,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean updateDati(String nome, String cognome, String citta, String sesso){
-         SQLiteDatabase db = getWritableDatabase();
-         ContentValues contentValues = new ContentValues();
-        contentValues.put("nome",nome);
-        contentValues.put("cognome",cognome);
-        contentValues.put("citta",citta);
-        contentValues.put("sesso",sesso);
-        db.update(TABELLA_UTENTE,contentValues, null, null);
-        return true;
-    }
-
     public Integer deleteDati(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_UTENTE, "email = ?", new String[]{email});
+    }
+
+    /*SEZIONE CITTA*/
+    public boolean inserisciCitta(String nome){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues1 = new ContentValues();
+        contentValues1.put("nome",nome);
+        long ins = db.insert(TABELLA_CITTA, null, contentValues1);
+        if(ins==-1) return  false;
+        else return true;
     }
 
     public Cursor getAllDataCitta(){
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_CITTA, null);
         return res;
+    }
+
+    public Boolean checkCitta(String citta){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nome FROM citta WHERE nome=?", new String[]{citta});
+        if(cursor.getCount()>0) return false;
+        else return true;
+    }
+
+    public Integer deleteCitta(String nome){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return  db.delete(TABELLA_CITTA, "nome = ?", new String[]{nome});
     }
 
 }
