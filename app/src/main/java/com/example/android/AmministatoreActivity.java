@@ -11,12 +11,14 @@ import android.view.View;
 import android.widget.Button;
 
 public class AmministatoreActivity extends AppCompatActivity {
+
     DatabaseHelper db;
     Button mButtonDati;
     Button mButtonCancella;
     Button mButtonInserisci;
     Button mButtonCitta;
     Button mButtonCancellaCitta;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

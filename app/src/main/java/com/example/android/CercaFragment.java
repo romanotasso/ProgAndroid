@@ -27,6 +27,7 @@ public class CercaFragment extends Fragment {
     ArrayList<String> list;
     ArrayAdapter adapter;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class CercaFragment extends Fragment {
         list.add("Venezia");
 
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,list);
+
         myList.setAdapter(adapter);
 
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -55,12 +57,9 @@ public class CercaFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String s) {
-
                 adapter.getFilter().filter(s);
-
                 return false;
             }
         });
@@ -68,17 +67,24 @@ public class CercaFragment extends Fragment {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 String città = list.get(i);
                 ShareFragment shareFragment = new ShareFragment();
+
                 Bundle bundle = new Bundle();
                 bundle.putString("Città selezionata: ", città);
                 shareFragment.setArguments(bundle);
+
                 FragmentManager manager = getFragmentManager();
                 manager.beginTransaction().replace(R.id.container_fragment, shareFragment).commit();
+
             }
         });
 
         return view;
     }
+
+
+
 
 }
