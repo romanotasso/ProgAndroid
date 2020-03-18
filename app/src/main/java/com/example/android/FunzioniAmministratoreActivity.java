@@ -31,7 +31,7 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mEditCitta.getText().toString().equals("")){
+                if(mEditCitta.getText().toString().equals("")||mEditCitta.getText().toString().trim().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Il campo è vuoto",Toast.LENGTH_SHORT).show();
                 } else {
                     boolean checkCitta = db.checkCitta(mEditCitta.getText().toString());
@@ -52,7 +52,7 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
         mButtonCancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mEditCitta.getText().toString().equals("")) {
+                if(mEditCitta.getText().toString().equals("")||mEditCitta.getText().toString().trim().isEmpty()) {
                     Integer cancellaRigaUtente = db.deleteDati(mEditEmail.getText().toString());
                     if (cancellaRigaUtente > 0) {
                         Toast.makeText(FunzioniAmministratoreActivity.this, "Dati cancellati", Toast.LENGTH_SHORT).show();
@@ -74,4 +74,12 @@ public class FunzioniAmministratoreActivity extends AppCompatActivity {
             }
         });
     }
-}
+
+
+
+
+
+    }
+
+
+

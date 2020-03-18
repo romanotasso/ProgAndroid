@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CercaFragment extends Fragment {
@@ -24,9 +25,9 @@ public class CercaFragment extends Fragment {
     View alwaysAppearingView;
     SearchView mysearchView;
     ListView myList;
-    ArrayList<String> list;
+    ArrayList<String> citta;
     ArrayAdapter adapter;
-
+    DatabaseHelper db;
 
     @Nullable
     @Override
@@ -35,22 +36,31 @@ public class CercaFragment extends Fragment {
 
         mysearchView = view.findViewById(R.id.searchView);
         myList = view.findViewById(R.id.listView);
+        db = new DatabaseHelper(getContext());
 
-        list = new ArrayList<String>();
-        list.add("Altamura");
-        list.add("Bari");
-        list.add("Bologna");
-        list.add("Firenze");
-        list.add("Messina");
-        list.add("Milano");
-        list.add("Palermo");
-        list.add("Roma");
-        list.add("Torino");
-        list.add("Venezia");
+        citta = new ArrayList<String>();
+        citta.add("Altamura");
+        citta.add("Bari");
+        citta.add("Bologna");
+        citta.add("Firenze");
+        citta.add("Messina");
+        citta.add("Milano");
+        citta.add("Palermo");
+        citta.add("Roma");
+        citta.add("Torino");
+        citta.add("Venezia");
 
-        adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,list);
+        adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,citta);
 
         myList.setAdapter(adapter);
+
+        for (int i=0;i<citta.size();i++){
+           if(db.checkCitta(citta.get(i))){
+               db.inserisciCitta(citta.get(i));
+           }else if(!db.checkCitta(citta.get(i))){
+               break;
+           }
+        }
 
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -68,7 +78,7 @@ public class CercaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String città = list.get(i);
+                String città = citta.get(i);
                 ShareFragment shareFragment = new ShareFragment();
 
                 Bundle bundle = new Bundle();
@@ -85,6 +95,13 @@ public class CercaFragment extends Fragment {
     }
 
 
+    public boolean cercaNelData(String citta, Array citta2){
+
+
+
+
+        return true;
+    }
 
 
 }

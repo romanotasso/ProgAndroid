@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //String data_nascita = mTextDataNascita.getText().toString();
                 String sesso = mTextSesso.getText().toString();
                 String citta = mTextCitta.getText().toString();
-                if(email.equals("")||password.equals("")||nome.equals("")||cognome.equals("")||sesso.equals("")||citta.equals("")){
+                if(email.trim().isEmpty()||password.trim().isEmpty()||nome.trim().isEmpty()||cognome.trim().isEmpty()||sesso.trim().isEmpty()||citta.trim().isEmpty()){
                     Toast.makeText(getApplicationContext(),"I campi sono vuoti",Toast.LENGTH_SHORT).show();
                 }else{
                     Boolean check = db.checkEmail(email);
