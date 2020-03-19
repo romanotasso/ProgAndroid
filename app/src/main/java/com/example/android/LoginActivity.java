@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     Button mButtonLogin;
     TextView mTextViewRegister;
     DatabaseHelper db;
+    ArrayList<String> città;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,19 @@ public class LoginActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.edittext_password);
         mButtonLogin = findViewById(R.id.button_login);
         mTextViewRegister = findViewById(R.id.textview_register);
+        città = new ArrayList<String>();
+        città.add("Milano");
+        città.add("Bologna");
+        città.add("Roma");
+
+        for (int i=0;i<città.size();i++){
+            if(db.checkCitta(città.get(i))){
+                db.inserisciCitta(città.get(i));
+            }else if(!db.checkCitta(città.get(i))){
+                break;
+            }
+        }
+
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -47,7 +47,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             } else {
-                                Toast.makeText(InserisciAmministratoreActivity.this, "Monumento già presente o ciità non esistente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InserisciAmministratoreActivity.this, "Monumento già presente o città non esistente", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
