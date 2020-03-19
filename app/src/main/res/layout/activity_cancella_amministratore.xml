@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CancellaAmministratoreActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <EditText
+        android:id="@+id/edittext_citta"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="75dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/citta"
+        android:importantForAutofill="no"
+        android:inputType="none" />
+
+    <EditText
+        android:id="@+id/edittext_monumenti"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/monumento"
+        android:importantForAutofill="no"
+        android:inputType="none" />
+
+    <EditText
+        android:id="@+id/edittext_gastronomia"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/ristoranti"
+        android:importantForAutofill="no"
+        android:inputType="none" />
+
+    <EditText
+        android:id="@+id/edittext_hotel"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/hotel_bb"
+        android:importantForAutofill="no"
+        android:inputType="none" />
+
+    <Button
+        android:id="@+id/button_cancella"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/cancella"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

@@ -12,6 +12,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Login.db";
     private static final String TABELLA_UTENTE = "utente";
     private static final String TABELLA_CITTA = "citta";
+    private static final String TABELLA_MONUMENTI = "monumenti";
+    private static final String TABELLA_GASTRONOMIA = "gastronomia";
+    private static final String TABELLA_HOTELEBB = "hotelebb";
 
 
     public DatabaseHelper(@Nullable Context context) {
@@ -22,28 +25,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, password text NOT NULL, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL)");
         db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL)");
-
-
+        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta_ID INTEGER, FOREIGN KEY (citta_ID) REFERENCES  " + TABELLA_CITTA + " (ID))");
+        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta_ID INTEGER, FOREIGN KEY (citta_ID) REFERENCES " + TABELLA_CITTA + " (ID))");
+        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta_ID INTEGER, FOREIGN KEY (citta_ID) REFERENCES  " + TABELLA_CITTA + " (ID))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABELLA_UTENTE);
         db.execSQL("DROP TABLE IF EXISTS " + TABELLA_CITTA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_HOTELEBB);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_MONUMENTI);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_GASTRONOMIA);
         onCreate(db);
     }
 
     /*SEZIONE UTENTE*/
-    public boolean inserisci(String email, String password, String nome, String cognome, String citta, String sesso){
+    public boolean inserisciUtente(String email, String password, String nome, String cognome, String citta, String sesso){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("email",email);
-        contentValues.put("password",password);
-        contentValues.put("nome",nome);
-        contentValues.put("cognome",cognome);
-        contentValues.put("citta",citta);
-        contentValues.put("sesso",sesso);
-        long ins = db.insert(TABELLA_UTENTE, null, contentValues);
+        ContentValues contentUtente = new ContentValues();
+        contentUtente.put("email",email);
+        contentUtente.put("password",password);
+        contentUtente.put("nome",nome);
+        contentUtente.put("cognome",cognome);
+        contentUtente.put("citta",citta);
+        contentUtente.put("sesso",sesso);
+        long ins = db.insert(TABELLA_UTENTE, null, contentUtente);
         if(ins==-1) return  false;
         else return true;
     }
@@ -76,9 +83,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*SEZIONE CITTA*/
     public boolean inserisciCitta(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues1 = new ContentValues();
-        contentValues1.put("nome",nome);
-        long ins = db.insert(TABELLA_CITTA, null, contentValues1);
+        ContentValues contentCitta = new ContentValues();
+        contentCitta.put("nome", nome);
+        long ins = db.insert(TABELLA_CITTA, null, contentCitta);
         if(ins==-1) return  false;
         else return true;
     }
@@ -99,6 +106,93 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Integer deleteCitta(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_CITTA, "nome = ?", new String[]{nome});
+    }
+
+    /*SEZIONE MONUMENTI*/
+    public boolean inserisciMonumento(String nome/*, int i*/){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentMonumento = new ContentValues();
+        contentMonumento.put("nome", nome);
+        //contentValues1.put("citta_ID", i);
+        long ins = db.insert(TABELLA_MONUMENTI, null, contentMonumento);
+        if(ins==-1) return  false;
+        else return true;
+    }
+
+    public Cursor getAllDataMonumenti(){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_MONUMENTI, null);
+        return res;
+    }
+
+    public Boolean checkMonumento(String monumento){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nome FROM monumenti WHERE nome=?", new String[]{monumento});
+        if(cursor.getCount()>0) return false;
+        else return true;
+    }
+
+    public Integer deleteMonumento(String nome){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return  db.delete(TABELLA_MONUMENTI, "nome = ?", new String[]{nome});
+    }
+
+    /*SEZIONE GASTRONOMIA*/
+    public boolean inserisciGastronomia(String nome/*, int i*/){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentGastronomia = new ContentValues();
+        contentGastronomia.put("nome",nome);
+        //contentValues1.put("citta_ID", i);
+        long ins = db.insert(TABELLA_GASTRONOMIA, null, contentGastronomia);
+        if(ins==-1) return  false;
+        else return true;
+    }
+
+    public Cursor getAllDataGastronomia(){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_GASTRONOMIA, null);
+        return res;
+    }
+
+    public Boolean checkGastronomia(String nome){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nome FROM gastronomia WHERE nome=?", new String[]{nome});
+        if(cursor.getCount()>0) return false;
+        else return true;
+    }
+
+    public Integer deleteGastronomia(String nome){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return  db.delete(TABELLA_GASTRONOMIA, "nome = ?", new String[]{nome});
+    }
+
+    /*SEZIONE HOTEL&BB*/
+    public boolean inserisciHotelBB(String nome/*, int i*/){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentHotel = new ContentValues();
+        contentHotel.put("nome",nome);
+       // contentValues1.put("citta_ID", i);
+        long ins = db.insert(TABELLA_HOTELEBB, null, contentHotel);
+        if(ins==-1) return  false;
+        else return true;
+    }
+
+    public Cursor getAllDataHotelBB(){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_HOTELEBB, null);
+        return res;
+    }
+
+    public Boolean checkHotelBB(String nome){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nome FROM hotelebb WHERE nome=?", new String[]{nome});
+        if(cursor.getCount()>0) return false;
+        else return true;
+    }
+
+    public Integer deleteHotelBB(String nome){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return  db.delete(TABELLA_HOTELEBB, "nome = ?", new String[]{nome});
     }
 
 }

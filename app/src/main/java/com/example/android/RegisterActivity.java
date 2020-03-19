@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     Boolean check = db.checkEmail(email);
                     if(check==true){
-                        Boolean inserisci = db.inserisci(email,password,nome,cognome,citta,sesso);
+                        Boolean inserisci = db.inserisciUtente(email,password,nome,cognome,citta,sesso);
                         if(inserisci == true){
                             Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(registerIntent);

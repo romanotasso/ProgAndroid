@@ -9,9 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FunzioniAmministratoreActivity"></activity>
+        <activity android:name=".VisualizzaDatiAmministratoreActivity"></activity>
+        <activity android:name=".CancellaAmministratoreActivity" />
+        <activity android:name=".InserisciAmministratoreActivity" />
         <activity android:name=".AmministatoreActivity" />
-        <activity android:name=".HomeActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
