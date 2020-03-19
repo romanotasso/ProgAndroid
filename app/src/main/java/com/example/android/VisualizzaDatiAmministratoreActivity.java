@@ -54,7 +54,6 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
                 }
                 StringBuffer buffer = new StringBuffer();
                 while (res.moveToNext()){
-
                     buffer.append("Monumento: " + res.getString(1) + "\n\n");
                     buffer.append("Citta: " + res.getString(2) + "\n\n");
                 }

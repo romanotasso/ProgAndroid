@@ -36,16 +36,19 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
                 } else {
                     //INSERIMENTO MONUMENTO
                     if ((mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
-                        boolean checkMonumento = db.checkMonumento(mEditMonumento.getText().toString());
-                        if (checkMonumento) {
-                            boolean isInsert = db.inserisciMonumento(mEditMonumento.getText().toString(),mEditCitta.getText().toString());
-                            if (isInsert) {
-                                Toast.makeText(InserisciAmministratoreActivity.this, "Monumeto aggiunto", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
-                                startActivity(intent);
+                        if(!(mEditMonumento.getText().toString().trim().isEmpty()) && !(mEditCitta.getText().toString().trim().isEmpty())){
+                            boolean checkMonumento = db.checkMonumento(mEditMonumento.getText().toString());
+                            boolean checkCitta = db.checkCitta(mEditCitta.getText().toString());
+                            if (checkMonumento && !checkCitta) {
+                                boolean isInsert = db.inserisciMonumento(mEditMonumento.getText().toString(),mEditCitta.getText().toString());
+                                if (isInsert) {
+                                    Toast.makeText(InserisciAmministratoreActivity.this, "Monumeto aggiunto", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
+                                    startActivity(intent);
+                                }
+                            } else {
+                                Toast.makeText(InserisciAmministratoreActivity.this, "Monumento già presente o ciità non esistente", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(InserisciAmministratoreActivity.this, "Monumento già presente", Toast.LENGTH_SHORT).show();
                         }
                     }
                     //INSERIMENTO CITTA'
@@ -65,31 +68,37 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
 
                     //INSERIMENTO GASTRONOMIA
                     if (((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()))) {
-                        boolean checkGastronomia = db.checkGastronomia(mEditGastronomia.getText().toString());
-                        if (checkGastronomia) {
-                            boolean isInsert = db.inserisciGastronomia(mEditGastronomia.getText().toString(),mEditCitta.getText().toString());
-                            if (isInsert) {
-                                Toast.makeText(InserisciAmministratoreActivity.this, "Gastronomia aggiunta", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
-                                startActivity(intent);
+                        if(!(mEditGastronomia.getText().toString().trim().isEmpty()) && !(mEditCitta.getText().toString().trim().isEmpty())) {
+                            boolean checkGastronomia = db.checkGastronomia(mEditGastronomia.getText().toString());
+                            boolean checkCitta = db.checkCitta(mEditCitta.getText().toString());
+                            if (checkGastronomia && !checkCitta) {
+                                boolean isInsert = db.inserisciGastronomia(mEditGastronomia.getText().toString(), mEditCitta.getText().toString());
+                                if (isInsert) {
+                                    Toast.makeText(InserisciAmministratoreActivity.this, "Gastronomia aggiunta", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
+                                    startActivity(intent);
+                                }
+                            } else {
+                                Toast.makeText(InserisciAmministratoreActivity.this, "Gastronomia già presente o città non esistente", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(InserisciAmministratoreActivity.this, "Gastronomia già presente", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     //INSERIMENTO HOTEL
                     if ((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty())) {
-                        boolean checkHotel = db.checkHotelBB(mEditHotel.getText().toString());
-                        if (checkHotel) {
-                            boolean isInsert = db.inserisciHotelBB(mEditHotel.getText().toString(),mEditCitta.getText().toString());
-                            if (isInsert) {
-                                Toast.makeText(InserisciAmministratoreActivity.this, "Hotel/BB aggiunto", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
-                                startActivity(intent);
+                        if(!(mEditHotel.getText().toString().trim().isEmpty()) && !(mEditCitta.getText().toString().trim().isEmpty())) {
+                            boolean checkHotel = db.checkHotelBB(mEditHotel.getText().toString());
+                            boolean checkCitta = db.checkCitta(mEditCitta.getText().toString());
+                            if (checkHotel && !checkCitta) {
+                                boolean isInsert = db.inserisciHotelBB(mEditHotel.getText().toString(), mEditCitta.getText().toString());
+                                if (isInsert) {
+                                    Toast.makeText(InserisciAmministratoreActivity.this, "Hotel/BB aggiunto", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
+                                    startActivity(intent);
+                                }
+                            } else {
+                                Toast.makeText(InserisciAmministratoreActivity.this, "Hotel/BB già presente o città non esistente", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            Toast.makeText(InserisciAmministratoreActivity.this, "Hotel/BB già presente", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
