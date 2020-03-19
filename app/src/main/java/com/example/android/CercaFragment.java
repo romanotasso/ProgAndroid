@@ -1,8 +1,9 @@
 package com.example.android;
 
-import android.content.Intent;
+
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CercaFragment extends Fragment {
@@ -26,10 +24,10 @@ public class CercaFragment extends Fragment {
     View alwaysAppearingView;
     SearchView mysearchView;
     ListView myList;
-    Cursor citta;
+    Cursor cittaHome;
     ArrayAdapter adapter;
     DatabaseHelper db;
-    ArrayList<String> citta1;
+    ArrayList<String> citta;
 
     @Nullable
     @Override
@@ -39,24 +37,19 @@ public class CercaFragment extends Fragment {
         mysearchView = view.findViewById(R.id.searchView);
         myList = view.findViewById(R.id.listView);
         db = new DatabaseHelper(getContext());
+        myList.setVisibility(View.GONE);
+        cittaHome = db.getAllDataCitta();
+        citta = new ArrayList<String>();
 
-        citta = db.getAllDataCitta();
-        citta1 = new ArrayList<String>();
-        for(citta.moveToFirst(); !citta.isAfterLast(); citta.moveToNext()){
-            citta1.add(citta.getString(0));
+        for(cittaHome.moveToFirst(); !cittaHome.isAfterLast(); cittaHome.moveToNext()){
+            citta.add(cittaHome.getString(0));
         }
 
-        adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,citta1);
+        adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,citta);
 
         myList.setAdapter(adapter);
 
-        /*for (int i=0;i<citta.size();i++){
-           if(db.checkCitta(citta.get(i))){
-               db.inserisciCitta(citta.get(i));
-           }else if(!db.checkCitta(citta.get(i))){
-               break;
-           }
-        }*/
+
 
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -68,16 +61,38 @@ public class CercaFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String s) {
-                adapter.getFilter().filter(s);
+
+                String text = s;
+
+                if(TextUtils.isEmpty(text)){
+                    myList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.getFilter().filter(text);
+                    myList.setVisibility(View.VISIBLE);
+                }
+                return true;
+
+            }
+
+        }
+        );
+
+       /* mysearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                myList.setVisibility(View.GONE);
                 return false;
             }
         });
 
+
+        */
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                String città = citta1.get(i);
+                String città = citta.get(i);
                 ShareFragment shareFragment = new ShareFragment();
 
                 Bundle bundle = new Bundle();
@@ -92,5 +107,7 @@ public class CercaFragment extends Fragment {
 
         return view;
     }
+
+
 
 }

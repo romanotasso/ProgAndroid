@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllDataCitta(){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_CITTA, null);
+        Cursor res = db.rawQuery("SELECT * FROM citta ORDER BY nome ASC",null);
         return res;
     }
 
