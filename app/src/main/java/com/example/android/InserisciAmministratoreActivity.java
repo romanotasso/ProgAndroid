@@ -35,10 +35,10 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "I campi sono vuoti", Toast.LENGTH_SHORT).show();
                 } else {
                     //INSERIMENTO MONUMENTO
-                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
+                    if ((mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
                         boolean checkMonumento = db.checkMonumento(mEditMonumento.getText().toString());
                         if (checkMonumento) {
-                            boolean isInsert = db.inserisciMonumento(mEditMonumento.getText().toString());
+                            boolean isInsert = db.inserisciMonumento(mEditMonumento.getText().toString(),mEditCitta.getText().toString());
                             if (isInsert) {
                                 Toast.makeText(InserisciAmministratoreActivity.this, "Monumeto aggiunto", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
@@ -64,10 +64,10 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
                     }
 
                     //INSERIMENTO GASTRONOMIA
-                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
+                    if (((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()))) {
                         boolean checkGastronomia = db.checkGastronomia(mEditGastronomia.getText().toString());
                         if (checkGastronomia) {
-                            boolean isInsert = db.inserisciGastronomia(mEditGastronomia.getText().toString());
+                            boolean isInsert = db.inserisciGastronomia(mEditGastronomia.getText().toString(),mEditCitta.getText().toString());
                             if (isInsert) {
                                 Toast.makeText(InserisciAmministratoreActivity.this, "Gastronomia aggiunta", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);
@@ -79,10 +79,10 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
                     }
 
                     //INSERIMENTO HOTEL
-                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty())) {
+                    if ((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty())) {
                         boolean checkHotel = db.checkHotelBB(mEditHotel.getText().toString());
                         if (checkHotel) {
-                            boolean isInsert = db.inserisciHotelBB(mEditHotel.getText().toString());
+                            boolean isInsert = db.inserisciHotelBB(mEditHotel.getText().toString(),mEditCitta.getText().toString());
                             if (isInsert) {
                                 Toast.makeText(InserisciAmministratoreActivity.this, "Hotel/BB aggiunto", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(InserisciAmministratoreActivity.this, AmministatoreActivity.class);

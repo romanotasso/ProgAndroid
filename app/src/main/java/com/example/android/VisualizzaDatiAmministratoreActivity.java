@@ -20,6 +20,7 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizza_dati_amministratore);
+
         db = new DatabaseHelper(this);
         mButtonCittà = findViewById(R.id.button_dati_città);
         mButtonMonumenti = findViewById(R.id.button_dati_monumenti);
@@ -37,7 +38,7 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
                 StringBuffer buffer = new StringBuffer();
                 while (res.moveToNext()){
 
-                    buffer.append("Città: " + res.getString(1) + "\n\n");
+                    buffer.append("Città: " + res.getString(0) + "\n\n");
                 }
                 showMessage("Dati:",buffer.toString());
             }
@@ -55,6 +56,7 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
                 while (res.moveToNext()){
 
                     buffer.append("Monumento: " + res.getString(1) + "\n\n");
+                    buffer.append("Citta: " + res.getString(2) + "\n\n");
                 }
                 showMessage("Dati:",buffer.toString());
             }
@@ -72,6 +74,7 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
                 while (res.moveToNext()){
 
                     buffer.append("Gastronomia: " + res.getString(1) + "\n\n");
+                    buffer.append("Citta: " + res.getString(2) + "\n\n");
                 }
                 showMessage("Dati:",buffer.toString());
             }
@@ -89,6 +92,7 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
                 while (res.moveToNext()){
 
                     buffer.append("Hotel/BB: " + res.getString(1) + "\n\n");
+                    buffer.append("Citta: " + res.getString(2) + "\n\n");
                 }
                 showMessage("Dati:",buffer.toString());
             }

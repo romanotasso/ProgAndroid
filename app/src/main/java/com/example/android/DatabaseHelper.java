@@ -24,10 +24,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, password text NOT NULL, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL)");
-        db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL)");
-        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta_ID INTEGER, FOREIGN KEY (citta_ID) REFERENCES  " + TABELLA_CITTA + " (ID))");
-        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta_ID INTEGER, FOREIGN KEY (citta_ID) REFERENCES " + TABELLA_CITTA + " (ID))");
-        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta_ID INTEGER, FOREIGN KEY (citta_ID) REFERENCES  " + TABELLA_CITTA + " (ID))");
+        db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(nome text PRIMARY KEY)");
+        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
     }
 
     @Override
@@ -109,11 +109,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE MONUMENTI*/
-    public boolean inserisciMonumento(String nome/*, int i*/){
+    public boolean inserisciMonumento(String nome,String nome_citta){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentMonumento = new ContentValues();
         contentMonumento.put("nome", nome);
-        //contentValues1.put("citta_ID", i);
+        contentMonumento.put("citta", nome_citta);
         long ins = db.insert(TABELLA_MONUMENTI, null, contentMonumento);
         if(ins==-1) return  false;
         else return true;
@@ -138,11 +138,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE GASTRONOMIA*/
-    public boolean inserisciGastronomia(String nome/*, int i*/){
+    public boolean inserisciGastronomia(String nome,String nome_citta){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentGastronomia = new ContentValues();
         contentGastronomia.put("nome",nome);
-        //contentValues1.put("citta_ID", i);
+        contentGastronomia.put("citta", nome_citta);
         long ins = db.insert(TABELLA_GASTRONOMIA, null, contentGastronomia);
         if(ins==-1) return  false;
         else return true;
@@ -167,10 +167,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE HOTEL&BB*/
-    public boolean inserisciHotelBB(String nome/*, int i*/){
+    public boolean inserisciHotelBB(String nome,String nome_citta){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentHotel = new ContentValues();
         contentHotel.put("nome",nome);
+        contentHotel.put("citta", nome_citta);
        // contentValues1.put("citta_ID", i);
         long ins = db.insert(TABELLA_HOTELEBB, null, contentHotel);
         if(ins==-1) return  false;
