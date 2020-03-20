@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.Date;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Login.db";
     private static final String TABELLA_UTENTE = "utente";
@@ -23,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, password text NOT NULL, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL)");
+        db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, password text NOT NULL, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL,dataNascita date NOT NULL)");
         db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(nome text PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
@@ -41,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE UTENTE*/
-    public boolean inserisciUtente(String email, String password, String nome, String cognome, String citta, String sesso){
+    public boolean inserisciUtente(String email, String password, String nome, String cognome, String citta, String sesso, Date dataNascita){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentUtente = new ContentValues();
         contentUtente.put("email",email);
@@ -50,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentUtente.put("cognome",cognome);
         contentUtente.put("citta",citta);
         contentUtente.put("sesso",sesso);
+        contentUtente.put("dataNascita", String.valueOf(dataNascita));
         long ins = db.insert(TABELLA_UTENTE, null, contentUtente);
         if(ins==-1) return  false;
         else return true;

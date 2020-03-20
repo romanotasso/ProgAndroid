@@ -14,6 +14,7 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
     Button mButtonMonumenti;
     Button mButtonGastronomia;
     Button mButtonHotelBB;
+    Button mButtonUtente;
     DatabaseHelper db;
 
     @Override
@@ -26,6 +27,28 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
         mButtonMonumenti = findViewById(R.id.button_dati_monumenti);
         mButtonGastronomia = findViewById(R.id.button_dati_gastronomia);
         mButtonHotelBB = findViewById(R.id.button_dati_hotelBB);
+        mButtonUtente = findViewById(R.id.button_dati_utente);
+        mButtonUtente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor res = db.getAllData();
+                if(res.getCount() == 0){
+                    showMessage("Errore", "Nessun record trovato");
+                    return;
+                }
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()){
+
+                    buffer.append("Email: " + res.getString(0) + "\n");
+                    buffer.append("Nome: " + res.getString(2) + "\n");
+                    buffer.append("Cognome: " + res.getString(3) + "\n");
+                    buffer.append("Città: " + res.getString(4) + "\n");
+                    buffer.append("Sesso: " + res.getString(5) + "\n");
+                    buffer.append("Data nascita: " + res.getString(6) + "\n\n");
+                }
+                showMessage("Utenti:",buffer.toString());
+            }
+        });
 
         mButtonCittà.setOnClickListener(new View.OnClickListener() {
             @Override

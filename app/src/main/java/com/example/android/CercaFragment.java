@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class CercaFragment extends Fragment {
 
-    View alwaysAppearingView;
+
     SearchView mysearchView;
     ListView myList;
     Cursor cittaHome;
@@ -78,16 +78,7 @@ public class CercaFragment extends Fragment {
         }
         );
 
-       /* mysearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                myList.setVisibility(View.GONE);
-                return false;
-            }
-        });
 
-
-        */
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

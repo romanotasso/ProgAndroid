@@ -14,7 +14,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -52,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String cognome = mTextCognome.getText().toString();
                 String email = mTextEmail.getText().toString();
                 String password = mTextPassword.getText().toString();
-                //String data_nascita = mTextDataNascita.getText().toString();
+                String data_nascita = mTextDataNascita.getText().toString();
                 String sesso = mTextSesso.getText().toString();
                 String citta = mTextCitta.getText().toString();
                 if(email.trim().isEmpty()||password.trim().isEmpty()||nome.trim().isEmpty()||cognome.trim().isEmpty()||sesso.trim().isEmpty()||citta.trim().isEmpty()){
@@ -60,7 +65,15 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     Boolean check = db.checkEmail(email);
                     if(check==true){
-                        Boolean inserisci = db.inserisciUtente(email,password,nome,cognome,citta,sesso);
+                        Date convertedDate = new Date();
+                        SimpleDateFormat sdf = new SimpleDateFormat(String.format("dd/MM/aaaa"),Locale.ITALIAN);
+                        try {
+                            convertedDate = sdf.parse(data_nascita);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(getApplicationContext(),"I campi sono"+ convertedDate +"vuoti",Toast.LENGTH_SHORT).show();
+                        Boolean inserisci = db.inserisciUtente(email,password,nome,cognome,citta,sesso,convertedDate);
                         if(inserisci == true){
                             Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(registerIntent);
@@ -69,10 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Email già esistente", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
-
         mTextDataNascita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,16 +96,14 @@ public class RegisterActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-
         mDataSetListner = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int giorno, int mese, int anno) {
-                Log.d(TAG,"onDataSet: dd/mm//aaaa: " + giorno + "/" + mese + "/" + anno);
+                Log.d(TAG,"onDataSet: dd/MM/aaaa: " + giorno + "/" + mese + "/" + anno);
                 mese = mese + 1;
                 String date = giorno + "/" + mese + "/" + anno;
                 mTextDataNascita.setText(date);
             }
         };
-
     }
 }
