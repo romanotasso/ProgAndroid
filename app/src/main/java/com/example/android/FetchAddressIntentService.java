@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import androidx.annotation.RequiresApi;
 public class FetchAddressIntentService extends IntentService {
 
     private ResultReceiver resultReceiver;
+    EditText t;
 
     public FetchAddressIntentService() {
         super("FetchAddressIntentService");

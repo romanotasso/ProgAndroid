@@ -21,6 +21,7 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    EditText t;
 
     /////////////////////////////
     private  static final int REQUEST_CODE_LOCATION_PERMISSION = 1;

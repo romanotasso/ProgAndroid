@@ -15,7 +15,7 @@
         android:iconifiedByDefault="false"
         android:queryHint="Cerca città"
         android:id="@+id/searchView"
-        android:inputType="textCapWords">
+        >
     </SearchView>
 
     <ListView

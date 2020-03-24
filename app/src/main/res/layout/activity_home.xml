@@ -41,6 +41,17 @@
         android:text="Confronto"
         android:layout_marginTop="250dp"/>
 
+    <TextView
+        android:id="@+id/text_attiva1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="Confronto"
+        android:layout_marginTop="250dp"/>
+
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
