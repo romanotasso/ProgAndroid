@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ExperienceTrip</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login">LOGIN</string>
+    <string name="crea_nuovo_account">Create new account</string>
+    <string name="nome">Name</string>
+    <string name="cognome">Surname</string>
+    <string name="email">Email</string>
+    <string name="sesso">Sex</string>
+    <string name="data_nascita">Date of birth</string>
+    <string name="citta">City</string>
+    <string name="regiatrati">Sing in</string>
+    <string name="indietro">Back</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="cerca">Search</string>
+    <string name="vedi_dati_citt">Show towns</string>
+    <string name="vedi_dati_monumenti">Show monuments</string>
+    <string name="vedi_dati_gastronomia">Show gastronomia</string>
+    <string name="vedi_dati_hotel_bb">Show Hotel/BB</string>
+    <string name="vedi_tutti_i_dati">Show all data</string>
+    <string name="inserisci">Insert</string>
+    <string name="monumento">Monuments</string>
+    <string name="ristoranti">Ristoranti</string>
+    <string name="hotel_bb">Hotel/BB</string>
+    <string name="cancella">Delete</string>
+    <string name="vedi_dati_utente">Show users</string>
+
+
+
+
+
+
+
+
+
+
+
+
+</resources>

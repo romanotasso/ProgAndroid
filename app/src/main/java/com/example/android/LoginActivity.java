@@ -2,7 +2,6 @@ package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String PASSWORD = "admin";
@@ -62,9 +61,11 @@ public class LoginActivity extends AppCompatActivity {
                 if((email.equals(USERNAME)) && (password.equals(PASSWORD))){
                     Intent amministratoreIntent = new Intent(LoginActivity.this, AmministatoreActivity.class);
                     startActivity(amministratoreIntent);
+                    finish();
                 }else if(controlloMailPassword == true){
                     Intent registerIntent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(registerIntent);
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Email o password sbagliate",Toast.LENGTH_SHORT).show();
                 }

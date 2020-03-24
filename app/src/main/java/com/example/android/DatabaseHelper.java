@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE UTENTE*/
-    public boolean inserisciUtente(String email, String password, String nome, String cognome, String citta, String sesso, Date dataNascita){
+    public boolean inserisciUtente(String email, String password, String nome, String cognome, String citta, String sesso, String dataNascita){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentUtente = new ContentValues();
         contentUtente.put("email",email);
@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentUtente.put("cognome",cognome);
         contentUtente.put("citta",citta);
         contentUtente.put("sesso",sesso);
-        contentUtente.put("dataNascita", String.valueOf(dataNascita));
+        contentUtente.put("dataNascita", dataNascita);
         long ins = db.insert(TABELLA_UTENTE, null, contentUtente);
         if(ins==-1) return  false;
         else return true;

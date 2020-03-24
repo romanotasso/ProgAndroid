@@ -65,15 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     Boolean check = db.checkEmail(email);
                     if(check==true){
-                        Date convertedDate = new Date();
-                        SimpleDateFormat sdf = new SimpleDateFormat(String.format("dd/MM/aaaa"),Locale.ITALIAN);
-                        try {
-                            convertedDate = sdf.parse(data_nascita);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        Toast.makeText(getApplicationContext(),"I campi sono"+ convertedDate +"vuoti",Toast.LENGTH_SHORT).show();
-                        Boolean inserisci = db.inserisciUtente(email,password,nome,cognome,citta,sesso,convertedDate);
+                        Boolean inserisci = db.inserisciUtente(email,password,nome,cognome,citta,sesso,data_nascita);
                         if(inserisci == true){
                             Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(registerIntent);
@@ -92,6 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 int mese = cal.get(Calendar.MONTH);
                 int giorno = cal.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDataSetListner, anno, mese, giorno);
+                dialog.getDatePicker().setMaxDate(new Date().getTime());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }

@@ -12,21 +12,20 @@
     <string name="citta">Città</string>
     <string name="regiatrati">Registrati</string>
     <string name="indietro">Indietro</string>
-    <string name="esplora">ESPLORA</string>
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="cerca">Cerca</string>
-    <string name="citt_pi_cercate">Città più cercate:</string>
-    <string name="vedi_dati_citt">Vedi dati città</string>
-    <string name="vedi_dati_monumenti">Vedi dati monumenti</string>
-    <string name="vedi_dati_gastronomia">Vedi dati gastronomia</string>
-    <string name="vedi_dati_hotel_bb">Vedi dati Hotel/BB</string>
+    <string name="vedi_dati_citt">Vedi città</string>
+    <string name="vedi_dati_monumenti">Vedi monumenti</string>
+    <string name="vedi_dati_gastronomia">Vedi gastronomia</string>
+    <string name="vedi_dati_hotel_bb">Vedi Hotel/BB</string>
     <string name="vedi_tutti_i_dati">Vedi tutti i dati</string>
     <string name="inserisci">Inserisci</string>
     <string name="monumento">Monumento</string>
     <string name="ristoranti">Ristoranti</string>
     <string name="hotel_bb">Hotel/BB</string>
     <string name="cancella">Cancella</string>
+    <string name="vedi_dati_utente">Vedi utente</string>
 
 
 </resources>

@@ -16,7 +16,7 @@
         android:gravity="center_horizontal"
         android:hint="@string/citta"
         android:importantForAutofill="no"
-        android:inputType="none" />
+        android:inputType="textCapWords" />
 
     <EditText
         android:id="@+id/edittext_monumenti"
@@ -26,7 +26,7 @@
         android:gravity="center_horizontal"
         android:hint="@string/monumento"
         android:importantForAutofill="no"
-        android:inputType="none" />
+        android:inputType="textCapWords" />
 
     <EditText
         android:id="@+id/edittext_gastronomia"
@@ -36,7 +36,7 @@
         android:gravity="center_horizontal"
         android:hint="@string/ristoranti"
         android:importantForAutofill="no"
-        android:inputType="none" />
+        android:inputType="textCapWords" />
 
     <EditText
         android:id="@+id/edittext_hotel"
@@ -46,7 +46,7 @@
         android:gravity="center_horizontal"
         android:hint="@string/hotel_bb"
         android:importantForAutofill="no"
-        android:inputType="none" />
+        android:inputType="textCapWords" />
 
     <Button
         android:id="@+id/button_cancella"

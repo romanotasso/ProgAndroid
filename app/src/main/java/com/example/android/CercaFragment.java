@@ -1,6 +1,5 @@
 package com.example.android;
 
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,7 +19,6 @@ import androidx.fragment.app.FragmentManager;
 import java.util.ArrayList;
 
 public class CercaFragment extends Fragment {
-
 
     SearchView mysearchView;
     ListView myList;
@@ -46,10 +44,7 @@ public class CercaFragment extends Fragment {
         }
 
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,citta);
-
         myList.setAdapter(adapter);
-
-
 
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -61,9 +56,7 @@ public class CercaFragment extends Fragment {
             }
             @Override
             public boolean onQueryTextChange(String s) {
-
                 String text = s;
-
                 if(TextUtils.isEmpty(text)){
                     myList.setVisibility(View.GONE);
                 }
@@ -71,13 +64,9 @@ public class CercaFragment extends Fragment {
                     adapter.getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);
                 }
-                return true;
-
+                return false;
             }
-
-        }
-        );
-
+        });
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,10 +84,6 @@ public class CercaFragment extends Fragment {
 
             }
         });
-
         return view;
     }
-
-
-
 }
