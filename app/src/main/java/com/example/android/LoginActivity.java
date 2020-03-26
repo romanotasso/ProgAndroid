@@ -36,10 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         città.add("Bologna");
         città.add("Roma");
 
-        for (int i=0;i<città.size();i++){
-            if(db.checkCitta(città.get(i))){
+        for (int i = 0; i < città.size(); i++) {
+            if (db.checkCitta(città.get(i))) {
                 db.inserisciCitta(città.get(i));
-            }else if(!db.checkCitta(città.get(i))){
+            } else if (!db.checkCitta(città.get(i))) {
                 break;
             }
         }
@@ -52,9 +52,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mButtonLogin.setOnClickListener(new View.OnClickListener() {
+        /*mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+                public void onClick(View view) {
                 String email = mTextEmail.getText().toString();
                 String password = mTextPassword.getText().toString();
                 Boolean controlloMailPassword = db.checkEmailPassword(email,password);
@@ -71,6 +71,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }*/
+
+    }
+
+
+    public void OnLogin(View view){
+        String email = mTextEmail.getText().toString();
+        String password= mTextPassword.getText().toString();
+        String type = "login";
+
+        BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+        backgroudWorker.execute(type,email,password);
+
 
     }
 }

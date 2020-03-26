@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.util.Calendar;
-
+import java.util.Date;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -25,9 +27,11 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mTextEmail;
     EditText mTextDataNascita;
     EditText mTextPassword;
-    EditText mTextSesso;
     EditText mTextCitta;
     DatabaseHelper db;
+    RadioGroup radioGroup;
+    RadioButton radioButtonSesso;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,11 @@ public class RegisterActivity extends AppCompatActivity {
         mTextEmail = findViewById(R.id.edittext_email);
         mTextPassword = findViewById(R.id.edittext_password1);
         mTextDataNascita = findViewById(R.id.edittext_data);
-        mTextSesso = findViewById(R.id.edittext_sesso);
+        radioGroup = findViewById(R.id.radio);
         mTextCitta = findViewById(R.id.edittext_citta);
         mButtonRegister = findViewById(R.id.button_register);
 
-        mButtonRegister.setOnClickListener(new View.OnClickListener() {
+       /* mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String nome = mTextNome.getText().toString();
@@ -69,7 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
+
         mTextDataNascita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,12 +91,37 @@ public class RegisterActivity extends AppCompatActivity {
         mDataSetListner = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int giorno, int mese, int anno) {
-                Log.d(TAG,"onDataSet:dd/mm/yyyy:" + giorno + "/" + mese + "/" + anno);
+                Log.d(TAG,"onDataSet:dd-MM-yyyy:" + anno + "/" + mese + "/" + giorno);
                 mese = mese + 1;
                 String date = anno + "/" + mese + "/" + giorno;
                 mTextDataNascita.setText(date);
                 Toast.makeText(getApplicationContext(),""+ date +"",Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    public String checkButton (View v) {
+        int radioID = radioGroup.getCheckedRadioButtonId();
+        radioButtonSesso = findViewById(radioID);
+        return radioButtonSesso.getText().toString();
+    }
+
+    public void onReg(View view){
+
+        String str_nome = mTextNome.getText().toString();
+        String str_cognome= mTextCognome.getText().toString();
+        String str_email = mTextEmail.getText().toString();
+        String str_pass = mTextPassword.getText().toString();
+        String str_citta = mTextCitta.getText().toString();
+        int radioID = radioGroup.getCheckedRadioButtonId();
+        radioButtonSesso = findViewById(radioID);
+        String str_sesso = radioButtonSesso.getText().toString();
+        String str_data = mTextDataNascita.getText().toString();
+        String type = "register";
+
+        BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+        backgroudWorker.execute(type,str_nome,str_cognome,str_email,str_pass,str_citta,str_sesso,str_data);
+
+
     }
 }

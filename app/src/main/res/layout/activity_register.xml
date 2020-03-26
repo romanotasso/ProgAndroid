@@ -70,15 +70,44 @@
         android:importantForAutofill="no"
         android:inputType="textCapWords" />
 
-    <EditText
-        android:id="@+id/edittext_sesso"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/sesso"
-        android:importantForAutofill="no"
-        android:inputType="textCapWords" />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/radio">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="37dp"
+            android:text="@string/sesso"
+            android:textSize="20sp"/>
+
+        <RadioButton
+            android:id="@+id/uomo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/uomo"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"
+            android:onClick="checkButton"
+            tools:ignore="OnClick" />
+
+        <RadioButton
+            android:id="@+id/donna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:onClick="checkButton"
+            android:text="@string/donna"
+            android:textSize="20sp"
+            tools:ignore="OnClick" />
+    </RadioGroup>
 
     <Button
         android:id="@+id/button_register"
@@ -87,7 +116,8 @@
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:textStyle="bold"
-        android:hint="@string/regiatrati"/>
+        android:hint="@string/regiatrati"
+        android:onClick="onReg"/>
 
 
 </LinearLayout>

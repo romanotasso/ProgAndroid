@@ -26,6 +26,8 @@
     <string name="hotel_bb">Hotel/BB</string>
     <string name="cancella">Cancella</string>
     <string name="vedi_dati_utente">Vedi utente</string>
+    <string name="uomo">uomo</string>
+    <string name="donna">donna</string>
 
 
 </resources>
