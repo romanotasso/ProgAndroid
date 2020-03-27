@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -115,13 +116,28 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
     protected void onPreExecute() {
 
         alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("LoginStatus");
+        alertDialog.setTitle("Stato di Registrazione");
     }
 
     @Override
     protected void onPostExecute(String result) {
+
         alertDialog.setMessage(result);
-        alertDialog.show();
+
+        if(result.equals("login success !!!!! Welcome")) {
+            Toast.makeText(context.getApplicationContext(), "login success !!!!! Welcome", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context.getApplicationContext(), HomeActivity.class);
+            context.startActivity(intent);
+        }else if(result.equals("REGISTRAZIONE AVVENUTA CON SUCCESSO")){
+            Toast.makeText(context.getApplicationContext(),"Registrazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context.getApplicationContext(), LoginActivity.class);
+            context.startActivity(intent);
+        }else if(result.equals("Attenzione, formato email non valido.")){
+            Toast.makeText(context.getApplicationContext(),"Attenzione, formato email non valido.",Toast.LENGTH_SHORT).show();
+        }else if(result.equals("E-MAIL GIA ESISTENTE")){
+            Toast.makeText(context.getApplicationContext(),"E-MAIL GIA ESISTENTE",Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

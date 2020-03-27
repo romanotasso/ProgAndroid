@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onReg(View view){
+
         String str_nome = mTextNome.getText().toString();
         String str_cognome= mTextCognome.getText().toString();
         String str_email = mTextEmail.getText().toString();
@@ -98,7 +99,18 @@ public class RegisterActivity extends AppCompatActivity {
         String str_data = mTextDataNascita.getText().toString();
         String type = "register";
 
-        BackgroudWorker backgroudWorker= new BackgroudWorker(this);
-        backgroudWorker.execute(type,str_nome,str_cognome,str_email,str_pass,str_citta,str_sesso,str_data);
+        if(str_nome.trim().isEmpty()||str_cognome.trim().isEmpty()||str_citta.trim().isEmpty()||str_data.trim().isEmpty()||str_email.trim().isEmpty()||str_pass.trim().isEmpty()||str_sesso.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Compila tutti i campi",Toast.LENGTH_SHORT).show();
+        }else{
+            BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+            backgroudWorker.execute(type,str_nome,str_cognome,str_email,str_pass,str_citta,str_sesso,str_data);
+        }
+
+
+
+
+
+
+
     }
 }
