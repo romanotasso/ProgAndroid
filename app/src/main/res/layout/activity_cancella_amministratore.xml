@@ -8,53 +8,78 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/edittext_citta"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="75dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/citta"
-        android:importantForAutofill="no"
-         />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_utente"
+            android:hint="@string/email"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/edittext_monumenti"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/monumento"
-        android:importantForAutofill="no"
-        android:inputType="textCapWords" />
-
-    <EditText
-        android:id="@+id/edittext_gastronomia"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/ristoranti"
-        android:importantForAutofill="no"
-        android:inputType="textCapWords" />
-
-    <EditText
-        android:id="@+id/edittext_hotel"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/hotel_bb"
-        android:importantForAutofill="no"
-        android:inputType="textCapWords" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_citta"
+            android:hint="@string/citta"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_monumenti"
+            android:hint="@string/monumento"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_gastronomia"
+            android:hint="@string/ristoranti"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_hotel"
+            android:hint="@string/hotel_bb"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button_cancella"
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/cancella"
         android:textStyle="bold"
+        android:textSize="20sp"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
