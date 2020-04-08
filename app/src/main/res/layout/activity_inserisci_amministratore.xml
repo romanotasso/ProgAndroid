@@ -8,6 +8,45 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_email_agg"
+            android:hint="@string/email"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edittext_pass"
+            android:hint="@string/password"
+            android:inputType="textCapWords"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_aggiorna"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Aggiorna"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onUpdate"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"

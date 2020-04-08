@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void OnLogin(View view){
+
         String email = mTextEmail.getText().toString();
         String password= mTextPassword.getText().toString();
         String type = "login";

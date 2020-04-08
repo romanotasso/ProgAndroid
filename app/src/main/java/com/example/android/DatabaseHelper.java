@@ -81,6 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Integer deleteDati(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_UTENTE, "email = ?", new String[]{email});
+
     }
 
     /*SEZIONE CITTA*/
