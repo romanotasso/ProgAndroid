@@ -27,8 +27,8 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
         /*mEditCitta = findViewById(R.id.edittext_citta);
         mEditGastronomia = findViewById(R.id.edittext_gastronomia);
         mEditHotel = findViewById(R.id.edittext_hotel);
-        mEditMonumento = findViewById(R.id.edittext_monumenti);*/
-        mButtonCancella = findViewById(R.id.button_cancella);
+        mEditMonumento = findViewById(R.id.edittext_monumenti);
+        mButtonCancella = findViewById(R.id.button_cancella);*/
         mEditUtente = findViewById(R.id.edittext_utente);
         db = new DatabaseHelper(this);
 
