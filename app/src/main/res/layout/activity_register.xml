@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edittext_nome"
             android:hint="@string/nome"
-            android:inputType="textCapWords"/>
+            android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -116,7 +116,8 @@
                 android:textSize="20sp"
                 android:layout_marginStart="10dp"
                 android:onClick="checkButton"
-                tools:ignore="OnClick" />
+                tools:ignore="OnClick"
+                android:checked="true"/>
             <RadioButton
                 android:id="@+id/donna"
                 android:layout_width="wrap_content"

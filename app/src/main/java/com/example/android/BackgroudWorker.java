@@ -13,8 +13,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -31,6 +33,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         String type = params[0];
         String  login_url ="http://progandroid.altervista.org/progandorid/login.php";
         String  register_url ="http://progandroid.altervista.org/progandorid/registrazione.php";
+        String delete_url = "http://progandroid.altervista.org/progandorid/cancellazione.php";
         if(type.equals("login")){
             try {
                 String email = params[1];
@@ -63,7 +66,8 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }if(type.equals("register")){
+        }
+        if(type.equals("register")){
             try {
                 String nome=params[1];
                 String cognome=params[2];
@@ -107,14 +111,43 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             }
         }
-
-
+        if (type.equals("cancella")){
+            try {
+                String email = params[1];
+                URL url = new URL(delete_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter =new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+                String post_data = URLEncoder.encode("email", "UTF-8")+"="+URLEncoder.encode(email,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while ((line = bufferedReader.readLine()) != null){
+                    result  += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
     @Override
     protected void onPreExecute() {
-
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Stato di Registrazione");
     }
@@ -125,7 +158,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         alertDialog.setMessage(result);
 
         if(result.equals("login success !!!!! Welcome")) {
-            Toast.makeText(context.getApplicationContext(), "login success !!!!! Welcome", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context.getApplicationContext(), "login success !!!!! Welcome", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context.getApplicationContext(), HomeActivity.class);
             context.startActivity(intent);
         }else if(result.equals("REGISTRAZIONE AVVENUTA CON SUCCESSO")){
@@ -136,9 +169,11 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             Toast.makeText(context.getApplicationContext(),"Attenzione, formato email non valido.",Toast.LENGTH_SHORT).show();
         }else if(result.equals("E-MAIL GIA ESISTENTE")){
             Toast.makeText(context.getApplicationContext(),"E-MAIL GIA ESISTENTE",Toast.LENGTH_SHORT).show();
+        }else if (result.equals("Cancellazione avvenuta con successo")){
+            Toast.makeText(context.getApplicationContext(),"Cancellazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context.getApplicationContext(), AmministatoreActivity.class);
+            context.startActivity(intent);
         }
-
-
     }
 
     @Override

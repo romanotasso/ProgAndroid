@@ -28,6 +28,9 @@
     <string name="vedi_dati_utente">Vedi utente</string>
     <string name="uomo">Uomo</string>
     <string name="donna">Donna</string>
+    <string name="sei_sicuro">Sei sicuro?</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
 
 
 </resources>

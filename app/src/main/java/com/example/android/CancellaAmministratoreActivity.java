@@ -18,19 +18,21 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
     EditText mEditHotel;
     EditText mEditMonumento;
     EditText mEditGastronomia;
+    EditText mEditUtente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancella_amministratore);
-        mEditCitta = findViewById(R.id.edittext_citta);
+        /*mEditCitta = findViewById(R.id.edittext_citta);
         mEditGastronomia = findViewById(R.id.edittext_gastronomia);
         mEditHotel = findViewById(R.id.edittext_hotel);
-        mEditMonumento = findViewById(R.id.edittext_monumenti);
+        mEditMonumento = findViewById(R.id.edittext_monumenti);*/
         mButtonCancella = findViewById(R.id.button_cancella);
+        mEditUtente = findViewById(R.id.edittext_utente);
         db = new DatabaseHelper(this);
 
-        mButtonCancella.setOnClickListener(new View.OnClickListener() {
+        /*mButtonCancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())){
@@ -78,6 +80,18 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
+    }
+
+    public void onDelete(View view) {
+        String str_email = mEditUtente.getText().toString();
+        String type = "cancella";
+
+        if(str_email.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Inserisci l'email da eliminare", Toast.LENGTH_SHORT).show();
+        } else {
+            BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+            backgroudWorker.execute(type,str_email);
+        }
     }
 }
