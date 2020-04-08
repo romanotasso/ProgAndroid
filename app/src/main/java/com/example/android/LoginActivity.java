@@ -78,13 +78,22 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void OnLogin(View view){
+
         String email = mTextEmail.getText().toString();
         String password= mTextPassword.getText().toString();
         String type = "login";
 
-        BackgroudWorker backgroudWorker= new BackgroudWorker(this);
-        backgroudWorker.execute(type,email,password);
-
-
+        if(email.trim().isEmpty()||password.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Compilare tutti i campi", Toast.LENGTH_SHORT).show();
+        }else {
+            if((email.equals(USERNAME)) && (password.equals(PASSWORD))){
+                Intent amministratoreIntent = new Intent(LoginActivity.this, AmministatoreActivity.class);
+                startActivity(amministratoreIntent);
+                finish();
+            }else{
+                BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+                backgroudWorker.execute(type,email,password);
+            }
+        }
     }
 }

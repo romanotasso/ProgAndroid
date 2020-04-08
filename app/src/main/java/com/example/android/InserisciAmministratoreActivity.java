@@ -2,6 +2,7 @@ package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,11 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
     EditText mEditHotel;
     EditText mEditMonumento;
     EditText mEditGastronomia;
+    EditText mEditEmail;
+    EditText mEditPassword;
+    Button mButtonUpdate;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +31,8 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
         mEditHotel = findViewById(R.id.edittext_hotel);
         mEditMonumento = findViewById(R.id.edittext_monumenti);
         mButtonInserisci = findViewById(R.id.button_inserisci);
+        mEditEmail = findViewById(R.id.edittext_email_agg);
+        mEditPassword = findViewById(R.id.edittext_pass);
         db = new DatabaseHelper(this);
 
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
@@ -105,4 +112,18 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
             }
         });
     }
+    public void onUpdate (View view){
+
+        String email = mEditEmail.getText().toString();
+        String password = mEditPassword.getText().toString();
+        String type = "UpdateUtente";
+
+        BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+        backgroudWorker.execute(type,email,password);
+
+
+    }
+
+
+
 }

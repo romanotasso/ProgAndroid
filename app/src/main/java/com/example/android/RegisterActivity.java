@@ -99,11 +99,17 @@ public class RegisterActivity extends AppCompatActivity {
         String str_data = mTextDataNascita.getText().toString();
         String type = "register";
 
-        if(str_nome.trim().isEmpty()||str_cognome.trim().isEmpty()||str_citta.trim().isEmpty()||str_data.trim().isEmpty()||str_email.trim().isEmpty()||str_pass.trim().isEmpty()||str_sesso.trim().isEmpty()){
-            Toast.makeText(getApplicationContext(),"Compila tutti i campi",Toast.LENGTH_SHORT).show();
-        }else{
+        if(str_nome.trim().isEmpty()||str_cognome.trim().isEmpty()||str_citta.trim().isEmpty()||str_email.trim().isEmpty()||str_pass.trim().isEmpty()||str_sesso.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Compilare tutti i campi", Toast.LENGTH_SHORT).show();
+        }else {
             BackgroudWorker backgroudWorker= new BackgroudWorker(this);
             backgroudWorker.execute(type,str_nome,str_cognome,str_email,str_pass,str_citta,str_sesso,str_data);
+            db.inserisciUtente(str_email,str_pass,str_nome,str_cognome,str_citta,str_sesso,str_data);
+        }
+
+
+
+
         }
 
 
@@ -113,4 +119,4 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-}
+
