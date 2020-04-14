@@ -19,7 +19,6 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
     EditText mEditGastronomia;
     EditText mEditEmail;
     EditText mEditPassword;
-    Button mButtonUpdate;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -35,7 +34,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
         mEditPassword = findViewById(R.id.edittext_pass);
         db = new DatabaseHelper(this);
 
-        mButtonInserisci.setOnClickListener(new View.OnClickListener() {
+       /* mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())){
@@ -110,7 +109,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
     }
     public void onUpdate (View view){
 
@@ -118,12 +117,55 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
         String password = mEditPassword.getText().toString();
         String type = "UpdateUtente";
 
-        BackgroudWorker backgroudWorker= new BackgroudWorker(this);
-        backgroudWorker.execute(type,email,password);
-
-
+        if(email.trim().isEmpty() || password.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Inserisci i dati per l'aggiornamento", Toast.LENGTH_SHORT).show();
+        } else {
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type, email, password);
+        }
     }
 
 
+    public void onInsert (View view) {
+        String citta = mEditCitta.getText().toString();
+        String monumento = mEditMonumento.getText().toString();
+        String gastronomia = mEditGastronomia.getText().toString();
+        String hotelbb = mEditHotel.getText().toString();
+        String type = "inserimento";
 
+        if ((citta.trim().isEmpty()) && ((monumento.trim().isEmpty() && gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty()))) {
+            Toast.makeText(getApplicationContext(), "Inserisci i dati", Toast.LENGTH_SHORT).show();
+        } else if ((monumento.trim().isEmpty() && gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty())) {
+            Toast.makeText(getApplicationContext(), "Inserisci i dati", Toast.LENGTH_SHORT).show();
+        } else if (!citta.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Città inserita con successo", Toast.LENGTH_SHORT).show();
+            hotelbb = "";
+            gastronomia = "";
+            monumento = "";
+            db.inserisciCitta(citta);
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
+        }  else if((hotelbb.trim().isEmpty() && gastronomia.trim().isEmpty())) {
+            Toast.makeText(getApplicationContext(),"Monumento inserito con successo", Toast.LENGTH_SHORT).show();
+            hotelbb = "";
+            gastronomia = "";
+            db.inserisciMonumento(monumento,citta);
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
+        } else if((monumento.trim().isEmpty() && hotelbb.trim().isEmpty())) {
+            Toast.makeText(getApplicationContext(),"Gastronomia inserita con successo", Toast.LENGTH_SHORT).show();
+            monumento = "";
+            hotelbb = "";
+            db.inserisciGastronomia(gastronomia,citta);
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
+        } else if((monumento.trim().isEmpty() && gastronomia.trim().isEmpty())) {
+            Toast.makeText(getApplicationContext(), "Hotel/BB inserito con successo", Toast.LENGTH_SHORT).show();
+            monumento = "";
+            gastronomia = "";
+            db.inserisciHotelBB(hotelbb, citta);
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
+        }
+    }
 }

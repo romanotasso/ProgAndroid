@@ -108,6 +108,7 @@
         android:hint="Inserisci"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:onClick="onInsert"/>
 
 </LinearLayout>

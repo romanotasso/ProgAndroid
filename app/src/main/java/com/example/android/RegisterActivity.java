@@ -16,7 +16,6 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "Registrazione";
@@ -31,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     DatabaseHelper db;
     RadioGroup radioGroup;
     RadioButton radioButtonSesso;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,17 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
             backgroudWorker.execute(type,str_nome,str_cognome,str_email,str_pass,str_citta,str_sesso,str_data);
             db.inserisciUtente(str_email,str_pass,str_nome,str_cognome,str_citta,str_sesso,str_data);
         }
-
-
-
-
-        }
-
-
-
-
-
-
-
     }
+}
 

@@ -42,7 +42,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:hint="@string/login"
-        android:onClick="OnLogin"/>
+        android:onClick="onLogin"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -2,6 +2,8 @@ package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ArrowKeyMovementMethod;
@@ -92,6 +94,7 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
         } else {
             BackgroudWorker backgroudWorker= new BackgroudWorker(this);
             backgroudWorker.execute(type,str_email);
+            db.deleteDati(str_email);
         }
     }
 }
