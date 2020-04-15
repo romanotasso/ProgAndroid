@@ -71,15 +71,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.add(R.id.container_fragment, new CercaFragment());
         fragmentTransaction.commit();
         ////////////////////////
-        resultReceiver = new AddressResultReciver(new Handler());
-        textLatLong = findViewById(R.id.textLatLog);
-        progressBar = findViewById(R.id.processBar);
-        textAddress = findViewById(R.id.textAddress);
-        textAttiva = findViewById(R.id.text_attiva_gps);
+        //resultReceiver = new AddressResultReciver(new Handler());
+       // textLatLong = findViewById(R.id.textLatLog);
+        //progressBar = findViewById(R.id.processBar);
+        //textAddress = findViewById(R.id.textAddress);
+        //textAttiva = findViewById(R.id.text_attiva_gps);
         db = new DatabaseHelper(this);
 
 
-        findViewById(R.id.text_attiva_gps).setOnClickListener(new View.OnClickListener() {
+       /* findViewById(R.id.text_attiva_gps).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -89,9 +89,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     getCurrentLocation();
                 }
             }
-        });
+        });*/
 
-        findViewById(R.id.text_attiva).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.text_attiva).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean b = db.checkCitta(textAddress.getText().toString());
@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(getApplicationContext(), "NIENTE", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -138,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
+   /* @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
@@ -201,6 +201,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
             progressBar.setVisibility(View.GONE);
         }
+   */
     }
 
-}
+//}

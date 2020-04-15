@@ -24,10 +24,6 @@
         <item android:title="Comunicazioni">
             <menu>
                 <item
-                    android:id="@+id/impostazioni1"
-                    android:icon="@drawable/ic_settings_black_24dp"
-                    android:title="Impostazioni" />
-                <item
                     android:id="@+id/condividi"
                     android:icon="@drawable/ic_share_black_24dp"
                     android:title="Share" />

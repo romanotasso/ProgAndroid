@@ -111,7 +111,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
             }
         });*/
     }
-    public void onUpdate (View view){
+    /*public void onUpdate (View view){
 
         String email = mEditEmail.getText().toString();
         String password = mEditPassword.getText().toString();
@@ -123,10 +123,11 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type, email, password);
         }
-    }
+    }*/
 
 
     public void onInsert (View view) {
+
         String citta = mEditCitta.getText().toString();
         String monumento = mEditMonumento.getText().toString();
         String gastronomia = mEditGastronomia.getText().toString();

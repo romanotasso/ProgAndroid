@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, password text NOT NULL, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL,dataNascita date NOT NULL)");
+        db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL,dataNascita date NOT NULL)");
         db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(nome text PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
@@ -43,11 +43,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE UTENTE*/
-    public boolean inserisciUtente(String email, String password, String nome, String cognome, String citta, String sesso, String dataNascita){
+    public boolean inserisciUtente(String email, String nome, String cognome, String citta, String sesso, String dataNascita){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentUtente = new ContentValues();
         contentUtente.put("email",email);
-        contentUtente.put("password",password);
         contentUtente.put("nome",nome);
         contentUtente.put("cognome",cognome);
         contentUtente.put("citta",citta);
@@ -58,19 +57,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-    public Boolean checkEmail(String email){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT email FROM utente WHERE email=?", new String[]{email});
-        if(cursor.getCount()>0) return false;
-        else return true;
-    }
-
-    public Boolean checkEmailPassword (String email, String password){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM utente WHERE email =? and password=?", new String[]{email,password});
-        if(cursor.getCount()>0) return true;
-        else return false;
-    }
 
     public Cursor getAllData(){
         SQLiteDatabase db = getWritableDatabase();
@@ -100,12 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Boolean checkCitta(String citta){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT nome FROM citta WHERE nome=?", new String[]{citta});
-        if(cursor.getCount()>0) return false;
-        else return true;
-    }
 
     public Integer deleteCitta(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -127,13 +107,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_MONUMENTI, null);
         return res;
-    }
-
-    public Boolean checkMonumento(String monumento){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT nome FROM monumenti WHERE nome=?", new String[]{monumento});
-        if(cursor.getCount()>0) return false;
-        else return true;
     }
 
     public Integer deleteMonumento(String nome){
@@ -158,13 +131,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Boolean checkGastronomia(String nome){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT nome FROM gastronomia WHERE nome=?", new String[]{nome});
-        if(cursor.getCount()>0) return false;
-        else return true;
-    }
-
     public Integer deleteGastronomia(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_GASTRONOMIA, "nome = ?", new String[]{nome});
@@ -186,13 +152,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_HOTELEBB, null);
         return res;
-    }
-
-    public Boolean checkHotelBB(String nome){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT nome FROM hotelebb WHERE nome=?", new String[]{nome});
-        if(cursor.getCount()>0) return false;
-        else return true;
     }
 
     public Integer deleteHotelBB(String nome){

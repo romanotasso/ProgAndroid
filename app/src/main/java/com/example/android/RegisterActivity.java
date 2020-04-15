@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         }else {
             BackgroudWorker backgroudWorker= new BackgroudWorker(this);
             backgroudWorker.execute(type,str_nome,str_cognome,str_email,str_pass,str_citta,str_sesso,str_data);
-            db.inserisciUtente(str_email,str_pass,str_nome,str_cognome,str_citta,str_sesso,str_data);
+            db.inserisciUtente(str_email,str_nome,str_cognome,str_citta,str_sesso,str_data);
         }
     }
 }

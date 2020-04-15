@@ -37,14 +37,14 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
         /*mButtonCancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())){
+                if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())) {
                     Toast.makeText(getApplicationContext(), "I campi sono vuoti", Toast.LENGTH_SHORT).show();
                 } else {
 
                     //CANCELLAZIONE MONUMENTO
-                    if((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())){
+                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
                         Integer deleteMonumento = db.deleteMonumento(mEditMonumento.getText().toString());
-                        if(deleteMonumento > 0){
+                        if (deleteMonumento > 0) {
                             Toast.makeText(getApplicationContext(), "Monumento cancellato", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
                             startActivity(intent);
@@ -52,9 +52,9 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
                     }
 
                     //CANCELLAZIONE CITTA'
-                    if((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())){
+                    if ((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
                         Integer deleteCittà = db.deleteCitta(mEditCitta.getText().toString());
-                        if(deleteCittà > 0){
+                        if (deleteCittà > 0) {
                             Toast.makeText(getApplicationContext(), "Città cancellata", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
                             startActivity(intent);
@@ -62,9 +62,9 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
                     }
 
                     //CANCELLAZIONE GASTRONOMIA
-                    if((mEditCitta.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())){
+                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
                         Integer deleteGastronomia = db.deleteGastronomia(mEditGastronomia.getText().toString());
-                        if(deleteGastronomia > 0){
+                        if (deleteGastronomia > 0) {
                             Toast.makeText(getApplicationContext(), "Gastronomia cancellata", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
                             startActivity(intent);
@@ -72,9 +72,9 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
                     }
 
                     //CANCELLAZIONE HOTELEBB
-                    if((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())){
+                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())) {
                         Integer deleteHoteleBB = db.deleteHotelBB(mEditHotel.getText().toString());
-                        if(deleteHoteleBB > 0){
+                        if (deleteHoteleBB > 0) {
                             Toast.makeText(getApplicationContext(), "Hotel/BB cancellato", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
                             startActivity(intent);
@@ -97,4 +97,6 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
             db.deleteDati(str_email);
         }
     }
+
+
 }

@@ -31,6 +31,8 @@
     <string name="sei_sicuro">Sei sicuro?</string>
     <string name="si">Si</string>
     <string name="no">No</string>
+    <string name="NuovaPassword">Nuova Password</string>
+    <string name="PasswordAttuale">Password Attuale</string>
 
 
 </resources>
