@@ -20,7 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     Button mButtonLogin;
     TextView mTextViewRegister;
     DatabaseHelper db;
-    ArrayList<String> città;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

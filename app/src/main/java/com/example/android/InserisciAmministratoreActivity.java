@@ -136,9 +136,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
 
         if ((citta.trim().isEmpty()) && ((monumento.trim().isEmpty() && gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty()))) {
             Toast.makeText(getApplicationContext(), "Inserisci i dati", Toast.LENGTH_SHORT).show();
-        } else if ((monumento.trim().isEmpty() && gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty())) {
-            Toast.makeText(getApplicationContext(), "Inserisci i dati", Toast.LENGTH_SHORT).show();
-        } else if (!citta.trim().isEmpty()){
+        } else if (!citta.trim().isEmpty() && (db.checkCitta(citta))){
             Toast.makeText(getApplicationContext(),"Città inserita con successo", Toast.LENGTH_SHORT).show();
             hotelbb = "";
             gastronomia = "";
@@ -146,21 +144,23 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
             db.inserisciCitta(citta);
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
-        }  else if((hotelbb.trim().isEmpty() && gastronomia.trim().isEmpty())) {
+        } else if ((monumento.trim().isEmpty() && gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty())) {
+            Toast.makeText(getApplicationContext(), "Inserisci i dati", Toast.LENGTH_SHORT).show();
+        }  else if((!citta.trim().isEmpty()) && (hotelbb.trim().isEmpty() && gastronomia.trim().isEmpty())) {
             Toast.makeText(getApplicationContext(),"Monumento inserito con successo", Toast.LENGTH_SHORT).show();
             hotelbb = "";
             gastronomia = "";
             db.inserisciMonumento(monumento,citta);
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
-        } else if((monumento.trim().isEmpty() && hotelbb.trim().isEmpty())) {
+        } else if((!citta.trim().isEmpty()) && (monumento.trim().isEmpty() && hotelbb.trim().isEmpty())) {
             Toast.makeText(getApplicationContext(),"Gastronomia inserita con successo", Toast.LENGTH_SHORT).show();
             monumento = "";
             hotelbb = "";
             db.inserisciGastronomia(gastronomia,citta);
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
-        } else if((monumento.trim().isEmpty() && gastronomia.trim().isEmpty())) {
+        } else if((!citta.trim().isEmpty()) && (monumento.trim().isEmpty() && gastronomia.trim().isEmpty())) {
             Toast.makeText(getApplicationContext(), "Hotel/BB inserito con successo", Toast.LENGTH_SHORT).show();
             monumento = "";
             gastronomia = "";

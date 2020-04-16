@@ -15,19 +15,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABELLA_MONUMENTI = "monumenti";
     private static final String TABELLA_GASTRONOMIA = "gastronomia";
     private static final String TABELLA_HOTELEBB = "hotelebb";
-    private static int DATABASE_VERSION  = 2;
+    private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context,DATABASE_NAME, null,DATABASE_VERSION);
     }
 
-    public int getDatabaseVersion(){
-        return DATABASE_VERSION;
-    }
-
-    public String getDatabaseVName(){
-        return DATABASE_NAME;
-    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL,dataNascita date NOT NULL)");
@@ -39,16 +32,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        DATABASE_VERSION = newVersion;
-        if(oldVersion==DATABASE_VERSION){
-            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_UTENTE);
-            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_CITTA);
-            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_HOTELEBB);
-            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_MONUMENTI);
-            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_GASTRONOMIA);
-            onCreate(db);
-        }
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_UTENTE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_CITTA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_HOTELEBB);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_MONUMENTI);
+        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_GASTRONOMIA);
+        onCreate(db);
     }
 
     /*SEZIONE UTENTE*/
@@ -93,6 +82,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM citta ORDER BY nome ASC",null);
         return res;
+    }
+
+    public boolean checkCitta (String nome) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM citta WHERE nome = ?", new String[]{nome});
+        int count = res.getCount();
+
+        if (count > 0){
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -169,13 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void updateMio(){
-
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(" DELETE  FROM " +  TABELLA_UTENTE);
-
     }
-
-
-
-
 }
