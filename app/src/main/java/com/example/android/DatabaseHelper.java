@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import androidx.annotation.Nullable;
 
-import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Login.db";
@@ -17,12 +15,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABELLA_MONUMENTI = "monumenti";
     private static final String TABELLA_GASTRONOMIA = "gastronomia";
     private static final String TABELLA_HOTELEBB = "hotelebb";
-
+    private static int DATABASE_VERSION  = 2;
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context,DATABASE_NAME, null,2);
+        super(context,DATABASE_NAME, null,DATABASE_VERSION);
     }
 
+    public int getDatabaseVersion(){
+        return DATABASE_VERSION;
+    }
+
+    public String getDatabaseVName(){
+        return DATABASE_NAME;
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL,dataNascita date NOT NULL)");
@@ -33,13 +38,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_UTENTE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_CITTA);
-        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_HOTELEBB);
-        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_MONUMENTI);
-        db.execSQL("DROP TABLE IF EXISTS " + TABELLA_GASTRONOMIA);
-        onCreate(db);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        DATABASE_VERSION = newVersion;
+        if(oldVersion==DATABASE_VERSION){
+            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_UTENTE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_CITTA);
+            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_HOTELEBB);
+            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_MONUMENTI);
+            db.execSQL("DROP TABLE IF EXISTS " + TABELLA_GASTRONOMIA);
+            onCreate(db);
+        }
+
     }
 
     /*SEZIONE UTENTE*/
@@ -158,5 +167,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_HOTELEBB, "nome = ?", new String[]{nome});
     }
+
+    public void updateMio(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE  FROM " +  TABELLA_UTENTE);
+
+    }
+
+
+
 
 }

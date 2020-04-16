@@ -3,6 +3,7 @@ package com.example.android;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -36,7 +37,6 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         context = ctx;
     }
     DatabaseHelper d;
-
     @Override
     protected String doInBackground(String... params) {
 
@@ -64,7 +64,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
                String line="";
                int i=0;
                String valori[] = new String[6];
-
+               d.updateMio();
                while ((line = bufferedReader.readLine())!=null){
                    result +=line;
                    if(i==VALORE_EMAIL){
@@ -325,8 +325,6 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             Toast.makeText(context.getApplicationContext(),"Email non presente!", Toast.LENGTH_SHORT).show();
         }else if(result.equals("Aggiornamento avvenuto con successo")){
             Toast.makeText(context.getApplicationContext(),"Password aggiornata con successo",Toast.LENGTH_SHORT).show();
-            //Intent intent = new Intent(context.getApplicationContext(),AmministatoreActivity.class);
-            //context.startActivity(intent);
         }else if(result.equals("Errore aggiornamento")) {
             Toast.makeText(context.getApplicationContext(), "Password non aggiornata", Toast.LENGTH_SHORT).show();
         }else if(result.equals("Password o email non corretti")) {

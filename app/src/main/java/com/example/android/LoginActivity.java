@@ -31,18 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.edittext_password);
         mButtonLogin = findViewById(R.id.button_login);
         mTextViewRegister = findViewById(R.id.textview_register);
-        città = new ArrayList<String>();
-        città.add("Milano");
-        città.add("Bologna");
-        città.add("Roma");
 
-        for (int i = 0; i < città.size(); i++) {
-            if (db.checkCitta(città.get(i))) {
-                db.inserisciCitta(città.get(i));
-            } else if (!db.checkCitta(città.get(i))) {
-                break;
-            }
-        }
 
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
