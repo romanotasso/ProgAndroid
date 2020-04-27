@@ -14,89 +14,105 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 public class CancellaAmministratoreActivity extends AppCompatActivity {
+
     DatabaseHelper db;
-    Button mButtonCancella;
+    EditText mEditUtente;
     EditText mEditCitta;
     EditText mEditHotel;
     EditText mEditMonumento;
     EditText mEditGastronomia;
-    EditText mEditUtente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancella_amministratore);
-        /*mEditCitta = findViewById(R.id.edittext_citta);
+        mEditUtente = findViewById(R.id.edittext_utente);
+        mEditCitta = findViewById(R.id.edittext_citta);
         mEditGastronomia = findViewById(R.id.edittext_gastronomia);
         mEditHotel = findViewById(R.id.edittext_hotel);
         mEditMonumento = findViewById(R.id.edittext_monumenti);
-        mButtonCancella = findViewById(R.id.button_cancella);*/
-        mEditUtente = findViewById(R.id.edittext_utente);
+
         db = new DatabaseHelper(this);
 
-        /*mButtonCancella.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())) {
-                    Toast.makeText(getApplicationContext(), "I campi sono vuoti", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    //CANCELLAZIONE MONUMENTO
-                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
-                        Integer deleteMonumento = db.deleteMonumento(mEditMonumento.getText().toString());
-                        if (deleteMonumento > 0) {
-                            Toast.makeText(getApplicationContext(), "Monumento cancellato", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-
-                    //CANCELLAZIONE CITTA'
-                    if ((mEditMonumento.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
-                        Integer deleteCittà = db.deleteCitta(mEditCitta.getText().toString());
-                        if (deleteCittà > 0) {
-                            Toast.makeText(getApplicationContext(), "Città cancellata", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-
-                    //CANCELLAZIONE GASTRONOMIA
-                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty()) && (mEditHotel.getText().toString().trim().isEmpty())) {
-                        Integer deleteGastronomia = db.deleteGastronomia(mEditGastronomia.getText().toString());
-                        if (deleteGastronomia > 0) {
-                            Toast.makeText(getApplicationContext(), "Gastronomia cancellata", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-
-                    //CANCELLAZIONE HOTELEBB
-                    if ((mEditCitta.getText().toString().trim().isEmpty()) && (mEditGastronomia.getText().toString().trim().isEmpty()) && (mEditMonumento.getText().toString().trim().isEmpty())) {
-                        Integer deleteHoteleBB = db.deleteHotelBB(mEditHotel.getText().toString());
-                        if (deleteHoteleBB > 0) {
-                            Toast.makeText(getApplicationContext(), "Hotel/BB cancellato", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CancellaAmministratoreActivity.this, AmministatoreActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                }
-            }
-        });*/
     }
 
     public void onDelete(View view) {
         String str_email = mEditUtente.getText().toString();
-        String type = "cancella";
+        String citta = mEditCitta.getText().toString(); ;
+        String monumento = mEditMonumento.getText().toString();
+        String gastronomia = mEditGastronomia.getText().toString();
+        String hotelbb = mEditHotel.getText().toString();
+        String typeUtenti = "cancellaUtente";
+        String deleteCitta = "cancellaCitta";
+        String deleteMonumento = "cancellaMonumento";
+        String deleteHotel = "cancellaHotel";
+        String deleteGastronomia = "cancellaGastronomia";
 
-        if(str_email.trim().isEmpty()){
-            Toast.makeText(getApplicationContext(), "Inserisci l'email da eliminare", Toast.LENGTH_SHORT).show();
-        } else {
-            BackgroudWorker backgroudWorker= new BackgroudWorker(this);
-            backgroudWorker.execute(type,str_email);
-            db.deleteDati(str_email);
+
+
+        if(str_email.trim().isEmpty()&&citta.trim().isEmpty()&&monumento.trim().isEmpty()&&gastronomia.trim().isEmpty()&&hotelbb.trim().isEmpty()){
+            Toast.makeText(getApplicationContext(), "Inserisci dati da cancellare", Toast.LENGTH_SHORT).show();
+        }else if(!(str_email.trim().isEmpty())){
+            if(citta.trim().isEmpty()&&monumento.trim().isEmpty()&&gastronomia.trim().isEmpty()&&hotelbb.trim().isEmpty()){
+                if(!(db.checkEmail(str_email))){
+                    db.deleteDati(str_email);
+                    BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+                    backgroudWorker.execute(typeUtenti,str_email);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Utente non presente", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }else if(str_email.trim().isEmpty()) {
+            if (monumento.trim().isEmpty() && gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty()) {
+                if (!db.checkCitta((citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase()))) {
+                    db.deleteCitta((citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase()));
+                    Toast.makeText(getApplicationContext(), "Citta eliminata con successo", Toast.LENGTH_SHORT).show();
+                    BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+                    backgroudWorker.execute(deleteCitta, (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase()));
+                } else {
+                    Toast.makeText(getApplicationContext(), "Citta non presente", Toast.LENGTH_SHORT).show();
+                }
+            }
+            if (gastronomia.trim().isEmpty() && hotelbb.trim().isEmpty()) {
+                if ((!(monumento.trim().isEmpty()))) {
+                        if((!(citta.trim().isEmpty()))){
+                            if ((!db.checkMonumento(monumento=monumento.substring(0,1).toUpperCase()+monumento.substring(1).toLowerCase()))) {
+                                  db.deleteMonumento(monumento=monumento.substring(0,1).toUpperCase()+monumento.substring(1).toLowerCase());
+                                  Toast.makeText(getApplicationContext(), "Monumento eliminato con successo", Toast.LENGTH_SHORT).show();
+                                  BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+                                  backgroudWorker.execute(deleteMonumento, monumento=monumento.substring(0,1).toUpperCase()+monumento.substring(1).toLowerCase());
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Monumento non presente", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(getApplicationContext(), "Inserire citta di riferimento", Toast.LENGTH_SHORT).show();
+                        }
+                }
+            }if (monumento.trim().isEmpty() && hotelbb.trim().isEmpty()) {
+                if ((!(citta.trim().isEmpty())) && (!(gastronomia.trim().isEmpty()))) {
+                    if ((!db.checkGastronomia(gastronomia=gastronomia.substring(0,1).toUpperCase()+gastronomia.substring(1).toLowerCase()))) {
+                        db.deleteGastronomia(gastronomia=gastronomia.substring(0,1).toUpperCase()+gastronomia.substring(1).toLowerCase());
+                        Toast.makeText(getApplicationContext(), "Punto Gastronomia eliminato con successo", Toast.LENGTH_SHORT).show();
+                        BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+                        backgroudWorker.execute(deleteGastronomia, gastronomia=gastronomia.substring(0,1).toUpperCase()+gastronomia.substring(1).toLowerCase());
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Punto Gastronomia non presente", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }if (monumento.trim().isEmpty() && gastronomia.trim().isEmpty()) {
+                if ((!(citta.trim().isEmpty())) && (!(hotelbb.trim().isEmpty()))) {
+                    if ((!db.checkHotel(hotelbb=hotelbb.substring(0,1).toUpperCase()+hotelbb.substring(1).toLowerCase()))) {
+                        db.deleteHotelBB(hotelbb=hotelbb.substring(0,1).toUpperCase()+hotelbb.substring(1).toLowerCase());
+                        Toast.makeText(getApplicationContext(), "Hotel/BB eliminato con successo", Toast.LENGTH_SHORT).show();
+                        BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+                        backgroudWorker.execute(deleteHotel, hotelbb=hotelbb.substring(0,1).toUpperCase()+hotelbb.substring(1).toLowerCase());
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Hotel/BB non presente", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+
         }
     }
-
-
 }

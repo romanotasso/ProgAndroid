@@ -25,9 +25,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL,dataNascita date NOT NULL)");
         db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(nome text PRIMARY KEY)");
-        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
-        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
-        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, nome text NOT NULL, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
     }
 
     @Override
@@ -84,9 +84,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public boolean checkEmail (String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT email FROM utente WHERE email = ?", new String[]{email});
+        int count = res.getCount();
+
+        if (count > 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     public boolean checkCitta (String nome) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT nome FROM citta WHERE nome = ?", new String[]{nome});
+        int count = res.getCount();
+
+        if (count > 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkMonumento (String nome) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM monumenti WHERE nome = ?", new String[]{nome});
+        int count = res.getCount();
+
+        if (count > 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkGastronomia (String nome) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM gastronomia WHERE nome = ?", new String[]{nome});
+        int count = res.getCount();
+
+        if (count > 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean checkHotel (String nome) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM hotelebb WHERE nome = ?", new String[]{nome});
         int count = res.getCount();
 
         if (count > 0){
@@ -169,8 +218,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  db.delete(TABELLA_HOTELEBB, "nome = ?", new String[]{nome});
     }
 
-    public void updateMio(){
+    public void updateDatiUtente(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(" DELETE  FROM " +  TABELLA_UTENTE);
     }
+
+    public void updateDatiCitta(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE  FROM " +  TABELLA_CITTA);
+
+    }
+
+    public void updateDatiHotel(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE  FROM " +  TABELLA_HOTELEBB);
+
+    }
+
+    public void updateDatiMonumenti(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE  FROM " +  TABELLA_MONUMENTI);
+
+    }
+
+    public void updateDatiGastronomia(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(" DELETE  FROM " +  TABELLA_GASTRONOMIA);
+
+    }
+
+
 }

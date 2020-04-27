@@ -40,28 +40,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*mButtonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-                public void onClick(View view) {
-                String email = mTextEmail.getText().toString();
-                String password = mTextPassword.getText().toString();
-                Boolean controlloMailPassword = db.checkEmailPassword(email,password);
-                if((email.equals(USERNAME)) && (password.equals(PASSWORD))){
-                    Intent amministratoreIntent = new Intent(LoginActivity.this, AmministatoreActivity.class);
-                    startActivity(amministratoreIntent);
-                    finish();
-                }else if(controlloMailPassword == true){
-                    Intent registerIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(registerIntent);
-                    finish();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Email o password sbagliate",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }*/
-
     }
 
 
