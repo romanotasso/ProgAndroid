@@ -109,9 +109,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean checkMonumento (String nome) {
+    public boolean checkMonumento (String nome,String citta) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM monumenti WHERE nome = ?", new String[]{nome});
+        Cursor res = db.rawQuery("SELECT nome FROM monumenti WHERE nome = ? AND citta = ?", new String[]{nome,citta});
         int count = res.getCount();
 
         if (count > 0){
@@ -121,9 +121,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean checkGastronomia (String nome) {
+    public boolean checkGastronomia (String nome,String citta) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM gastronomia WHERE nome = ?", new String[]{nome});
+        Cursor res = db.rawQuery("SELECT nome FROM gastronomia WHERE nome = ? AND citta = ?", new String[]{nome,citta});
         int count = res.getCount();
 
         if (count > 0){
@@ -133,9 +133,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean checkHotel (String nome) {
+    public boolean checkHotel (String nome,String citta) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM hotelebb WHERE nome = ?", new String[]{nome});
+        Cursor res = db.rawQuery("SELECT nome FROM hotelebb WHERE nome = ?  AND citta = ?", new String[]{nome,citta});
         int count = res.getCount();
 
         if (count > 0){
@@ -201,7 +201,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentHotel = new ContentValues();
         contentHotel.put("nome",nome);
         contentHotel.put("citta", nome_citta);
-       // contentValues1.put("citta_ID", i);
+        // contentValues1.put("citta_ID", i);
         long ins = db.insert(TABELLA_HOTELEBB, null, contentHotel);
         if(ins==-1) return  false;
         else return true;

@@ -621,9 +621,9 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         }else if(result.equals("Password o email non corretti")) {
             Toast.makeText(context.getApplicationContext(), "Password o email non corretti", Toast.LENGTH_SHORT).show();
         } else if (result.equals("Inserimento avvenuto con successo")) {
-            Toast.makeText(context.getApplicationContext(),"Inserimento avvenuto con successo", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context.getApplicationContext(),"Inserimento avvenuto con successo", Toast.LENGTH_SHORT).show();
         } else if (result.equals("Errore nell'inserimento")) {
-            Toast.makeText(context.getApplicationContext(),"Errore nell'inserimento", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context.getApplicationContext(),"Errore nell'inserimento", Toast.LENGTH_SHORT).show();
         } else if (result.equals("Citta non presente")) {
             Toast.makeText(context.getApplicationContext(),"Città non presente", Toast.LENGTH_SHORT).show();
         } else if (result.equals("Inserimento citta avvenuto con successo")){
