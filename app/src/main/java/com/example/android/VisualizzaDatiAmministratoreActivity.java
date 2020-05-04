@@ -60,7 +60,6 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
             buffer.append("Data nascita: " + res.getString(5) + "\n\n");
         }
         showMessage("Utenti:",buffer.toString());
-
     }
 
     public void onAggDatiCitta(View view){
@@ -80,7 +79,6 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
             buffer.append("Città: " + res.getString(0) + "\n\n");
         }
         showMessage("Dati:",buffer.toString());
-
     }
 
     public void onAggDatiHotel(View view){
@@ -101,8 +99,6 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
             buffer.append("Citta: " + res.getString(1) + "\n\n");
         }
         showMessage("Dati:",buffer.toString());
-
-
     }
 
     public void onAggDatiMonumenti(View view) {
@@ -122,7 +118,6 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
             buffer.append("Citta: " + res.getString(1) + "\n\n");
         }
         showMessage("Dati:",buffer.toString());
-
     }
 
     public void onAggDatiGastronomia(View view) {
@@ -143,7 +138,5 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
             buffer.append("Citta: " + res.getString(1) + "\n\n");
         }
         showMessage("Dati:",buffer.toString());
-
     }
-
-    }
+}

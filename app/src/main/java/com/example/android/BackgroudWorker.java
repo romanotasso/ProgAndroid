@@ -3,7 +3,6 @@ package com.example.android;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -15,12 +14,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class BackgroudWorker extends AsyncTask<String,Void,String> {
@@ -34,6 +31,9 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
     final static int VALORE_NOME_CITTA=0;
     final static int VALORE_NOME_MHG=0;
     final static int VALORE_CITTA_MHG=1;
+
+    String emailDati;
+    String cittaDati;
 
     Context context;
     AlertDialog alertDialog;
@@ -55,8 +55,8 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         String riceviDatiHotel_url = "http://progandroid.altervista.org/progandorid/fornisciDatiHotelBB.php";
         String riceviDatiMonumenti_url = "http://progandroid.altervista.org/progandorid/fornisciDatiMonumento.php";
         String riceviDatiGastronomia_url = "http://progandroid.altervista.org/progandorid/fornisciDatiGastronomia.php";
-        String deleteDati="http://progandroid.altervista.org/progandorid/cancellazioneDati.php";
-
+        String deleteDati = "http://progandroid.altervista.org/progandorid/cancellazioneDati.php";
+        String checkCitta = "http://progandroid.altervista.org/progandorid/checkCitta.php";
 
         d = new DatabaseHelper(context.getApplicationContext());
 
@@ -395,6 +395,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             try {
                 String email = params[1];
                 String password = params[2];
+                emailDati = email;
                 URL url = new URL(login_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -574,6 +575,43 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             }
         }
+        if(type.equals("checkCitta")){
+            try{
+                String citta = params[1];
+                cittaDati = citta;
+                URL url = new URL(checkCitta);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter =new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+                String post_data = URLEncoder.encode("citta", "UTF-8")+"="+URLEncoder.encode(citta,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while ((line = bufferedReader.readLine()) != null){
+                    result  += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
@@ -585,14 +623,11 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-
         alertDialog.setMessage(result);
-
-
-
 
         if(result.equals("login success !!!!! Welcome")) {
             Intent intent = new Intent(context.getApplicationContext(), HomeActivity.class);
+            Toast.makeText(context.getApplicationContext(),"Ciao " + emailDati,Toast.LENGTH_SHORT).show();
             context.startActivity(intent);
         }else if(result.equals("login not success")){
             Toast.makeText(context.getApplicationContext(),"Email o password errati",Toast.LENGTH_SHORT).show();
@@ -630,6 +665,11 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             Toast.makeText(context.getApplicationContext(),"Inserimento città avvenuto con successo", Toast.LENGTH_SHORT).show();
         } else if (result.equals("Errore citta")){
             Toast.makeText(context.getApplicationContext(),"Errore città", Toast.LENGTH_SHORT).show();
+        } else if(result.equals("Citta presente")){
+            Toast.makeText(context.getApplicationContext(),"Città " + cittaDati + " presente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context.getApplicationContext(), CittaActivity.class);
+            intent.putExtra("citta", cittaDati);
+            context.startActivity(intent);
         }
     }
 

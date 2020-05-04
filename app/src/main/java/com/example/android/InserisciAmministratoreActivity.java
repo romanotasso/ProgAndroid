@@ -30,8 +30,8 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
         mEditHotel = findViewById(R.id.edittext_hotel);
         mEditMonumento = findViewById(R.id.edittext_monumenti);
         mButtonInserisci = findViewById(R.id.button_inserisci);
-        mEditEmail = findViewById(R.id.edittext_email_agg);
-        mEditPassword = findViewById(R.id.edittext_pass);
+        //mEditEmail = findViewById(R.id.edittext_email_agg);
+        //mEditPassword = findViewById(R.id.edittext_pass);
         db = new DatabaseHelper(this);
 
 

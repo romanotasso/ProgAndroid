@@ -168,6 +168,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getAllDataMonumentiCitta(String citta){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_MONUMENTI + " WHERE citta = ?", new String[]{citta});
+        return res;
+    }
+
     public Integer deleteMonumento(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_MONUMENTI, "nome = ?", new String[]{nome});

@@ -14,15 +14,21 @@ import androidx.fragment.app.FragmentTransaction;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +38,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DatabaseHelper db;
@@ -39,20 +46,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    EditText t;
+    //FragmentManager fragmentManager;
+    //FragmentTransaction fragmentTransaction;
 
-    /////////////////////////////
+    SearchView mysearchView;
+    ListView myList;
+    Cursor cittaHome;
+    ArrayAdapter adapter;
+    ArrayList<String> citta;
+    //////////////////////////////////////////////////////////////
     private  static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    private TextView textLatLong, textAddress, textAttiva;
-    private ProgressBar progressBar;
+    private TextView textLatLong, textAddress;
+    private Button attiva_gps;
     private ResultReceiver resultReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        db = new DatabaseHelper(this);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,20 +79,71 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
 
-        fragmentManager = getSupportFragmentManager();
+        mysearchView = findViewById(R.id.searchView);
+        myList = findViewById(R.id.listView);
+        myList.setVisibility(View.GONE);
+        cittaHome = db.getAllDataCitta();
+        citta = new ArrayList<String>();
+
+        for(cittaHome.moveToFirst(); !cittaHome.isAfterLast(); cittaHome.moveToNext()){
+            citta.add(cittaHome.getString(0));
+        }
+
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,citta);
+        myList.setAdapter(adapter);
+
+        mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getApplicationContext(), CittaActivity.class);
+                startActivity(intent);
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                String text = s;
+                if(TextUtils.isEmpty(text)){
+                    myList.setVisibility(View.GONE);
+                }
+                else {
+                    adapter.getFilter().filter(text);
+                    myList.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String città = citta.get(i);
+                //ShareFragment shareFragment = new ShareFragment();
+                Intent intent = new Intent(getApplicationContext(), CittaActivity.class);
+                //Bundle bundle = new Bundle();
+                //bundle.putString("Città selezionata: ", città);
+                //shareFragment.setArguments(bundle);
+                startActivity(intent);
+
+                /*FragmentManager manager = getFragmentManager();
+                manager.beginTransaction().replace(R.id.container_fragment, shareFragment).commit();*/
+
+            }
+        });
+
+
+        /*fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container_fragment, new CercaFragment());
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();*/
         ////////////////////////
-        //resultReceiver = new AddressResultReciver(new Handler());
-       // textLatLong = findViewById(R.id.textLatLog);
-        //progressBar = findViewById(R.id.processBar);
-        //textAddress = findViewById(R.id.textAddress);
-        //textAttiva = findViewById(R.id.text_attiva_gps);
-        db = new DatabaseHelper(this);
+        resultReceiver = new AddressResultReciver(new Handler());
+        textLatLong = findViewById(R.id.textLatLog);
+        textAddress = findViewById(R.id.textAddress);
+        attiva_gps = findViewById(R.id.attiva_gps);
 
 
-       /* findViewById(R.id.text_attiva_gps).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.attiva_gps).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -109,22 +173,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
 
         if(menuItem.getItemId() == R.id.profilo){
-            fragmentManager = getSupportFragmentManager();
+            Intent intent = new Intent(this, ProfiloActivity.class);
+            startActivity(intent);
+            /*fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new ProfiloFragment());
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
         }
         if(menuItem.getItemId() == R.id.impostazioni){
-            fragmentManager = getSupportFragmentManager();
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+            /*fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new SettingFragment());
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
         }
         if(menuItem.getItemId() == R.id.condividi){
-            fragmentManager = getSupportFragmentManager();
+            Intent intent = new Intent(this, ShareActivity.class);
+            startActivity(intent);
+            /*fragmentManager = getSupportFragmentManager();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container_fragment, new ShareFragment());
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
         }
         if(menuItem.getItemId() == R.id.logout){
             Intent h = new Intent(HomeActivity.this, LoginActivity.class);
@@ -138,7 +208,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-   /* @Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0){
@@ -151,7 +221,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getCurrentLocation() {
-        progressBar.setVisibility(View.VISIBLE);
 
         final LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -172,8 +241,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     location.setLatitude(latitudine);
                     location.setLongitude(longitudine);
                     fetchAddressFromLatLong(location);
-                } else {
-                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, Looper.getMainLooper());
@@ -199,9 +266,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             } else {
                 Toast.makeText(HomeActivity.this, resultData.getString(Costanti.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
             }
-            progressBar.setVisibility(View.GONE);
         }
-   */
     }
 
-//}
+    public void onAttivaGPS(View view) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+            getCurrentLocation();
+        } else {
+            getCurrentLocation();
+        }
+    }
+
+    public void onChecKCitta(View view) {
+        String indirizzo = textAddress.getText().toString();
+        String type = "checkCitta";
+
+        BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+        backgroudWorker.execute(type,indirizzo);
+
+    }
+}

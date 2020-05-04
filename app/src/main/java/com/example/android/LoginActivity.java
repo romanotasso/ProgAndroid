@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         mButtonLogin = findViewById(R.id.button_login);
         mTextViewRegister = findViewById(R.id.textview_register);
 
-
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
