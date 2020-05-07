@@ -33,6 +33,8 @@
     <string name="no">No</string>
     <string name="NuovaPassword">Nuova Password</string>
     <string name="PasswordAttuale">Password Attuale</string>
+    <string name="Password">Password</string>
+    <string name="Avanti">Avanti</string>
 
 
 </resources>

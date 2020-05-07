@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 
 
@@ -29,7 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABELLA_UTENTE);
@@ -39,7 +40,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABELLA_GASTRONOMIA);
         onCreate(db);
     }
-
     /*SEZIONE UTENTE*/
     public boolean inserisciUtente(String email, String nome, String cognome, String citta, String sesso, String dataNascita){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -55,7 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else return true;
     }
 
-
     public Cursor getAllData(){
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_UTENTE, null);
@@ -67,7 +66,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  db.delete(TABELLA_UTENTE, "email = ?", new String[]{email});
 
     }
-
     /*SEZIONE CITTA*/
     public boolean inserisciCitta(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -95,7 +93,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-
 
     public boolean checkCitta (String nome) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -145,7 +142,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
     public Integer deleteCitta(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_CITTA, "nome = ?", new String[]{nome});
@@ -178,7 +174,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_MONUMENTI, "nome = ?", new String[]{nome});
     }
-
     /*SEZIONE GASTRONOMIA*/
     public boolean inserisciGastronomia(String nome,String nome_citta){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -254,5 +249,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public String getNome(String email){
+
+        String nome ="";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_UTENTE + " WHERE email = ?", new String[]{email});
+        if(res!=null && res.getCount()>0){
+            res.moveToFirst();
+            nome = res.getString(0);
+            return nome;
+        }else{
+            return nome;
+        }
+    }
+
+    public String getCognome(String email){
+
+        String cognome ="";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT cognome FROM " + TABELLA_UTENTE + " WHERE email = ?", new String[]{email});
+        if(res!=null && res.getCount()>0){
+            res.moveToFirst();
+            cognome = res.getString(0);
+            return cognome;
+        }else{
+            return cognome;
+        }
+    }
 
 }

@@ -32,7 +32,8 @@
     <string name="sei_sicuro">Are you sure?</string>
     <string name="si">Yes</string>
     <string name="no">No</string>
-
+    <string name="NuovaPassword">New password</string>
+    <string name="PasswordAttuale">Current password</string>
 
 
 

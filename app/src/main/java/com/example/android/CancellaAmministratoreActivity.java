@@ -1,14 +1,16 @@
 package com.example.android;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import android.graphics.Color;
 import android.os.Bundle;
-
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
-
+import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.Toast;
 
 public class CancellaAmministratoreActivity extends AppCompatActivity {
@@ -19,20 +21,72 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
     EditText mEditHotel;
     EditText mEditMonumento;
     EditText mEditGastronomia;
+    Button mCancella;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancella_amministratore);
+
+
         mEditUtente = findViewById(R.id.edittext_utente);
         mEditCitta = findViewById(R.id.edittext_citta);
         mEditGastronomia = findViewById(R.id.edittext_gastronomia);
         mEditHotel = findViewById(R.id.edittext_hotel);
         mEditMonumento = findViewById(R.id.edittext_monumenti);
-
         db = new DatabaseHelper(this);
 
+        mEditUtente.addTextChangedListener(emailTextWatch);
+        mEditCitta.addTextChangedListener(emailTextWatch);
+        mEditGastronomia.addTextChangedListener(emailTextWatch);
+        mEditHotel.addTextChangedListener(emailTextWatch);
+        mEditMonumento.addTextChangedListener(emailTextWatch);
+
     }
+
+    private TextWatcher emailTextWatch = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            String str_email = mEditUtente.getText().toString();
+            String citta = mEditCitta.getText().toString(); ;
+            String monumento = mEditMonumento.getText().toString();
+            String gastronomia = mEditGastronomia.getText().toString();
+            String hotelbb = mEditHotel.getText().toString();
+
+            if(!TextUtils.isEmpty(str_email)){
+                mEditCitta.setVisibility(View.INVISIBLE);
+                mEditMonumento.setVisibility(View.INVISIBLE);
+                mEditGastronomia.setVisibility(View.INVISIBLE);
+                mEditHotel.setVisibility(View.INVISIBLE);
+            }else {
+                mEditCitta.setVisibility(View.VISIBLE);
+                mEditMonumento.setVisibility(View.VISIBLE);
+                mEditGastronomia.setVisibility(View.VISIBLE);
+                mEditHotel.setVisibility(View.VISIBLE);
+            }
+            if(!TextUtils.isEmpty(citta)||!TextUtils.isEmpty(monumento)||!TextUtils.isEmpty(gastronomia)||!TextUtils.isEmpty(hotelbb)){
+                mEditUtente.setVisibility(View.INVISIBLE);
+            }else {
+                mEditUtente.setVisibility(View.VISIBLE);
+
+            }
+
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+
+
+
+
+
+        }
+    };
+
 
     public void onDelete(View view) {
 

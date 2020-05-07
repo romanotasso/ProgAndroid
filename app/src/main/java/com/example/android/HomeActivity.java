@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -46,19 +47,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-    //FragmentManager fragmentManager;
-    //FragmentTransaction fragmentTransaction;
 
     SearchView mysearchView;
     ListView myList;
     Cursor cittaHome;
     ArrayAdapter adapter;
     ArrayList<String> citta;
+    TextView nome;
+    TextView cognome;
+    View hView;
+    String email;
     //////////////////////////////////////////////////////////////
     private  static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
+
+
     private TextView textLatLong, textAddress;
     private Button attiva_gps;
     private ResultReceiver resultReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +76,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
+        hView=navigationView.getHeaderView(0);
+        nome = hView.findViewById(R.id.textNome);
+        cognome = hView.findViewById(R.id.textCognome);
+        nome.setText(db.getNome(getIntent().getExtras().getString("email")));
+        cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
         navigationView.setNavigationItemSelectedListener(this);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open,R.string.close);

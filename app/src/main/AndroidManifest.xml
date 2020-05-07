@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -13,31 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfiloActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ShareActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SettingActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".CittaActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".ProfiloActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ShareActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SettingActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".CittaActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".VisualizzaDatiAmministratoreActivity" />
         <activity android:name=".CancellaAmministratoreActivity" />
         <activity android:name=".InserisciAmministratoreActivity" />
         <activity android:name=".AmministatoreActivity" />
-        <activity
-            android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterPhotoActivity" android:parentActivityName=".RegisterActivity"/>
+        <activity android:name=".HomeActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".RegisterActivity" android:parentActivityName=".RegisterEmailPassActivity"/>
+        <activity android:name=".RegisterEmailPassActivity" android:parentActivityName=".LoginActivity"/>
         <activity android:name=".LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <service android:name=".FetchAddressIntentService" />
     </application>
 

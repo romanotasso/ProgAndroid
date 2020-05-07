@@ -78,26 +78,14 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
         if(menuItem.getItemId() == R.id.profilo){
             Intent intent = new Intent(this, ProfiloActivity.class);
             startActivity(intent);
-            /*fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new ProfiloFragment());
-            fragmentTransaction.commit();*/
         }
         if(menuItem.getItemId() == R.id.impostazioni){
             Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
-            /*fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new SettingFragment());
-            fragmentTransaction.commit();*/
         }
         if(menuItem.getItemId() == R.id.condividi){
             Intent intent = new Intent(this, ShareActivity.class);
             startActivity(intent);
-            /*fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new ShareFragment());
-            fragmentTransaction.commit();*/
         }
         if(menuItem.getItemId() == R.id.logout){
             Intent h = new Intent(this, LoginActivity.class);

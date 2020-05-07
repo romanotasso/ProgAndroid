@@ -14,12 +14,13 @@
         android:layout_marginTop="50dp"
         android:focusable="true"
         android:focusableInTouchMode="true">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_utente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_utente"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -79,11 +80,11 @@
         android:id="@+id/button_cancella"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="@string/cancella"
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:layout_gravity="center_horizontal"
-        android:onClick="onDelete"/>
+        android:layout_marginTop="90dp"
+        android:hint="@string/cancella"
+        android:onClick="onDelete"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

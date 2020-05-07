@@ -627,14 +627,12 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
 
         if(result.equals("login success !!!!! Welcome")) {
             Intent intent = new Intent(context.getApplicationContext(), HomeActivity.class);
+            intent.putExtra("email",emailDati);
             Toast.makeText(context.getApplicationContext(),"Ciao " + emailDati,Toast.LENGTH_SHORT).show();
             context.startActivity(intent);
         }else if(result.equals("login not success")){
             Toast.makeText(context.getApplicationContext(),"Email o password errati",Toast.LENGTH_SHORT).show();
         }else if(result.equals("REGISTRAZIONE AVVENUTA CON SUCCESSO")){
-            Toast.makeText(context.getApplicationContext(),"Registrazione avvenuta con successo",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context.getApplicationContext(), LoginActivity.class);
-            context.startActivity(intent);
         }else if(result.equals("Attenzione, formato email non valido.")){
             Toast.makeText(context.getApplicationContext(),"Attenzione, formato email non valido.",Toast.LENGTH_SHORT).show();
         }else if(result.equals("E-MAIL GIA ESISTENTE")){
