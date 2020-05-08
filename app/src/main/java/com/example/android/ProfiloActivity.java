@@ -32,48 +32,46 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.bringToFront();
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
+        navigationView.setCheckedItem(R.id.profilo);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        if(menuItem.getItemId() == R.id.profilo){
-            Intent intent = new Intent(this, ProfiloActivity.class);
-            startActivity(intent);
-            /*fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new ProfiloFragment());
-            fragmentTransaction.commit();*/
-        }
-        if(menuItem.getItemId() == R.id.impostazioni){
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
-            /*fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new SettingFragment());
-            fragmentTransaction.commit();*/
-        }
-        if(menuItem.getItemId() == R.id.condividi){
-            Intent intent = new Intent(this, ShareActivity.class);
-            startActivity(intent);
-            /*fragmentManager = getSupportFragmentManager();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_fragment, new ShareFragment());
-            fragmentTransaction.commit();*/
-        }
-        if(menuItem.getItemId() == R.id.logout){
-            Intent h = new Intent(this, LoginActivity.class);
-            startActivity(h);
-            finish();
-        }
-        if(menuItem.getItemId() == R.id.home){
-            Intent h = new Intent(this,HomeActivity.class);
-            startActivity(h);
+        switch (menuItem.getItemId()){
+            case R.id.home:
+                Intent intentHome = new Intent(ProfiloActivity.this, HomeActivity.class);
+                startActivity(intentHome);
+                break;
+            case R.id.profilo:
+                break;
+            case R.id.impostazioni:
+                Intent intentImpo = new Intent(ProfiloActivity.this, SettingActivity.class);
+                startActivity(intentImpo);
+                break;
+            case R.id.logout:
+                Intent h = new Intent(ProfiloActivity.this, LoginActivity.class);
+                startActivity(h);
+                finish();
+                break;
         }
         return true;
     }

@@ -65,36 +65,46 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.bringToFront();
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
+        navigationView.setCheckedItem(R.id.impostazioni);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        if(menuItem.getItemId() == R.id.profilo){
-            Intent intent = new Intent(this, ProfiloActivity.class);
-            startActivity(intent);
-        }
-        if(menuItem.getItemId() == R.id.impostazioni){
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
-        }
-        if(menuItem.getItemId() == R.id.condividi){
-            Intent intent = new Intent(this, ShareActivity.class);
-            startActivity(intent);
-        }
-        if(menuItem.getItemId() == R.id.logout){
-            Intent h = new Intent(this, LoginActivity.class);
-            startActivity(h);
-            finish();
-        }
-        if(menuItem.getItemId() == R.id.home){
-            Intent h = new Intent(this,HomeActivity.class);
-            startActivity(h);
+        switch (menuItem.getItemId()){
+            case R.id.home:
+                Intent intentHome = new Intent(SettingActivity.this, HomeActivity.class);
+                startActivity(intentHome);
+                break;
+            case R.id.profilo:
+                Intent intentProfilo = new Intent(SettingActivity.this, ProfiloActivity.class);
+                startActivity(intentProfilo);
+                break;
+            case R.id.impostazioni:
+                break;
+            case R.id.logout:
+                Intent h = new Intent(SettingActivity.this, LoginActivity.class);
+                startActivity(h);
+                finish();
+                break;
         }
         return true;
     }

@@ -14,11 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ProfiloActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ShareActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SettingActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".CittaActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProfiloActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShareActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CittaActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".VisualizzaDatiAmministratoreActivity" />
         <activity android:name=".CancellaAmministratoreActivity" />
         <activity android:name=".InserisciAmministratoreActivity" />
@@ -31,9 +38,11 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service android:name=".FetchAddressIntentService" />
     </application>
 

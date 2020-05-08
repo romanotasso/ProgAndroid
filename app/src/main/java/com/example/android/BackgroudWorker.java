@@ -666,7 +666,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         } else if(result.equals("Citta presente")){
             Toast.makeText(context.getApplicationContext(),"Città " + cittaDati + " presente", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context.getApplicationContext(), CittaActivity.class);
-            intent.putExtra("citta", cittaDati);
+            intent.putExtra("cittaDB", cittaDati);
             context.startActivity(intent);
         }
     }

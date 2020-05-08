@@ -191,6 +191,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getAllDataRistorantiCitta(String citta){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_GASTRONOMIA + " WHERE citta = ?", new String[]{citta});
+        return res;
+    }
+
     public Integer deleteGastronomia(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_GASTRONOMIA, "nome = ?", new String[]{nome});
@@ -211,6 +217,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllDataHotelBB(){
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_HOTELEBB, null);
+        return res;
+    }
+
+    public Cursor getAllDataHotelBBCitta(String citta){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_HOTELEBB + " WHERE citta = ?", new String[]{citta});
         return res;
     }
 

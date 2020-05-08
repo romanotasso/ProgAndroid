@@ -21,14 +21,16 @@
     </group>
 
 
-        <item android:title="Comunicazioni">
-            <menu>
+    <!--<item android:title="Comunicazioni">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/condividi"
                     android:icon="@drawable/ic_share_black_24dp"
                     android:title="Share" />
-            </menu>
-        </item>
+            </group>
+        </menu>
+    </item>-->
 
 
 </menu>

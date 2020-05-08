@@ -25,21 +25,70 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_marginTop="55dp"
-        android:padding="30dp">
+        android:layout_marginTop="55dp">
 
-        <TextView
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabLayout"
+            android:background="@color/colorAccent"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/design_default_color_on_secondary">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/monumenti"
+                android:text="@string/monumento"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gastronomia"
+                android:text="@string/ristoranti"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hotel_bb"
+                android:text="@string/hotel_bb"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Benvenuto nella sezione della città"
-            android:textStyle="italic"
-            android:textSize="20sp"/>
+            android:id="@+id/viewPager">
+        </androidx.viewpager.widget.ViewPager>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/vediDati"
-            android:text="Vedi dati" />
+        <!-- <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:id="@+id/b"
+             android:layout_marginTop="20dp"
+             android:hint="vedi città"
+             android:gravity="bottom"/>
+
+
+     <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Benvenuto nella sezione della città"
+             android:textStyle="italic"
+             android:textSize="20sp"
+             android:padding="30dp"/>
+
+         <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/vediDati"
+         android:text="Vedi dati" />
+
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:id="@+id/vediDati1"
+             android:text="Vedi dati Search"/>-->
 
     </LinearLayout>
 
