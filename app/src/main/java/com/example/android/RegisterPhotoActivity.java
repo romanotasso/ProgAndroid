@@ -1,21 +1,37 @@
 package com.example.android;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class RegisterPhotoActivity extends AppCompatActivity {
@@ -26,6 +42,9 @@ public class RegisterPhotoActivity extends AppCompatActivity {
     Button addPhoto;
     Button skipPhoto;
     DatabaseHelper db;
+    Bitmap bitmap;
+    Uri filepath;
+    String URL_UPLOAD="http://progandroid.altervista.org/progandorid/uploadPhoto.php";
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,26 +72,53 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         String str_data = getIntent().getExtras().getString("data_nascita");
         String type = "register";
 
-        BackgroudWorker backgroudWorker = new BackgroudWorker(this);
-        backgroudWorker.execute(type
-                , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
-                , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
-                , str_email
-                , str_pass
-                , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
-                , str_sesso,
-                str_data);
-        db.inserisciUtente(str_email,
-                  str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
-                , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
-                , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
-                , str_sesso,
-                str_data);
 
-        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-        Toast.makeText(getApplicationContext(),"Registrazione avvenuta con successo",Toast.LENGTH_SHORT).show();
-        startActivity(intent);
+        if(filepath==null){
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type
+                    , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                    , str_email
+                    , str_pass
+                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                    , str_sesso,
+                    str_data);
+            db.inserisciUtente(str_email,
+                    str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                    , str_sesso,
+                    str_data);
 
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+        }else {
+
+            Bitmap image = ((BitmapDrawable)immagineProfilo.getDrawable()).getBitmap();
+            new updateImage(image,str_email).execute();
+
+            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
+            backgroudWorker.execute(type
+                    , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                    , str_email
+                    , str_pass
+                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                    , str_sesso,
+                    str_data);
+            db.inserisciUtente(str_email,
+                    str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                    , str_sesso,
+                    str_data);
+
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
+
+        }
     }
 
     public void addPhoto(View view){
@@ -96,7 +142,6 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         startActivityForResult(intent,IMAGE_PICK_CODE);
 
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -113,14 +158,103 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         }
 
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            immagineProfilo.setImageURI(data.getData());
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE && data!= null) {
+            filepath = data.getData();
+            immagineProfilo.setImageURI(filepath);
+
         }
     }
+
+    private class updateImage extends AsyncTask<Void, Void, Void> {
+
+        Bitmap image;
+        String email;
+
+        public updateImage(Bitmap image, String email){
+            this.image = image;
+            this.email = email;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
+            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(),Base64.DEFAULT);
+
+            List<Pair<String, String>> params = new ArrayList<>();
+            params.add(new Pair<>("email", email));
+            params.add(new Pair<>("image", encodedImage));
+
+            try {
+
+                URL url = new URL(URL_UPLOAD);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter =new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+                String post_data = URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+ URLEncoder.encode("image","UTF-8")+"="+URLEncoder.encode(encodedImage,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result="";
+                String line="";
+                while ((line = bufferedReader.readLine()) != null){
+                    result  += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+
+    }
+
+    /*private String getPath(Uri uri){
+
+    Cursor curson = getContentResolver().query(uri,null,null,null,null);
+    curson.moveToFirst();
+    String document_id = curson.getString(0);
+
+    document_id = document_id.substring(document_id.lastIndexOf(":")+1);
+    curson = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,MediaStore.Images.Media._ID + " = ? ",new String[]{document_id},null);
+    curson.moveToFirst();
+    String path = curson.getString(curson.getColumnIndex(MediaStore.Images.Media.DATA));
+    curson.close();
+    return path;
+    }
+
+    private String imagetoString(Bitmap bitmap){
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+        byte[] imageBytes = outputStream.toByteArray();
+
+        String encodeImages = Base64.encodeToString(imageBytes,Base64.DEFAULT);
+        return encodeImages;
+    }
+*/
+
+
 }
 

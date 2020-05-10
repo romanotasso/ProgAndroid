@@ -58,8 +58,8 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         String deleteDati = "http://progandroid.altervista.org/progandorid/cancellazioneDati.php";
         String checkCitta = "http://progandroid.altervista.org/progandorid/checkCitta.php";
 
-        d = new DatabaseHelper(context.getApplicationContext());
 
+        d = new DatabaseHelper(context.getApplicationContext());
 
         if(type.equals("cancellaHotel")){
             try{

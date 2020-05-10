@@ -8,25 +8,27 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,9 +49,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-    //FragmentManager fragmentManager;
-    //FragmentTransaction fragmentTransaction;
-
+    String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     SearchView mysearchView;
     ListView myList;
     Cursor cittaHome;
@@ -56,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<String> citta;
     TextView nome;
     TextView cognome;
+    ImageView immagineProfilo;
     View hView;
     String email;
     //////////////////////////////////////////////////////////////
@@ -75,13 +77,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
         hView=navigationView.getHeaderView(0);
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
-//        nome.setText(db.getNome(getIntent().getExtras().getString("email")));
-//        cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
+        immagineProfilo = hView.findViewById(R.id.imageProfilo);
+        DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
+        downloadImage.execute();
+        nome.setText(db.getNome(getIntent().getExtras().getString("email")));
+        cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.bringToFront();
@@ -264,4 +270,44 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         backgroudWorker.execute(type, indirizzo);
 
     }
+
+    private class DownloadImage extends AsyncTask<Void,Void,Bitmap>{
+
+        String email;
+
+        public DownloadImage(String email){
+            this.email = email;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+
+            String url = urlDownlaodImageProfilo + email + "JPG";
+            Bitmap bitmap=null;
+
+            try{
+
+                InputStream inputStream = new java.net.URL(url).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+
+                return bitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if(bitmap!=null){
+                immagineProfilo.setImageBitmap(bitmap);
+            }
+
+            super.onPostExecute(bitmap);
+        }
+    }
+
+
+
 }
