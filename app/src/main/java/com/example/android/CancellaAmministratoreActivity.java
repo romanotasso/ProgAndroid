@@ -28,6 +28,7 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancella_amministratore);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mEditUtente = findViewById(R.id.edittext_utente);
         mEditCitta = findViewById(R.id.edittext_citta);

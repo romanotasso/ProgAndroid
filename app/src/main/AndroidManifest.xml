@@ -27,9 +27,9 @@
         <activity
             android:name=".CittaActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".VisualizzaDatiAmministratoreActivity" />
-        <activity android:name=".CancellaAmministratoreActivity" />
-        <activity android:name=".InserisciAmministratoreActivity" />
+        <activity android:name=".VisualizzaDatiAmministratoreActivity" android:parentActivityName=".AmministatoreActivity"/>
+        <activity android:name=".CancellaAmministratoreActivity" android:parentActivityName=".AmministatoreActivity"/>
+        <activity android:name=".InserisciAmministratoreActivity" android:parentActivityName=".AmministatoreActivity"/>
         <activity android:name=".AmministatoreActivity" />
         <activity android:name=".RegisterPhotoActivity" android:parentActivityName=".RegisterActivity"/>
         <activity android:name=".HomeActivity" android:theme="@style/AppTheme.NoActionBar" />

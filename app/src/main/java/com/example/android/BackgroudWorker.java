@@ -578,7 +578,9 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         if(type.equals("checkCitta")){
             try{
                 String citta = params[1];
+                String email = params[2];
                 cittaDati = citta;
+                emailDati = email;
                 URL url = new URL(checkCitta);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -667,6 +669,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             Toast.makeText(context.getApplicationContext(),"Città " + cittaDati + " presente", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context.getApplicationContext(), CittaActivity.class);
             intent.putExtra("cittaDB", cittaDati);
+            intent.putExtra("email", emailDati);
             context.startActivity(intent);
         }
     }

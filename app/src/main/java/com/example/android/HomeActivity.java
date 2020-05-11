@@ -1,6 +1,7 @@
 package com.example.android;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,7 +9,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,11 +20,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,6 +53,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
+
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     SearchView mysearchView;
     ListView myList;
@@ -59,7 +64,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView cognome;
     ImageView immagineProfilo;
     View hView;
-    String email;
+
+    String email1;
     //////////////////////////////////////////////////////////////
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
@@ -67,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ResultReceiver resultReceiver;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +84,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
+
         hView=navigationView.getHeaderView(0);
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
@@ -89,6 +96,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         nome.setText(db.getNome(getIntent().getExtras().getString("email")));
         cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
         navigationView.setNavigationItemSelectedListener(this);
+
+        email1 = getIntent().getExtras().getString("email");
 
         navigationView.bringToFront();
 
@@ -115,19 +124,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(getApplicationContext(), CittaActivity.class);
-                intent.putExtra("cittaSearch", query);
-                Toast.makeText(HomeActivity.this, "Città " + query + " presente", Toast.LENGTH_LONG).show();
-                startActivity(intent);
+                boolean check = db.checkCitta(query);
+                if (!check) {
+                    Intent intent = new Intent(getApplicationContext(), CittaActivity.class);
+                    intent.putExtra("cittaSearch", query);
+                    intent.putExtra("email", getIntent().getExtras().getString("email"));
+                    Toast.makeText(HomeActivity.this, "Città " + query + " presente", Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(HomeActivity.this, "Città " + query + " non presente", Toast.LENGTH_LONG).show();
+                }
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
-                    myList.setVisibility(View.INVISIBLE);
-                    findViewById(R.id.attiva_gps).setVisibility(View.GONE);
-                    findViewById(R.id.checkCitta).setVisibility(View.GONE);
+                    myList.setVisibility(View.GONE);
+                    findViewById(R.id.attiva_gps).setVisibility(View.VISIBLE);
+                    findViewById(R.id.checkCitta).setVisibility(View.VISIBLE);
                 } else {
                     findViewById(R.id.attiva_gps).setVisibility(View.GONE);
                     findViewById(R.id.checkCitta).setVisibility(View.GONE);
@@ -145,6 +160,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 String città = adapterView.getItemAtPosition(i).toString();
                 Intent intent = new Intent(getApplicationContext(), CittaActivity.class);
                 intent.putExtra("cittaLista", città);
+                intent.putExtra("email", getIntent().getExtras().getString("email"));
                 Toast.makeText(HomeActivity.this, "Città " + città + " presente", Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
@@ -177,10 +193,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(HomeActivity.this, ProfiloActivity.class);
+                intentProfilo.putExtra("email", getIntent().getExtras().getString("email"));
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(HomeActivity.this, SettingActivity.class);
+                intentImpo.putExtra("email", getIntent().getExtras().getString("email"));
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
@@ -264,10 +282,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public void onChecKCitta(View view) {
         String indirizzo = textAddress.getText().toString();
+        String email = email1;
         String type = "checkCitta";
 
         BackgroudWorker backgroudWorker = new BackgroudWorker(this);
-        backgroudWorker.execute(type, indirizzo);
+        backgroudWorker.execute(type, indirizzo, email);
 
     }
 

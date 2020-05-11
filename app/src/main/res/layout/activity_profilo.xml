@@ -15,31 +15,189 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include
-        layout="@layout/content_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_marginTop="55dp"
-        android:padding="30dp">
+        android:layout_marginTop="55dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Benvenuto nel tuo profilo"
             android:textStyle="italic"
-            android:textSize="25sp"/>
+            android:textSize="25sp"
+            android:layout_marginTop="25dp"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:padding="25dp">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_span="1"
+                    android:gravity="center_horizontal"
+                    android:text="Nome: "
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/nome"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nome"
+                    android:textStyle="italic|bold"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cognome: "
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/cognome"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cognome"
+                    android:textStyle="italic|bold"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: "
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:textStyle="italic|bold"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Città: "
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/citta"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/citta"
+                    android:textStyle="italic|bold"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sesso: "
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/sesso"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sesso"
+                    android:textStyle="italic|bold"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data Nascita: "
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="209dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/data_nascita"
+                    android:textStyle="italic|bold"
+                    android:textSize="25sp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal" />
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"

@@ -12,7 +12,7 @@
         android:id="@+id/button_dati"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="170dp"
         android:hint="@string/vedi_tutti_i_dati"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -37,5 +37,17 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/buttomLogout"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:hint="Logout"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
+
 
 </LinearLayout>

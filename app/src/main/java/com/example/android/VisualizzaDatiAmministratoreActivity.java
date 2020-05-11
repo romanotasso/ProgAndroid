@@ -22,6 +22,8 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizza_dati_amministratore);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = new DatabaseHelper(this);
         mButtonCittà = findViewById(R.id.button_dati_città);
         mButtonMonumenti = findViewById(R.id.button_dati_monumenti);

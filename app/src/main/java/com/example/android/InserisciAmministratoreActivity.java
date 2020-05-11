@@ -25,6 +25,9 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inserisci_amministratore);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mEditCitta = findViewById(R.id.edittext_citta);
         mEditGastronomia = findViewById(R.id.edittext_gastronomia);
         mEditHotel = findViewById(R.id.edittext_hotel);

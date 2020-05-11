@@ -61,6 +61,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getAllDataUtente(String email) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_UTENTE + " WHERE email = ?", new String[]{email});
+        return res;
+    }
+
     public Integer deleteDati(String email){
         SQLiteDatabase db = this.getWritableDatabase();
         return  db.delete(TABELLA_UTENTE, "email = ?", new String[]{email});

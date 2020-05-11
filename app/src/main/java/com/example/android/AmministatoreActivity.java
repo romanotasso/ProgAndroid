@@ -16,6 +16,7 @@ public class AmministatoreActivity extends AppCompatActivity {
     Button mButtonDati;
     Button mButtonCancella;
     Button mButtonInserisci;
+    Button mButtomLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class AmministatoreActivity extends AppCompatActivity {
         mButtonCancella = findViewById(R.id.button_cancella);
         mButtonInserisci = findViewById(R.id.button_inserisci);
         mButtonDati = findViewById(R.id.button_dati);
+        mButtomLogout = findViewById(R.id.buttomLogout);
 
         mButtonDati.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,14 @@ public class AmministatoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AmministatoreActivity.this, InserisciAmministratoreActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mButtomLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AmministatoreActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

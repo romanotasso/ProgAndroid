@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -42,6 +43,11 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
     public String citta, cittaSearch, cittaLista, cittaDB;
 
+    TextView nome;
+    TextView cognome;
+    View hView;
+    String email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +56,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         cittaSearch = getIntent().getExtras().getString("cittaSearch");
         cittaLista = getIntent().getExtras().getString("cittaLista");
         cittaDB = getIntent().getExtras().getString("cittaDB");
-        /*if((cittaSearch == null) && (cittaLista == null)) {
-            citta = cittaDB;
-        } else if(cittaSearch == null){
-            citta = cittaLista;
-        } else {
-            citta = cittaSearch;
-        }*/
 
         db = new DatabaseHelper(this);
 
@@ -72,6 +71,14 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
+        email = getIntent().getExtras().getString("email");
+        hView=navigationView.getHeaderView(0);
+        nome = hView.findViewById(R.id.textNome);
+        cognome = hView.findViewById(R.id.textCognome);
+
+        nome.setText(db.getNome(email));
+        cognome.setText(db.getCognome(email));
 
         /*Visualizzazione dati*/
         tabLayout = findViewById(R.id.tabLayout);
@@ -127,12 +134,14 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         drawerLayout.closeDrawer(GravityCompat.START);
 
         if (menuItem.getItemId() == R.id.profilo) {
-            Intent intent = new Intent(this, ProfiloActivity.class);
-            startActivity(intent);
+            Intent intentProfilo = new Intent(this, ProfiloActivity.class);
+            intentProfilo.putExtra("email", email);
+            startActivity(intentProfilo);
         }
         if (menuItem.getItemId() == R.id.impostazioni) {
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
+            Intent intentImpo = new Intent(this, SettingActivity.class);
+            intentImpo.putExtra("email", email);
+            startActivity(intentImpo);
         }
         if (menuItem.getItemId() == R.id.logout) {
             Intent h = new Intent(CittaActivity.this, LoginActivity.class);
@@ -141,6 +150,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         }
         if (menuItem.getItemId() == R.id.home) {
             Intent h = new Intent(CittaActivity.this, HomeActivity.class);
+            h.putExtra("email", email);
             startActivity(h);
         }
         return true;
