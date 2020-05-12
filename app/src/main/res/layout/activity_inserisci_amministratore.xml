@@ -1,76 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InserisciAmministratoreActivity"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    >
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        android:id="@+id/tabLayoutAmministatore"
+        android:background="@color/colorAccent"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/design_default_color_on_secondary">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_citta"
-            android:hint="@string/citta"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:id="@+id/cittaAmministatore"
+            android:text="Citta"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_monumenti"
-            android:hint="@string/monumento"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:id="@+id/monumentiAmministatore"
+            android:text="@string/monumento"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_gastronomia"
-            android:hint="@string/ristoranti"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+            android:id="@+id/gastronomiaAmministatore"
+            android:text="@string/ristoranti"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_hotel"
-            android:hint="@string/hotel_bb"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:id="@+id/hotel_bbAmministatore"
+            android:text="@string/hotel_bb"/>
 
+    </com.google.android.material.tabs.TabLayout>
 
-    <Button
-        android:id="@+id/button_inserisci"
-        android:layout_width="200dp"
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Inserisci"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_gravity="center_horizontal"
-        android:onClick="onInsert"/>
+        android:id="@+id/viewPagerAmministatore">
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

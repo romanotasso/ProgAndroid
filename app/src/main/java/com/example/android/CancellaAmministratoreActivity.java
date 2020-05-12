@@ -2,8 +2,11 @@ package com.example.android;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -12,6 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
 public class CancellaAmministratoreActivity extends AppCompatActivity {
 
@@ -23,6 +29,12 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
     EditText mEditGastronomia;
     Button mCancella;
 
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    PagaAdapterAmministratoreCancella pageAdapter;
+    TabItem tabMonumento, tabRistoranti, tabHotelBB,tabCitta;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,66 +42,67 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mEditUtente = findViewById(R.id.edittext_utente);
         mEditCitta = findViewById(R.id.edittext_citta);
         mEditGastronomia = findViewById(R.id.edittext_gastronomia);
         mEditHotel = findViewById(R.id.edittext_hotel);
         mEditMonumento = findViewById(R.id.edittext_monumenti);
         db = new DatabaseHelper(this);
 
-        mEditUtente.addTextChangedListener(emailTextWatch);
-        mEditCitta.addTextChangedListener(emailTextWatch);
-        mEditGastronomia.addTextChangedListener(emailTextWatch);
-        mEditHotel.addTextChangedListener(emailTextWatch);
-        mEditMonumento.addTextChangedListener(emailTextWatch);
+        tabLayout = findViewById(R.id.tabLayoutAmministatoreCancella);
+        tabMonumento = findViewById(R.id.monumentiAmministatoreCancella);
+        tabRistoranti = findViewById(R.id.gastronomiaAmministatoreCancella);
+        tabHotelBB = findViewById(R.id.hotel_bbAmministatoreCancella);
+        tabCitta = findViewById(R.id.cittaAmministatoreCancella);
+        viewPager = findViewById(R.id.viewPagerCancellaAmministatore);
+
+        pageAdapter = new PagaAdapterAmministratoreCancella(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapter);
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1) {
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorAccent));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorAccent));
+                    }
+                } else if (tab.getPosition() == 2) {
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.darkGray));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.darkGray));
+                    }
+                } else if (tab.getPosition()==3){
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    }
+                } else  {
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
 
     }
 
-    private TextWatcher emailTextWatch = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        }
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            String str_email = mEditUtente.getText().toString();
-            String citta = mEditCitta.getText().toString(); ;
-            String monumento = mEditMonumento.getText().toString();
-            String gastronomia = mEditGastronomia.getText().toString();
-            String hotelbb = mEditHotel.getText().toString();
-
-            if(!TextUtils.isEmpty(str_email)){
-                mEditCitta.setVisibility(View.INVISIBLE);
-                mEditMonumento.setVisibility(View.INVISIBLE);
-                mEditGastronomia.setVisibility(View.INVISIBLE);
-                mEditHotel.setVisibility(View.INVISIBLE);
-            }else {
-                mEditCitta.setVisibility(View.VISIBLE);
-                mEditMonumento.setVisibility(View.VISIBLE);
-                mEditGastronomia.setVisibility(View.VISIBLE);
-                mEditHotel.setVisibility(View.VISIBLE);
-            }
-            if(!TextUtils.isEmpty(citta)||!TextUtils.isEmpty(monumento)||!TextUtils.isEmpty(gastronomia)||!TextUtils.isEmpty(hotelbb)){
-                mEditUtente.setVisibility(View.INVISIBLE);
-            }else {
-                mEditUtente.setVisibility(View.VISIBLE);
-
-            }
-
-        }
-        @Override
-        public void afterTextChanged(Editable s) {
-
-
-
-
-
-        }
-    };
-
-
-    public void onDelete(View view) {
+    /*public void onDelete(View view) {
 
         String str_email = mEditUtente.getText().toString();
         String citta = mEditCitta.getText().toString(); ;
@@ -366,5 +379,5 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
 }

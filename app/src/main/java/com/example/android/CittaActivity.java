@@ -156,27 +156,5 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         return true;
     }
 
-    /*public void onShowDate(View view) {
-        String citta = getIntent().getExtras().getString("citta");
-        Cursor res = db.getAllDataMonumentiCitta(citta);
-        if(res.getCount() == 0){
-            showMessage("Errore", "Nessun record trovato");
-            return;
-        }
-        StringBuffer buffer = new StringBuffer();
-        while (res.moveToNext()){
-
-            buffer.append("Nome: " + res.getString(0) + "\n");
-        }
-        showMessage("Monumento/i di " + citta + ":",buffer.toString());
-    }
-
-    public void showMessage(String title, String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }*/
 
 }

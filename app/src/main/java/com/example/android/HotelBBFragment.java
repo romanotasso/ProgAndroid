@@ -38,9 +38,9 @@ public class HotelBBFragment extends Fragment {
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
         cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
         cittaDB = getActivity().getIntent().getExtras().getString("cittaDB");
-        if((cittaSearch == null) && (cittaLista == null)) {
+        if ((cittaSearch == null) && (cittaLista == null)) {
             citta = cittaDB;
-        } else if(cittaSearch == null){
+        } else if (cittaSearch == null) {
             citta = cittaLista;
         } else {
             citta = cittaSearch;
@@ -52,11 +52,11 @@ public class HotelBBFragment extends Fragment {
         cittaHotel = db.getAllDataHotelBBCitta(citta);
         hotel = new ArrayList<String>();
 
-        for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
+        for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
             hotel.add(cittaHotel.getString(0));
         }
 
-        adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,hotel);
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, hotel);
         myList.setAdapter(adapter);
 
         return view;

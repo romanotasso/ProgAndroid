@@ -230,31 +230,5 @@ public class RegisterPhotoActivity extends AppCompatActivity {
 
     }
 
-    /*private String getPath(Uri uri){
-
-    Cursor curson = getContentResolver().query(uri,null,null,null,null);
-    curson.moveToFirst();
-    String document_id = curson.getString(0);
-
-    document_id = document_id.substring(document_id.lastIndexOf(":")+1);
-    curson = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,MediaStore.Images.Media._ID + " = ? ",new String[]{document_id},null);
-    curson.moveToFirst();
-    String path = curson.getString(curson.getColumnIndex(MediaStore.Images.Media.DATA));
-    curson.close();
-    return path;
-    }
-
-    private String imagetoString(Bitmap bitmap){
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-        byte[] imageBytes = outputStream.toByteArray();
-
-        String encodeImages = Base64.encodeToString(imageBytes,Base64.DEFAULT);
-        return encodeImages;
-    }
-*/
-
-
 }
 
