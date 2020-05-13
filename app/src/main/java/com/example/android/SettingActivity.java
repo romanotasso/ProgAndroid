@@ -8,15 +8,22 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.InputStream;
 
 public class SettingActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DatabaseHelper db;
@@ -28,6 +35,9 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
     EditText mEditPassword;
     EditText mEditNewPassword;
     Button mAggiorna;
+
+    String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
+    ImageView immagineProfilo;
 
     TextView nome;
     TextView cognome;
@@ -82,12 +92,20 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
         nome.setText(db.getNome(email));
         cognome.setText(db.getCognome(email));
 
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.citta).setVisible(false);
+        menu.findItem(R.id.cerca).setVisible(false);
+
         navigationView.bringToFront();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
+        immagineProfilo = hView.findViewById(R.id.imageProfilo);
+        SettingActivity.DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
+        downloadImage.execute();
 
         navigationView.setCheckedItem(R.id.impostazioni);
 
@@ -108,7 +126,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
 
         switch (menuItem.getItemId()){
             case R.id.home:
-                Intent intentHome = new Intent(SettingActivity.this, HomeActivity.class);
+                Intent intentHome = new Intent(SettingActivity.this, CercaActivity.class);
                 intentHome.putExtra("email",email);
                 startActivity(intentHome);
                 break;
@@ -126,5 +144,42 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
                 break;
         }
         return true;
+    }
+
+    private class DownloadImage extends AsyncTask<Void,Void, Bitmap> {
+
+        String email;
+
+        public DownloadImage(String email){
+            this.email = email;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+
+            String url = urlDownlaodImageProfilo + email + "JPG";
+            Bitmap bitmap=null;
+
+            try{
+
+                InputStream inputStream = new java.net.URL(url).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+
+                return bitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if(bitmap!=null){
+                immagineProfilo.setImageBitmap(bitmap);
+            }
+
+            super.onPostExecute(bitmap);
+        }
     }
 }

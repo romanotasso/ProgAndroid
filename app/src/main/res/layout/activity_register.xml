@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="30dp"
-    android:gravity="center_horizontal">
+    tools:context=".RegisterActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="250dp"
@@ -15,15 +15,15 @@
         android:layout_marginTop="10dp"
         android:focusable="true"
         android:focusableInTouchMode="true">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_nome"
             android:hint="@string/nome"
             android:inputType="textCapWords"
-            android:singleLine="true"
             android:lines="1"
-            />
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -32,32 +32,32 @@
         android:layout_marginTop="20dp"
         android:focusable="true"
         android:focusableInTouchMode="true">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_cognome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_cognome"
             android:hint="@string/cognome"
             android:inputType="textCapWords"
-            android:singleLine="true"
-            android:lines="1"/>
+            android:lines="1"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:focusable="true"
         android:layout_marginTop="20dp"
+        android:focusable="true"
         android:focusableInTouchMode="true">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_citta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_citta"
             android:hint="@string/citta"
             android:inputType="textCapWords"
-            android:singleLine="true"
-            android:lines="1"/>
+            android:lines="1"
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -66,13 +66,14 @@
         android:layout_marginTop="20dp"
         android:focusable="true"
         android:focusableInTouchMode="true">
+
         <EditText
             android:id="@+id/edittext_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
             android:hint="@string/data_nascita"
-            android:inputType="date"
-            android:focusable="false"/>
+            android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -129,9 +130,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center_horizontal"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:hint="@string/Avanti"
-        android:onClick="onReg"/>
+        android:text="@string/Avanti"
+        android:onClick="onReg"
+        android:textSize="20sp" />
 
 </LinearLayout>

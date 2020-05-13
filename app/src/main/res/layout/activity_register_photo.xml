@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/inserisci_la_tua_foto_profilo"
+        android:textStyle="italic"
+        android:textSize="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
 
     <ImageView
         android:id="@+id/profilo_immagine"
-        android:layout_width="224dp"
-        android:layout_height="242dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_profilo"
+        android:layout_marginTop="60dp"
         android:scaleType="centerCrop"
-        >
+        android:src="@drawable/ic_profilo"/>
 
-    </ImageView>
-
-    <Button
+    <ImageButton
         android:id="@+id/button_addPhoto"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="240dp"
-        android:onClick="addPhoto"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_add"></Button>
+        android:layout_marginTop="265dp"
+        android:background="#FAFAFA"
+        android:onClick="addPhoto"
+        android:src="@drawable/ic_add"
+        android:tint="#000000" />
 
     <Button
         android:id="@+id/button_skipPhoto"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
         android:layout_centerHorizontal="true"
-        android:hint="AVANTI"
-        android:onClick="skipPhoto">
-
-    </Button>
+        android:layout_marginTop="400dp"
+        android:text="@string/Avanti"
+        android:onClick="skipPhoto"/>
 
 </RelativeLayout>

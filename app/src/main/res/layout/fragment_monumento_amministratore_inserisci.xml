@@ -60,8 +60,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:hint="Inserisci"
-        android:textStyle="bold"
+        android:text="@string/inserisci"
         android:textSize="20sp"
         android:layout_gravity="center_horizontal" />
 

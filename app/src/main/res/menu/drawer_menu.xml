@@ -7,6 +7,14 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Home" />
         <item
+            android:id="@+id/cerca"
+            android:icon="@drawable/ic_cerca"
+            android:title="Cerca" />
+        <item
+            android:id="@+id/citta"
+            android:icon="@drawable/ic_place_black_24dp"
+            android:title="Città" />
+        <item
             android:id="@+id/profilo"
             android:icon="@drawable/ic_profilo"
             android:title="Profilo" />

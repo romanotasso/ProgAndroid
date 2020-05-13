@@ -9,14 +9,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.InputStream;
 
 public class ProfiloActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DatabaseHelper db;
@@ -32,6 +39,9 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     TextView data;
     TextView email;
     TextView citta;
+
+    String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
+    ImageView immagineProfilo;
 
     String e;
 
@@ -61,12 +71,20 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         nome.setText(db.getNome(e));
         cognome.setText(db.getCognome(e));
 
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.citta).setVisible(false);
+        menu.findItem(R.id.cerca).setVisible(false);
+
         navigationView.bringToFront();
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open,R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
+        immagineProfilo = hView.findViewById(R.id.imageProfilo);
+        ProfiloActivity.DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
+        downloadImage.execute();
 
         navigationView.setCheckedItem(R.id.profilo);
 
@@ -126,5 +144,42 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
                 break;
         }
         return true;
+    }
+
+    private class DownloadImage extends AsyncTask<Void,Void, Bitmap> {
+
+        String email;
+
+        public DownloadImage(String email){
+            this.email = email;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+
+            String url = urlDownlaodImageProfilo + email + "JPG";
+            Bitmap bitmap=null;
+
+            try{
+
+                InputStream inputStream = new java.net.URL(url).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+
+                return bitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if(bitmap!=null){
+                immagineProfilo.setImageBitmap(bitmap);
+            }
+
+            super.onPostExecute(bitmap);
+        }
     }
 }

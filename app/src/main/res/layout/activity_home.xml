@@ -8,90 +8,73 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".HomeActivity"
-    android:background="@color/white"
-    tools:openDrawer="start">
+    android:background="@color/white">
 
     <include
         layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!--<include
-        layout="@layout/content_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_marginTop="55dp"
-        android:padding="30dp">
+        android:layout_marginTop="55dp">
 
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:queryHint="Cerca città"
-            android:id="@+id/searchView"
-            android:inputType="textCapWords">
-        </SearchView>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_marginTop="10dp"/>
-
-        <Button
-            android:id="@+id/attiva_gps"
+        <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:text="Attiva GPS"
-            android:onClick="onAttivaGPS"/>
-
-        <Button
-            android:id="@+id/checkCitta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Check Città"
-            android:onClick="onChecKCitta"
-            android:layout_marginTop="20dp"/>
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/experience"/>
 
         <TextView
-            android:id="@+id/textLatLog"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="gone"/>
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/logo"/>
 
-        <TextView
-            android:id="@+id/textAddress"
+        <Button
+            android:id="@+id/esplora"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="@color/darkGray"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"/>
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:background="#F46537"
+            android:text="@string/cerca"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#B50606"
+            android:text="@string/i_miei_viaggi"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#FD9700"
+            android:text="@string/usa_coupon"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
 
     </LinearLayout>
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/drawer_menu">
-        </com.google.android.material.navigation.NavigationView>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/drawer_header"
+        app:menu="@menu/drawer_menu">
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

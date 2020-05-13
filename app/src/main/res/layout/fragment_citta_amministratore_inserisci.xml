@@ -46,9 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:hint="Inserisci"
+        android:text="@string/inserisci"
         android:textSize="20sp"
-        android:textStyle="bold"
         tools:ignore="OnClick" />
 
 </LinearLayout>

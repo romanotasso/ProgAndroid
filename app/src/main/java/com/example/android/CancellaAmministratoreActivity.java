@@ -64,24 +64,24 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorAccent));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorAccent));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 2) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.darkGray));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.darkGray));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition()==3){
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 } else  {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.colorPrimaryDark));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 }
             }

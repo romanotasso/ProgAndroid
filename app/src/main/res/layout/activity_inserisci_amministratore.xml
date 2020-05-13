@@ -1,19 +1,17 @@
 
 <LinearLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabLayoutAmministatore"
-        android:background="@color/colorAccent"
+        android:background="@color/orange"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/design_default_color_on_secondary">
 
@@ -21,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cittaAmministatore"
-            android:text="Citta"/>
+            android:text="@string/citta"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

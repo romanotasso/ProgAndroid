@@ -5,13 +5,10 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -29,7 +26,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    PageAdapterAmministratore pageAdapter;
+    PageAdapterAmministratoreInserisci pageAdapter;
     TabItem tabMonumento, tabRistoranti, tabHotelBB,tabCitta;
 
     @SuppressLint("WrongViewCast")
@@ -55,7 +52,7 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
         tabCitta = findViewById(R.id.cittaAmministatore);
         viewPager = findViewById(R.id.viewPagerAmministatore);
 
-        pageAdapter = new PageAdapterAmministratore(getSupportFragmentManager(), tabLayout.getTabCount());
+        pageAdapter = new PageAdapterAmministratoreInserisci(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(pageAdapter);
 
 
@@ -64,24 +61,24 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.colorAccent));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.colorAccent));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 2) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.darkGray));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.darkGray));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition()==3){
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.colorPrimaryDark));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     }
                 } else  {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.colorPrimaryDark));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.colorPrimaryDark));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(InserisciAmministratoreActivity.this, R.color.orange));
                     }
                 }
             }

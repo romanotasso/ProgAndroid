@@ -1,33 +1,30 @@
 package com.example.android;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.InputStream;
 
 public class CittaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     DatabaseHelper db;
@@ -36,9 +33,12 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     Toolbar toolbar;
     NavigationView navigationView;
 
+    String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
+    ImageView immagineProfilo;
+
     TabLayout tabLayout;
     ViewPager viewPager;
-    PageAdapter pageAdapter;
+    PageAdapterUtente pageAdapterUtente;
     TabItem tabMonumento, tabRistoranti, tabHotelBB;
 
     public String citta, cittaSearch, cittaLista, cittaDB;
@@ -56,6 +56,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         cittaSearch = getIntent().getExtras().getString("cittaSearch");
         cittaLista = getIntent().getExtras().getString("cittaLista");
         cittaDB = getIntent().getExtras().getString("cittaDB");
+        email = getIntent().getExtras().getString("email");
 
         db = new DatabaseHelper(this);
 
@@ -80,6 +81,13 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         nome.setText(db.getNome(email));
         cognome.setText(db.getCognome(email));
 
+        immagineProfilo = hView.findViewById(R.id.imageProfilo);
+        CittaActivity.DownloadImage downloadImage = new DownloadImage(email);
+        downloadImage.execute();
+
+        navigationView.bringToFront();
+        navigationView.setCheckedItem(R.id.citta);
+
         /*Visualizzazione dati*/
         tabLayout = findViewById(R.id.tabLayout);
         tabMonumento = findViewById(R.id.monumenti);
@@ -87,30 +95,30 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         tabHotelBB = findViewById(R.id.hotel_bb);
         viewPager = findViewById(R.id.viewPager);
 
-        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pageAdapter);
+        pageAdapterUtente = new PageAdapterUtente(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapterUtente);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 1) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.colorAccent));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.colorAccent));
+                if (tab.getPosition() == 0) {
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.colorAccent));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     }
-                } else if (tab.getPosition() == 2) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.darkGray));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.darkGray));
+                } else if (tab.getPosition() == 1) {
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.darkGray));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     }
                 } else {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.colorPrimaryDark));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.colorPrimaryDark));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.colorPrimaryDark));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     }
                 }
             }
@@ -133,28 +141,73 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        if (menuItem.getItemId() == R.id.profilo) {
-            Intent intentProfilo = new Intent(this, ProfiloActivity.class);
-            intentProfilo.putExtra("email", email);
-            startActivity(intentProfilo);
-        }
-        if (menuItem.getItemId() == R.id.impostazioni) {
-            Intent intentImpo = new Intent(this, SettingActivity.class);
-            intentImpo.putExtra("email", email);
-            startActivity(intentImpo);
-        }
-        if (menuItem.getItemId() == R.id.logout) {
-            Intent h = new Intent(CittaActivity.this, LoginActivity.class);
-            startActivity(h);
-            finish();
-        }
-        if (menuItem.getItemId() == R.id.home) {
-            Intent h = new Intent(CittaActivity.this, HomeActivity.class);
-            h.putExtra("email", email);
-            startActivity(h);
+        switch (menuItem.getItemId()) {
+            case R.id.citta:
+                break;
+            case R.id.home:
+                Intent intentHome = new Intent(this, HomeActivity.class);
+                intentHome.putExtra("email", email);
+                startActivity(intentHome);
+                break;
+            case R.id.cerca:
+                Intent intentCerca = new Intent(this, CercaActivity.class);
+                intentCerca.putExtra("email", email);
+                startActivity(intentCerca);
+                break;
+            case R.id.profilo:
+                Intent intentProfilo = new Intent(this, ProfiloActivity.class);
+                intentProfilo.putExtra("email", email);
+                startActivity(intentProfilo);
+                break;
+            case R.id.impostazioni:
+                Intent intentImpo = new Intent(this, SettingActivity.class);
+                intentImpo.putExtra("email", email);
+                startActivity(intentImpo);
+                break;
+            case R.id.logout:
+                Intent h = new Intent(CittaActivity.this, LoginActivity.class);
+                startActivity(h);
+                finish();
+                break;
         }
         return true;
     }
 
+    private class DownloadImage extends AsyncTask<Void,Void, Bitmap> {
+
+        String email;
+
+        public DownloadImage(String email){
+            this.email = email;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+
+            String url = urlDownlaodImageProfilo + email + "JPG";
+            Bitmap bitmap=null;
+
+            try{
+
+                InputStream inputStream = new java.net.URL(url).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+
+                return bitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if(bitmap!=null){
+                immagineProfilo.setImageBitmap(bitmap);
+            }
+
+            super.onPostExecute(bitmap);
+        }
+    }
 
 }

@@ -3,7 +3,7 @@
     <string name="app_name">ExperienceTrip</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
-    <string name="login">LOGIN</string>
+    <string name="login">Login</string>
     <string name="crea_nuovo_account">Create new account</string>
     <string name="nome">Name</string>
     <string name="cognome">Surname</string>
@@ -36,6 +36,16 @@
     <string name="PasswordAttuale">Current password</string>
     <string name="Password">Password</string>
     <string name="Avanti">Go on</string>
+    <string name="logout">Logout</string>
+    <string name="attiva_gps">Activate GPS</string>
+    <string name="check_citt">Check City</string>
+    <string name="i_miei_viaggi">My travels</string>
+    <string name="usa_coupon">Use coupons</string>
+    <string name="benvenuto_nel_tuo_profilo">Welcome to your profile</string>
+    <string name="conferma_password">Confirm password</string>
+    <string name="inserisci_la_tua_foto_profilo">Insert your profile photo</string>
+    <string name="aggiorna">Update</string>
+    <string name="punto_gastronomia">Gastronomu point</string>
 
 
 

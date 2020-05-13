@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Benvenuto nel tuo profilo"
+            android:text="@string/benvenuto_nel_tuo_profilo"
             android:textStyle="italic"
             android:textSize="25sp"
             android:layout_marginTop="25dp"/>
@@ -42,9 +42,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_span="1"
                     android:gravity="center_horizontal"
-                    android:text="Nome: "
+                    android:text="@string/nome"
                     android:textAlignment="center"
                     android:textSize="25sp"
                     android:textStyle="italic" />
@@ -68,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cognome: "
+                    android:text="@string/cognome"
                     android:textStyle="italic"
                     android:textAlignment="center"
                     android:textSize="25sp"
@@ -94,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email: "
+                    android:text="@string/email"
                     android:textStyle="italic"
                     android:textAlignment="center"
                     android:textSize="25sp"
@@ -120,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Città: "
+                    android:text="@string/citta"
                     android:textStyle="italic"
                     android:textAlignment="center"
                     android:textSize="25sp"
@@ -146,7 +145,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sesso: "
+                    android:text="@string/sesso"
                     android:textStyle="italic"
                     android:textAlignment="center"
                     android:textSize="25sp"
@@ -172,7 +171,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Data Nascita: "
+                    android:text="@string/data_nascita"
                     android:textStyle="italic"
                     android:textAlignment="center"
                     android:textSize="25sp"

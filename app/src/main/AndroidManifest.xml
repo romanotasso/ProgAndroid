@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ProfiloActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -27,16 +29,29 @@
         <activity
             android:name=".CittaActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".VisualizzaDatiAmministratoreActivity" android:parentActivityName=".AmministatoreActivity"/>
-        <activity android:name=".CancellaAmministratoreActivity" android:parentActivityName=".AmministatoreActivity"/>
-        <activity android:name=".InserisciAmministratoreActivity" android:parentActivityName=".AmministatoreActivity"/>
+        <activity
+            android:name=".VisualizzaDatiAmministratoreActivity"
+            android:parentActivityName=".AmministatoreActivity" />
+        <activity
+            android:name=".CancellaAmministratoreActivity"
+            android:parentActivityName=".AmministatoreActivity" />
+        <activity
+            android:name=".InserisciAmministratoreActivity"
+            android:parentActivityName=".AmministatoreActivity" />
         <activity android:name=".AmministatoreActivity" />
-        <activity android:name=".RegisterPhotoActivity" android:parentActivityName=".RegisterActivity"/>
-        <activity android:name=".HomeActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegisterActivity" android:parentActivityName=".RegisterEmailPassActivity"/>
-        <activity android:name=".RegisterEmailPassActivity" android:parentActivityName=".LoginActivity"/>
+        <activity
+            android:name=".RegisterPhotoActivity"
+            android:parentActivityName=".RegisterActivity" />
+        <activity
+            android:name=".CercaActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".RegisterEmailPassActivity" />
+        <activity
+            android:name=".RegisterEmailPassActivity"
+            android:parentActivityName=".LoginActivity" />
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

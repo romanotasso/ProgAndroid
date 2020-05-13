@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="175dp"
     android:orientation="vertical"
-    android:background="@color/design_default_color_secondary_variant"
+    android:background="@color/orange"
     android:gravity="bottom"
     android:padding="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageProfilo"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -26,20 +26,19 @@
                 android:id="@+id/textNome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NOME"
+                android:text="@string/nome"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
             <TextView
                 android:id="@+id/textCognome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="COGNOME"
+                android:text="@string/cognome"
                 android:paddingLeft="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         </TableRow>
 
     </TableLayout>
-
 
 </LinearLayout>

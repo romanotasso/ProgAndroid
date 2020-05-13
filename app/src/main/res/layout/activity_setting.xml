@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".HomeActivity"
+    tools:context=".CercaActivity"
     android:background="@color/white"
     tools:openDrawer="start">
 
@@ -15,11 +15,6 @@
         layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <!--<include
-        layout="@layout/content_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,9 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:hint="Aggiorna"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="@string/aggiorna"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

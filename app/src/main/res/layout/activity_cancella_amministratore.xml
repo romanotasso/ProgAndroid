@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabLayoutAmministatoreCancella"
-        android:background="@color/colorAccent"
+        android:background="@color/orange"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/design_default_color_on_secondary">
 
@@ -19,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cittaAmministatoreCancella"
-            android:text="Citta"/>
+            android:text="@string/citta"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -48,83 +47,3 @@
     </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>
-
-    <!--<com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edittext_utente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>-->
-
-
-   <!-- <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edittext_citta"
-            android:hint="@string/citta"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edittext_monumenti"
-            android:hint="@string/monumento"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edittext_gastronomia"
-            android:hint="Gastronomia"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edittext_hotel"
-            android:hint="@string/hotel_bb"
-            android:inputType="textCapWords"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <Button
-        android:id="@+id/button_cancella"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="90dp"
-        android:hint="@string/cancella"
-        android:onClick="onDelete"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-</LinearLayout>-->

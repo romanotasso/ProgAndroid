@@ -4,50 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AmministatoreActivity"
+    android:layout_gravity="center_horizontal"
+    android:background="#EFEFEF"
     android:orientation="vertical"
-    android:layout_gravity="center_horizontal">
+    tools:context=".AmministatoreActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/experience"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/logo"/>
 
     <Button
         android:id="@+id/button_dati"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="170dp"
-        android:hint="@string/vedi_tutti_i_dati"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:background="#F46537"
+        android:text="@string/vedi_tutti_i_dati"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button_inserisci"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:hint="@string/inserisci"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:background="#B50606"
+        android:text="@string/inserisci"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button_cancella"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:hint="@string/cancella"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:background="#ED9700"
+        android:text="@string/cancella"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/buttomLogout"
         android:layout_width="200dp"
         android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:hint="Logout"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
-
-
+        android:background="#2196F3"
+        android:text="@string/logout"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
 </LinearLayout>

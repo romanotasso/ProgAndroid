@@ -13,8 +13,10 @@ import android.util.Base64;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,16 +38,15 @@ import java.util.List;
 
 public class RegisterPhotoActivity extends AppCompatActivity {
 
-    private  static final int IMAGE_PICK_CODE = 1000;
-    private  static final int PERMISSION_CODE = 1000;
+    private static final int IMAGE_PICK_CODE = 1000;
+    private static final int PERMISSION_CODE = 1000;
     ImageView immagineProfilo;
-    Button addPhoto;
+    ImageButton addPhoto;
     Button skipPhoto;
     DatabaseHelper db;
     Bitmap bitmap;
     Uri filepath;
-    String URL_UPLOAD="http://progandroid.altervista.org/progandorid/uploadPhoto.php";
-
+    String URL_UPLOAD = "http://progandroid.altervista.org/progandorid/uploadPhoto.php";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,15 +54,14 @@ public class RegisterPhotoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    immagineProfilo = findViewById(R.id.profilo_immagine);
-    addPhoto = findViewById(R.id.button_addPhoto);
-    skipPhoto = findViewById(R.id.button_skipPhoto);
-    db = new DatabaseHelper(this);
+        immagineProfilo = findViewById(R.id.profilo_immagine);
+        addPhoto = findViewById(R.id.button_addPhoto);
+        skipPhoto = findViewById(R.id.button_skipPhoto);
+        db = new DatabaseHelper(this);
 
     }
 
-
-    public void skipPhoto(View view){
+    public void skipPhoto(View view) {
 
         String str_nome = getIntent().getExtras().getString("nome");
         String str_cognome = getIntent().getExtras().getString("cognome");
@@ -72,8 +72,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         String str_data = getIntent().getExtras().getString("data_nascita");
         String type = "register";
 
-
-        if(filepath==null){
+        if (filepath == null) {
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type
                     , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
@@ -93,10 +92,10 @@ public class RegisterPhotoActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
             startActivity(intent);
-        }else {
+        } else {
 
-            Bitmap image = ((BitmapDrawable)immagineProfilo.getDrawable()).getBitmap();
-            new updateImage(image,str_email).execute();
+            Bitmap image = ((BitmapDrawable) immagineProfilo.getDrawable()).getBitmap();
+            new updateImage(image, str_email).execute();
 
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type
@@ -117,52 +116,53 @@ public class RegisterPhotoActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
             startActivity(intent);
-
         }
     }
 
-    public void addPhoto(View view){
+    public void addPhoto(View view) {
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 String[] perimissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                requestPermissions(perimissions,PERMISSION_CODE);
-            }else{
+                requestPermissions(perimissions, PERMISSION_CODE);
+            } else {
                 pickImageFromGallery();
             }
-        }else {
+        } else {
             pickImageFromGallery();
         }
     }
 
-    private void pickImageFromGallery(){
+    private void pickImageFromGallery() {
 
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_CODE);
+        startActivityForResult(intent, IMAGE_PICK_CODE);
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        switch (requestCode){
+        switch (requestCode) {
 
-            case PERMISSION_CODE:{
-                if(grantResults.length>0 && grantResults[0]==
-                PackageManager.PERMISSION_GRANTED){
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery();
-                }else {
-                    Toast.makeText(this,"Permesso negato",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permesso negato", Toast.LENGTH_SHORT).show();
                 }
             }
         }
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE && data!= null) {
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null) {
             filepath = data.getData();
             immagineProfilo.setImageURI(filepath);
 
@@ -174,7 +174,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         Bitmap image;
         String email;
 
-        public updateImage(Bitmap image, String email){
+        public updateImage(Bitmap image, String email) {
             this.image = image;
             this.email = email;
         }
@@ -183,8 +183,8 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
-            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(),Base64.DEFAULT);
+            image.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
 
             List<Pair<String, String>> params = new ArrayList<>();
             params.add(new Pair<>("email", email));
@@ -193,23 +193,23 @@ public class RegisterPhotoActivity extends AppCompatActivity {
             try {
 
                 URL url = new URL(URL_UPLOAD);
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
-                BufferedWriter bufferedWriter =new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-                String post_data = URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8")+"&"+ URLEncoder.encode("image","UTF-8")+"="+URLEncoder.encode(encodedImage,"UTF-8");
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(encodedImage, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-                String result="";
-                String line="";
-                while ((line = bufferedReader.readLine()) != null){
-                    result  += line;
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
                 }
                 bufferedReader.close();
                 inputStream.close();
@@ -222,6 +222,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
             return null;
 
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
