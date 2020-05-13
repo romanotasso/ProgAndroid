@@ -1,20 +1,13 @@
 package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
-import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
-
-public class AmministatoreActivity extends AppCompatActivity {
+public class AmministratoreActivity extends AppCompatActivity {
 
     DatabaseHelper db;
     Button mButtonDati;
@@ -26,7 +19,7 @@ public class AmministatoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amministatore);
+        setContentView(R.layout.activity_amministratore);
         db = new DatabaseHelper(this);
         mButtonCancella = findViewById(R.id.button_cancella);
         mButtonInserisci = findViewById(R.id.button_inserisci);
@@ -36,7 +29,7 @@ public class AmministatoreActivity extends AppCompatActivity {
         mButtonDati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AmministatoreActivity.this, VisualizzaDatiAmministratoreActivity.class);
+                Intent intent = new Intent(AmministratoreActivity.this, VisualizzaDatiAmministratoreActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +37,7 @@ public class AmministatoreActivity extends AppCompatActivity {
         mButtonCancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AmministatoreActivity.this, CancellaAmministratoreActivity.class);
+                Intent intent = new Intent(AmministratoreActivity.this, CancellaAmministratoreActivity.class);
                 startActivity(intent);
             }
         });
@@ -52,7 +45,7 @@ public class AmministatoreActivity extends AppCompatActivity {
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AmministatoreActivity.this, InserisciAmministratoreActivity.class);
+                Intent intent = new Intent(AmministratoreActivity.this, InserisciAmministratoreActivity.class);
                 startActivity(intent);
             }
         });
@@ -60,7 +53,7 @@ public class AmministatoreActivity extends AppCompatActivity {
         mButtomLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AmministatoreActivity.this, LoginActivity.class);
+                Intent intent = new Intent(AmministratoreActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

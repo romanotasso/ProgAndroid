@@ -19,13 +19,13 @@ public class PageAdapterAmministratoreInserisci extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new CittaFragmentAmmistatoreInserisci();
+                return new CittaFragmentAmministratoreInserisci();
             case 1:
-                return new MonumentoFragmentAmministatoreInserisci();
+                return new MonumentoFragmentAmministratoreInserisci();
             case 2:
-                return new GastronomiaFragmentAmministatoreInserisci();
+                return new GastronomiaFragmentAmministratoreInserisci();
             case 3:
-                return new HotelBBFragmentAmministatoreInserisci();
+                return new HotelBBFragmentAmministratoreInserisci();
                 default:
                 return null;
         }

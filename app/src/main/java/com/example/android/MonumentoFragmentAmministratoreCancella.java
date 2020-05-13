@@ -23,19 +23,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class CittaFragmentAmministatoreCancella extends Fragment {
+public class MonumentoFragmentAmministratoreCancella extends Fragment {
 
-    String urlCancellaImageProfilo = "http://progandroid.altervista.org/progandorid/deletePhotoCitta.php";
-    DatabaseHelper db;
-    Button mButtonCancella;
+    String urlCancellaImageMonumento = "http://progandroid.altervista.org/progandorid/deletePhotoMonumento.php";
     EditText mEditCitta;
-
+    EditText mEditMonumento;
+    Button mButtonCancella;
+    DatabaseHelper db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_citta_amministratore_cancella, container, false);
+        View view = inflater.inflate(R.layout.fragment_monumento_amministratore_cancella, container, false);
 
+        mEditMonumento = view.findViewById(R.id.edittext_monumenti);
         mButtonCancella = view.findViewById(R.id.button_cancella);
         mEditCitta = view.findViewById(R.id.edittext_citta);
         db = new DatabaseHelper(getContext());
@@ -45,43 +46,50 @@ public class CittaFragmentAmministatoreCancella extends Fragment {
             public void onClick(View v) {
 
                 String citta = mEditCitta.getText().toString();
-                String deleteCitta = "cancellaCitta";
+                String monumento = mEditMonumento.getText().toString();
+                String deleteMonumento = "cancellaMonumento";
 
                 if ((citta.trim().isEmpty())) {
                     mEditCitta.setError("Campo Obbligatorio");
-                    mEditCitta.findFocus();
-                } else if (!(citta.trim().isEmpty())) {
-                    if (!db.checkCitta(citta = citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())) {
-                        db.deleteCitta((citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase()));
-                        Toast.makeText(getContext(), "Citta eliminata con successo", Toast.LENGTH_SHORT).show();
-                        String path = (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())+ "JPG";
-                        deleteImageCitta deleteImageCitta = new deleteImageCitta(path);
-                        deleteImageCitta.execute();
-                        BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                        backgroudWorker.execute(deleteCitta, (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase()));
+                }else if ((!(monumento.trim().isEmpty()))) {
+                    if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
+                        if ((!db.checkMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase()))) {
+                            db.deleteMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase());
+                            Toast.makeText(getContext(), "Monumento eliminato con successo", Toast.LENGTH_SHORT).show();
+                            String path = (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())+(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase())+ "JPG";
+                            deleteImageMonumento deleteImageMonumento = new deleteImageMonumento(path);
+                            deleteImageMonumento.execute();
+                            BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                            backgroudWorker.execute(deleteMonumento, monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase());
+                        } else {
+                            mEditMonumento.setError("Monumento non presente");
+                        }
                     } else {
                         mEditCitta.setError("Citta non presente");
                     }
+                }else {
+                    mEditMonumento.setError("Campo obbligatorio");
                 }
+
+
             }
         });
-
 
         return view;
     }
 
-    private class deleteImageCitta extends AsyncTask<Void,Void,Void>{
+    private class deleteImageMonumento extends AsyncTask<Void,Void,Void> {
 
         String path;
 
-        public deleteImageCitta(String path){
+        public deleteImageMonumento(String path){
             this.path=path;
         }
 
         protected Void doInBackground(Void... voids) {
 
             try {
-                URL url = new URL(urlCancellaImageProfilo);
+                URL url = new URL(urlCancellaImageMonumento);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);

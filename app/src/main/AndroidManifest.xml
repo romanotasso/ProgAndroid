@@ -21,9 +21,6 @@
             android:name=".ProfiloActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ShareActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -31,14 +28,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisualizzaDatiAmministratoreActivity"
-            android:parentActivityName=".AmministatoreActivity" />
+            android:parentActivityName=".AmministratoreActivity" />
         <activity
             android:name=".CancellaAmministratoreActivity"
-            android:parentActivityName=".AmministatoreActivity" />
+            android:parentActivityName=".AmministratoreActivity" />
         <activity
             android:name=".InserisciAmministratoreActivity"
-            android:parentActivityName=".AmministatoreActivity" />
-        <activity android:name=".AmministatoreActivity" />
+            android:parentActivityName=".AmministratoreActivity" />
+        <activity android:name=".AmministratoreActivity" />
         <activity
             android:name=".RegisterPhotoActivity"
             android:parentActivityName=".RegisterActivity" />

@@ -19,13 +19,13 @@ public class PagaAdapterAmministratoreCancella extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new CittaFragmentAmministatoreCancella();
+                return new CittaFragmentAmministratoreCancella();
             case 1:
-                return new MonumentoFragmentAmministatoreCancella();
+                return new MonumentoFragmentAmministratoreCancella();
             case 2:
-                return new GastronomiaFragmentAmministatoreCancella();
+                return new GastronomiaFragmentAmministratoreCancella();
             case 3:
-                return new HotelBBFragmentAmministatoreCancella();
+                return new HotelBBFragmentAmministratoreCancella();
             default:
                 return null;
         }

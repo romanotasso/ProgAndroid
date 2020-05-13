@@ -23,21 +23,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class HotelBBFragmentAmministatoreCancella extends Fragment {
+public class GastronomiaFragmentAmministratoreCancella extends Fragment {
 
-    String urlCancellaImageHotel = "http://progandroid.altervista.org/progandorid/deletePhotoHotelBB.php";
+    String urlCancellaImageGastronomia = "http://progandroid.altervista.org/progandorid/deletePhotoGastronomia.php";
     DatabaseHelper db;
     Button mButtonCancella;
     EditText mEditCitta;
-    EditText mEditHotel;
-
+    EditText mEditGastronomia;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_hotel_b_b_amministratore_cancella, container, false);
+        View view = inflater.inflate(R.layout.fragment_gastronomia_amministratore_cancella, container, false);
 
-        mEditHotel = view.findViewById(R.id.edittext_hotel);
+        mEditGastronomia = view.findViewById(R.id.edittext_gastronomia);
         mButtonCancella = view.findViewById(R.id.button_cancella);
         mEditCitta = view.findViewById(R.id.edittext_citta);
         db = new DatabaseHelper(getContext());
@@ -47,48 +46,50 @@ public class HotelBBFragmentAmministatoreCancella extends Fragment {
             public void onClick(View v) {
 
                 String citta = mEditCitta.getText().toString();
-                String hotel = mEditHotel.getText().toString();
-                String deleteHotel = "cancellaHotel";
+                String gastronomia = mEditGastronomia.getText().toString();
+                String deleteGastronomia = "cancellaGastronomia";
+
 
                 if ((citta.trim().isEmpty())) {
                     mEditCitta.setError("Campo Obbligatorio");
-                }else if ((!(hotel.trim().isEmpty()))) {
-                    if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
-                        if ((!db.checkHotel(hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase()))) {
-                            db.deleteHotelBB(hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase());
-                            Toast.makeText(getContext(), "Hotel/B&B eliminato con successo", Toast.LENGTH_SHORT).show();
-                            String path = (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())+(hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase())+ "JPG";
-                            deleteImageHotel deleteImageMonumento = new deleteImageHotel(path);
-                            deleteImageMonumento.execute();
-                            BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                            backgroudWorker.execute(deleteHotel, hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase());
+                }else if ((!(gastronomia.trim().isEmpty()))) {
+                        if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
+                            if ((!db.checkGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase()))) {
+                                db.deleteGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase());
+                                Toast.makeText(getContext(), "Punto Gastronomia eliminato con successo", Toast.LENGTH_SHORT).show();
+                                String path = (citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())+(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase())+ "JPG";
+                                deleteImageGastronomia deleteImageGastronomia = new deleteImageGastronomia(path);
+                                deleteImageGastronomia.execute();
+                                BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                                backgroudWorker.execute(deleteGastronomia, gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase());
+                            } else {
+                                mEditGastronomia.setError("Punto gastronomia non presente");
+                            }
                         } else {
-                            mEditHotel.setError("Hotel/B&B non presente");
+                            mEditCitta.setError("Citta non presente");
                         }
-                    } else {
-                        mEditCitta.setError("Citta non presente");
-                    }
                 }else {
-                    mEditHotel.setError("Campo obbligatorio");
+                    mEditGastronomia.setError("Campo obbligatorio");
                 }
             }
         });
 
+
         return view;
     }
 
-    private class deleteImageHotel extends AsyncTask<Void,Void,Void> {
+    private class deleteImageGastronomia extends AsyncTask<Void,Void,Void> {
 
         String path;
 
-        public deleteImageHotel(String path){
+        public deleteImageGastronomia(String path){
             this.path=path;
         }
 
         protected Void doInBackground(Void... voids) {
 
             try {
-                URL url = new URL(urlCancellaImageHotel);
+                URL url = new URL(urlCancellaImageGastronomia);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoOutput(true);
@@ -118,5 +119,4 @@ public class HotelBBFragmentAmministatoreCancella extends Fragment {
             return null;
         }
     }
-
 }

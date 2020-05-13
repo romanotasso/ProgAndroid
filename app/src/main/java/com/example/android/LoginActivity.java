@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class LoginActivity extends AppCompatActivity {
     private static final String PASSWORD = "admin";
     private static final String USERNAME = "admin";
@@ -52,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Compilare tutti i campi", Toast.LENGTH_SHORT).show();
         }else {
             if((email.equals(USERNAME)) && (password.equals(PASSWORD))){
-                Intent amministratoreIntent = new Intent(LoginActivity.this, AmministatoreActivity.class);
+                Intent amministratoreIntent = new Intent(LoginActivity.this, AmministratoreActivity.class);
                 startActivity(amministratoreIntent);
                 finish();
             }else{

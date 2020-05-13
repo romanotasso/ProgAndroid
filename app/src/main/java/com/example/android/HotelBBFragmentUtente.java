@@ -29,6 +29,7 @@ public class HotelBBFragmentUtente extends Fragment {
     //ArrayAdapter adapter;
     int images [] = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};
     ArrayList<String> hotel;
+    //ciao
     DatabaseHelper db;
 
     public String citta, cittaSearch, cittaLista, cittaDB;
