@@ -169,7 +169,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         }
     }
 
-    private class updateImage extends AsyncTask<Void, Void, Void> {
+    class updateImage extends AsyncTask<Void, Void, Void> {
 
         Bitmap image;
         String email;

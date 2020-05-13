@@ -16,7 +16,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MonumentoFragment extends Fragment {
+public class MonumentoFragmentUtente extends Fragment {
 
     ListView myList;
     Cursor cittaMonu;
@@ -28,7 +28,7 @@ public class MonumentoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monumento, container, false);
+        View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
 
         db = new DatabaseHelper(getContext());
 

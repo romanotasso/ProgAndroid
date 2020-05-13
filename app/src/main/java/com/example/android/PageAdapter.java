@@ -19,11 +19,11 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new MonumentoFragment();
+                return new MonumentoFragmentUtente();
             case 1:
-                return new GastronomiaFragment();
+                return new GastronomiaFragmentUtente();
             case 2:
-                return new HotelBBFragment();
+                return new HotelBBFragmentUtente();
             default:
                 return null;
         }

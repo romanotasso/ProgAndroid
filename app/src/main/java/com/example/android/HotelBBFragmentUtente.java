@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HotelBBFragment extends Fragment {
+public class HotelBBFragmentUtente extends Fragment {
 
     ListView myList;
     Cursor cittaHotel;
@@ -30,7 +30,7 @@ public class HotelBBFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_hotel_b_b, container, false);
+        View view = inflater.inflate(R.layout.fragment_hotel_b_b_utente, container, false);
 
         db = new DatabaseHelper(getContext());
 

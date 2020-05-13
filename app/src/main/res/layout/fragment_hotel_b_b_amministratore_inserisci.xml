@@ -1,12 +1,11 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InserisciAmministratoreActivity"
     android:orientation="vertical"
     android:gravity="center_horizontal">
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="250dp"
@@ -30,16 +29,36 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_monumenti"
-            android:hint="@string/monumento"
+            android:id="@+id/edittext_hotel"
+            android:hint="@string/hotel_bb"
             android:inputType="textCapWords"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/hotel_immagine"
+        android:layout_width="224dp"
+        android:layout_height="242dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_image_black_24dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        />
+
+    <ImageButton
+        android:id="@+id/button_addPhotoHotel"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:background="#FAFAFA"
+        android:src="@drawable/ic_add"
+        android:tint="#000000"></ImageButton>
 
     <Button
         android:id="@+id/button_inserisci"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:hint="Inserisci"
         android:textStyle="bold"
         android:textSize="20sp"
