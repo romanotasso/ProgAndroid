@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.edittext_password);
         mButtonLogin = findViewById(R.id.button_login);
         mTextViewRegister = findViewById(R.id.textview_register);
-
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,9 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
-
     }
-
 
     public void onLogin(View view){
 
