@@ -45,15 +45,6 @@
     <string name="conferma_password">Confirm password</string>
     <string name="inserisci_la_tua_foto_profilo">Insert your profile photo</string>
     <string name="aggiorna">Update</string>
-    <string name="punto_gastronomia">Gastronomu point</string>
-
-
-
-
-
-
-
-
-
-
+    <string name="punto_gastronomia">Gastronomy point</string>
+    <string name="punto_di_interesse">Point of interest</string>
 </resources>

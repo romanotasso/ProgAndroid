@@ -29,73 +29,71 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/experience"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintVertical_bias=".20" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@+id/esplora"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".20" />
 
         <Button
             android:id="@+id/esplora"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="350dp"
             android:background="#F46537"
             android:text="@string/cerca"
             android:textColor="#FFFFFF"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/i_miei_viaggi"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".20" />
 
         <Button
             android:id="@+id/i_miei_viaggi"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="480dp"
             android:background="#B50606"
             android:text="@string/i_miei_viaggi"
             android:textColor="#FFFFFF"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/button4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/esplora"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".20" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="610dp"
             android:layout_marginBottom="16dp"
             android:background="#FD9700"
             android:text="@string/usa_coupon"
             android:textColor="#FFFFFF"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/i_miei_viaggi"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".20" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

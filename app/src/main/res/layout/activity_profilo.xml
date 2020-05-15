@@ -25,14 +25,13 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintVertical_bias=".20">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -51,7 +50,6 @@
                     android:id="@+id/nome"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="@string/nome"
@@ -77,7 +75,6 @@
                     android:id="@+id/cognome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="@string/cognome"
@@ -104,7 +101,6 @@
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="@string/email"
@@ -125,15 +121,12 @@
                     android:text="@string/citta"
                     android:textAlignment="center"
                     android:textSize="25sp"
-                    android:textStyle="bold"
-
-                    />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/citta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="@string/citta"
@@ -160,7 +153,6 @@
                     android:id="@+id/sesso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="@string/sesso"
@@ -187,7 +179,6 @@
                     android:id="@+id/data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
                     android:text="@string/data_nascita"
