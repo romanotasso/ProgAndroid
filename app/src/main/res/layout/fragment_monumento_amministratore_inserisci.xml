@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,59 +8,92 @@
     android:gravity="center_horizontal">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout20"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout21"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_citta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_citta"
             android:hint="@string/citta"
-            android:inputType="textCapWords"/>
+            android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout21"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="32dp"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toTopOf="@+id/monumento_immagine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout20"
+        tools:ignore="MissingConstraints">
+
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edittext_monumenti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edittext_monumenti"
             android:hint="@string/monumento"
-            android:inputType="textCapWords"/>
+            android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/monumento_immagine"
-        android:layout_width="224dp"
-        android:layout_height="242dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_image_black_24dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:scaleType="centerCrop"
-        />
+        android:src="@drawable/ic_image_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_addPhotoMonumento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout21"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/button_addPhotoMonumento"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="32dp"
         android:background="#FAFAFA"
         android:src="@drawable/ic_add"
-        android:tint="#000000"></ImageButton>
+        android:tint="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/button_inserisci"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/monumento_immagine"
+        tools:ignore="MissingConstraints"></ImageButton>
 
     <Button
         android:id="@+id/button_inserisci"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="60dp"
         android:text="@string/inserisci"
         android:textSize="20sp"
-        android:layout_gravity="center_horizontal" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_addPhotoMonumento"
+        tools:ignore="MissingConstraints" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

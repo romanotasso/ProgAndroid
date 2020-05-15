@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/inserisci_la_tua_foto_profilo"
-        android:textStyle="italic"
-        android:textSize="25dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="50dp"
+        android:text="@string/inserisci_la_tua_foto_profilo"
+        android:textSize="25dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/profilo_immagine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/profilo_immagine"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="142dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_profilo"/>
+        android:src="@drawable/ic_profilo"
+        app:layout_constraintBottom_toTopOf="@+id/button_addPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/button_addPhoto"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="265dp"
+        android:layout_marginTop="32dp"
         android:background="#FAFAFA"
         android:onClick="addPhoto"
         android:src="@drawable/ic_add"
-        android:tint="#000000" />
+        android:tint="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/button_skipPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilo_immagine"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/button_skipPhoto"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"
-        android:text="@string/Avanti"
-        android:onClick="skipPhoto"/>
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="60dp"
+        android:onClick="skipPhoto"
+        android:text="@string/regiatrati"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_addPhoto"
+        tools:ignore="MissingConstraints" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

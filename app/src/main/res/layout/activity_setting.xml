@@ -8,15 +8,14 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".CercaActivity"
-    android:background="@color/white"
-    tools:openDrawer="start">
+    android:background="@color/white">
 
     <include
         layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -25,25 +24,38 @@
         android:padding="30dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout25"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout26"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext_email_agg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edittext_email_agg"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout26"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="24dp"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout27"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout25"
+            tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittext_pass"
@@ -54,11 +66,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout27"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="343dp"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toTopOf="@+id/button_aggiorna"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout26"
+            tools:ignore="MissingConstraints">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittext_new_pass"
@@ -73,11 +92,17 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
             android:text="@string/aggiorna"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout27"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="MissingConstraints" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

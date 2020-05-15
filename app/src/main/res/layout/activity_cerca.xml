@@ -8,15 +8,14 @@
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".CercaActivity"
-    android:background="@color/white"
-    tools:openDrawer="start">
+    android:background="@color/white">
 
     <include
         layout="@layout/drawer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -25,58 +24,81 @@
         android:padding="30dp">
 
         <SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:iconifiedByDefault="false"
+            android:inputType="textCapWords"
             android:queryHint="Cerca città"
-            android:id="@+id/searchView"
-            android:inputType="textCapWords">
-        </SearchView>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></SearchView>
 
         <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/attiva_gps"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
         <Button
             android:id="@+id/attiva_gps"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="130dp"
+            android:onClick="onAttivaGPS"
             android:text="@string/attiva_gps"
-            android:onClick="onAttivaGPS"/>
+            app:layout_constraintBottom_toTopOf="@+id/checkCitta"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listView" />
 
         <Button
             android:id="@+id/checkCitta"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="@string/check_citt"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
             android:onClick="onChecKCitta"
-            android:layout_marginTop="20dp"/>
+            android:text="@string/check_citt"
+            app:layout_constraintBottom_toTopOf="@+id/textAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/attiva_gps" />
 
         <TextView
             android:id="@+id/textLatLog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
             android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:textColor="@color/design_default_color_on_secondary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="30dp"
+            tools:layout_editor_absoluteY="30dp"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/textAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="305dp"
             android:gravity="center_horizontal"
             android:textColor="@color/darkGray"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkCitta" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_view"

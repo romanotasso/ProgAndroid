@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="175dp"
     android:orientation="vertical"
@@ -13,32 +15,54 @@
         android:id="@+id/imageProfilo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_profilo" />
+        android:src="@drawable/ic_profilo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999"
+        tools:ignore="MissingConstraints" />
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="20dp"
+        tools:layout_editor_absoluteY="20dp">
 
         <TableRow>
-
-            <TextView
-                android:id="@+id/textNome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nome"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-            <TextView
-                android:id="@+id/textCognome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cognome"
-                android:paddingLeft="5dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         </TableRow>
 
     </TableLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textCognome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:paddingLeft="5dp"
+        android:text="@string/cognome"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textNome"
+        app:layout_constraintTop_toBottomOf="@+id/imageProfilo" />
+
+    <TextView
+        android:id="@+id/textNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:text="@string/nome"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageProfilo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
