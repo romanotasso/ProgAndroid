@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".IMieiViaggiActivity"></activity>
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfiloActivity"
             android:theme="@style/AppTheme.NoActionBar" />

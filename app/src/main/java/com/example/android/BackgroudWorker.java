@@ -57,6 +57,7 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
         String riceviDatiGastronomia_url = "http://progandroid.altervista.org/progandorid/fornisciDatiGastronomia.php";
         String deleteDati = "http://progandroid.altervista.org/progandorid/cancellazioneDati.php";
         String checkCitta = "http://progandroid.altervista.org/progandorid/checkCitta.php";
+        String inserisciViaggio = "http://progandroid.altervista.org/progandorid/inserimentoViaggi.php";
 
 
         d = new DatabaseHelper(context.getApplicationContext());
@@ -614,6 +615,43 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             }
         }
+        if (type.equals("inserisciViaggio")) {
+            try {
+                String email = params[1];
+                String citta = params[2];
+                String nome = params[3];
+                URL url = new URL(inserisciViaggio);
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+                String post_data = URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(email,"UTF-8") +"&" +
+                        URLEncoder.encode("citta","UTF-8")+"="+URLEncoder.encode(citta,"UTF-8") +"&" +
+                        URLEncoder.encode("nome","UTF-8")+"="+URLEncoder.encode(nome,"UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null){
+                    result  += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return null;
     }
 
@@ -671,6 +709,12 @@ public class BackgroudWorker extends AsyncTask<String,Void,String> {
             intent.putExtra("cittaDB", cittaDati);
             intent.putExtra("email", emailDati);
             context.startActivity(intent);
+        } else if (result.equals("Viaggia già inserito")){
+            Toast.makeText(context.getApplicationContext(), "Viaggia già inserito", Toast.LENGTH_SHORT).show();
+        } else if (result.equals("Inseriemento avvento con successo")){
+            Toast.makeText(context.getApplicationContext(), "Inseriemento avvento con successo", Toast.LENGTH_SHORT).show();
+        } else if (result.equals("Impossibile aggiungere viaggio")){
+            Toast.makeText(context.getApplicationContext(), "Impossibile aggiungere viaggio", Toast.LENGTH_SHORT).show();
         }
     }
 

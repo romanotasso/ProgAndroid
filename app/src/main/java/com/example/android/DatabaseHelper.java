@@ -17,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABELLA_MONUMENTI = "monumenti";
     private static final String TABELLA_GASTRONOMIA = "gastronomia";
     private static final String TABELLA_HOTELEBB = "hotelebb";
+    private static final String TABELLA_VIAGGI = "viaggi";
     private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(@Nullable Context context) {
@@ -30,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_VIAGGI + "(email text, citta TEXT, nome TEXT, PRIMARY KEY(email,citta), FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome), FOREIGN KEY (email) REFERENCES  " + TABELLA_UTENTE + " (email))");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -295,6 +297,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             return cognome;
         }
+    }
+
+    /*Sezione Viaggi*/
+    public boolean inserisciViaggio(String email,String nome_citta, String nome){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentViaggio = new ContentValues();
+        contentViaggio.put("email", email);
+        contentViaggio.put("citta", nome_citta);
+        contentViaggio.put("nome", nome);
+        long ins = db.insert(TABELLA_VIAGGI, null, contentViaggio);
+        if(ins==-1) return  false;
+        else return true;
+    }
+
+    public Cursor getAllDataViaggi(){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_VIAGGI , new String[]{});
+        return res;
     }
 
 }

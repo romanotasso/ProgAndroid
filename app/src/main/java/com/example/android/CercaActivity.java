@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -67,7 +68,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
     //////////////////////////////////////////////////////////////
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
-    private Button attiva_gps;
+    Button attiva_gps;
     private ResultReceiver resultReceiver;
 
 
@@ -172,7 +173,28 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         textLatLong = findViewById(R.id.textLatLog);
         textAddress = findViewById(R.id.textAddress);
         attiva_gps = findViewById(R.id.attiva_gps);
+        final LoadingDialog loadingDialog = new LoadingDialog(CercaActivity.this);
 
+        attiva_gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingDialog.startLoadingDialog();
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(CercaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+                    getCurrentLocation();
+                } else {
+                    getCurrentLocation();
+                }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingDialog.dismissDialog();
+                        findViewById(R.id.checkCitta).setVisibility(View.VISIBLE);
+                    }
+                }, 5000);
+            }
+        });
 
     }
 
@@ -277,14 +299,14 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         }
     }
 
-    public void onAttivaGPS(View view) {
+    /*public void onAttivaGPS(View view) {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(CercaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
             getCurrentLocation();
         } else {
             getCurrentLocation();
         }
-    }
+    }*/
 
     public void onChecKCitta(View view) {
         String indirizzo = textAddress.getText().toString();
