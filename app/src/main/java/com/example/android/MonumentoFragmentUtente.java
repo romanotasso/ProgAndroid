@@ -3,6 +3,9 @@ package com.example.android;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,26 +18,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class MonumentoFragmentUtente extends Fragment {
+
+public class MonumentoFragmentUtente extends Fragment{
 
     ListView myList;
     Cursor cittaMonu;
-    //ArrayAdapter adapter;
     ArrayList<String> monumento;
-    int images [] = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};
     DatabaseHelper db;
     ImageButton button;
+    public  ArrayList<Bitmap> foto;
+
+
 
     public String citta, cittaSearch, cittaLista, cittaDB, email;
 
@@ -46,6 +48,8 @@ public class MonumentoFragmentUtente extends Fragment {
         View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
 
         db = new DatabaseHelper(getContext());
+
+        foto = new ArrayList<Bitmap>();
 
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
@@ -66,12 +70,17 @@ public class MonumentoFragmentUtente extends Fragment {
         cittaMonu = db.getAllDataMonumentiCitta(citta);
         monumento = new ArrayList<String>();
 
+
         for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
             monumento.add(cittaMonu.getString(0));
         }
 
-        MyAdapter adapter = new MyAdapter(getContext(), monumento, images);
-        myList.setAdapter(adapter);
+
+        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+        backgroudWorkerPhoto.context = getContext();
+        backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+        backgroudWorkerPhoto.nomeCitta = citta;
+        backgroudWorkerPhoto.execute();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -90,17 +99,18 @@ public class MonumentoFragmentUtente extends Fragment {
         return  view;
     }
 
-    class MyAdapter extends ArrayAdapter<String> {
-        Context context;
-        int rImg[];
-        ArrayList<String> nomePunto;
-        //Bitmap immagine[];
 
-        MyAdapter(Context c, ArrayList<String> monumento, int imgs[]) {
-            super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
+    class MyAdapter extends ArrayAdapter<String> {
+
+        Context context;
+
+        ArrayList<String> nomePunto;
+
+
+        MyAdapter(Context c, ArrayList<String> gastronomia) {
+            super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = monumento;
-            //this. rImg = imgs;
         }
 
         @NonNull
@@ -111,8 +121,7 @@ public class MonumentoFragmentUtente extends Fragment {
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             button = row.findViewById(R.id.id);
-
-            //images.setImageResource(rImg[position]);
+            images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
@@ -131,6 +140,59 @@ public class MonumentoFragmentUtente extends Fragment {
         }
     }
 
+    public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
+
+
+        Context context;
+        String nomeCitta;
+        ArrayList<String> nomeMonumenti = new ArrayList<>();
+        final static String url_photoMonumento = "http://progandroid.altervista.org/progandorid/FotoMonumenti/";
+
+
+        @Override
+        public ArrayList<Bitmap> doInBackground(Void... voids) {
+
+            Bitmap immagine;
+            String url;
+            ArrayList<Bitmap> fotoBack = new ArrayList<Bitmap>();
+
+            try {
+                for (int i = 0; i < nomeMonumenti.size(); i = i + 1) {
+                    String nomeMonumento =  nomeMonumenti.get(i).replaceAll(" ","%20");
+                    url = url_photoMonumento + nomeCitta +nomeMonumento+ "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    immagine = BitmapFactory.decodeStream(inputStream);
+                    if (!(immagine == null)) {
+                        fotoBack.add(i, immagine);
+                    }
+                }
+                return fotoBack;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
+            super.onPostExecute(bitmaps);
+            if(bitmaps!=null){
+                returnFoto(bitmaps);
+            }
+        }
+    }
+
+    public void returnFoto(ArrayList<Bitmap> foto){
+
+        this.foto.addAll(foto);
+        MyAdapter adapter = new MyAdapter(getContext(),monumento);
+        myList.setAdapter(adapter);
+
+    }
+
+
+
+
     public void refreshItems() {
         switch (refresh_count) {
             default:
@@ -141,7 +203,7 @@ public class MonumentoFragmentUtente extends Fragment {
                     monumento.add(cittaMonu.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento, images);
+                final MyAdapter adapter = new MyAdapter(getContext(), monumento);
                 myList.setAdapter(adapter);
                 break;
         }

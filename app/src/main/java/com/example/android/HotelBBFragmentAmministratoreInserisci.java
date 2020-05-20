@@ -77,13 +77,13 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
                     mEditCitta.setError("Campo Obbligatorio");
                 } else if (!hotelbb.trim().isEmpty()) {
                     if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
-                        if (db.checkHotel(hotelbb = hotelbb.substring(0, 1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
+                        if (db.checkHotel(hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                             if(count==1){
                                 gastronomia = "";
                                 monumento = "";
-                                db.inserisciHotelBB(hotelbb = hotelbb.substring(0, 1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
+                                db.inserisciHotelBB(hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase());
                                 BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                                backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia, hotelbb = hotelbb.substring(0, 1).toUpperCase() + hotelbb.substring(1).toLowerCase());
+                                backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia, hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase());
                                 Toast.makeText(getContext(), "Hotel/B&B inserito con successo", Toast.LENGTH_SHORT).show();
                                 Bitmap image = ((BitmapDrawable)photoHotel.getDrawable()).getBitmap();
                                 new updateImage(image,citta,hotelbb).execute();

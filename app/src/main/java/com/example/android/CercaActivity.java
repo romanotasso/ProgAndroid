@@ -3,6 +3,7 @@ package com.example.android;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -64,15 +65,16 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
     ImageView immagineProfilo;
     View hView;
 
-    String email;
+    String email1;
+
     //////////////////////////////////////////////////////////////
+
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
     Button attiva_gps;
     private ResultReceiver resultReceiver;
 
 
-    //@RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,34 +84,29 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        email = getIntent().getExtras().getString("email");
-
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
-
         hView=navigationView.getHeaderView(0);
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        DownloadImage downloadImage = new DownloadImage(email);
+
+        DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
         downloadImage.execute();
-        nome.setText(db.getNome(email));
-        cognome.setText(db.getCognome(email));
+
+        nome.setText(db.getNome(getIntent().getExtras().getString("email")));
+        cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
         navigationView.setNavigationItemSelectedListener(this);
-
-
+        email1 = getIntent().getExtras().getString("email");
 
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
 
         navigationView.bringToFront();
-
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
-
         navigationView.setCheckedItem(R.id.cerca);
 
         mysearchView = findViewById(R.id.searchView);
@@ -132,7 +129,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 if (!check) {
                     Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
                     intent.putExtra("cittaSearch", query);
-                    intent.putExtra("email", email);
+                    intent.putExtra("email", email1);
                     Toast.makeText(CercaActivity.this, "Città " + query + " presente", Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 } else {
@@ -145,11 +142,11 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
                     myList.setVisibility(View.GONE);
-                    findViewById(R.id.attiva_gps).setVisibility(View.VISIBLE);
-                    findViewById(R.id.checkCitta).setVisibility(View.VISIBLE);
+                    //findViewById(R.id.attiva_gps).setVisibility(View.VISIBLE);
+                    //findViewById(R.id.checkCitta).setVisibility(View.VISIBLE);
                 } else {
-                    findViewById(R.id.attiva_gps).setVisibility(View.GONE);
-                    findViewById(R.id.checkCitta).setVisibility(View.GONE);
+                    //findViewById(R.id.attiva_gps).setVisibility(View.GONE);
+                    //findViewById(R.id.checkCitta).setVisibility(View.GONE);
                     adapter.getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);
                 }
@@ -164,41 +161,25 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 String città = adapterView.getItemAtPosition(i).toString();
                 Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
                 intent.putExtra("cittaLista", città);
-                intent.putExtra("email", email);
+                intent.putExtra("email", email1);
                 Toast.makeText(CercaActivity.this, "Città " + città + " presente", Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
         });
-
         ////////////////////////
         resultReceiver = new AddressResultReciver(new Handler());
         textLatLong = findViewById(R.id.textLatLog);
         textAddress = findViewById(R.id.textAddress);
-        attiva_gps = findViewById(R.id.attiva_gps);
-        final LoadingDialog loadingDialog = new LoadingDialog(CercaActivity.this);
+        //attiva_gps = findViewById(R.id.attiva_gps);
 
-        attiva_gps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadingDialog.startLoadingDialog();
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(CercaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
                     getCurrentLocation();
                 } else {
                     getCurrentLocation();
                 }
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingDialog.dismissDialog();
-                        findViewById(R.id.checkCitta).setVisibility(View.VISIBLE);
-                    }
-                }, 5000);
             }
-        });
 
-    }
 
     @Override
     public void onBackPressed() {
@@ -208,7 +189,6 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -216,24 +196,19 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         switch (menuItem.getItemId()){
             case R.id.home:
                 Intent intentHome = new Intent(CercaActivity.this, HomeActivity.class);
-                intentHome.putExtra("email", email);
+                intentHome.putExtra("email", email1);
                 startActivity(intentHome);
-                break;
-            case R.id.viaggi:
-                Intent intentViaggi = new Intent(CercaActivity.this, IMieiViaggiActivity.class);
-                intentViaggi.putExtra("email", email);
-                startActivity(intentViaggi);
                 break;
             case R.id.cerca:
                 break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(CercaActivity.this, ProfiloActivity.class);
-                intentProfilo.putExtra("email", email);
+                intentProfilo.putExtra("email", email1);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(CercaActivity.this, SettingActivity.class);
-                intentImpo.putExtra("email", email);
+                intentImpo.putExtra("email", email1);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
@@ -244,7 +219,6 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         }
         return true;
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -300,29 +274,15 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
             super.onReceiveResult(resultCode, resultData);
             if (resultCode == Costanti.SUCCESS_RESULT) {
                 textAddress.setText(resultData.getString(Costanti.RESULT_DATA_KEY));
+                if(!db.checkCitta(resultData.getString(Costanti.RESULT_DATA_KEY))){
+                    LoadingDialog loadingDialog = new LoadingDialog(CercaActivity.this,resultData.getString(Costanti.RESULT_DATA_KEY),email1);
+                    loadingDialog.startLoadingDialog();
+                }
+
             } else {
                 Toast.makeText(CercaActivity.this, resultData.getString(Costanti.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    /*public void onAttivaGPS(View view) {
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(CercaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
-            getCurrentLocation();
-        } else {
-            getCurrentLocation();
-        }
-    }*/
-
-    public void onChecKCitta(View view) {
-        String indirizzo = textAddress.getText().toString();
-        String emailCheck = email;
-        String type = "checkCitta";
-
-        BackgroudWorker backgroudWorker = new BackgroudWorker(this);
-        backgroudWorker.execute(type, indirizzo, emailCheck);
-
     }
 
     private class DownloadImage extends AsyncTask<Void,Void,Bitmap>{

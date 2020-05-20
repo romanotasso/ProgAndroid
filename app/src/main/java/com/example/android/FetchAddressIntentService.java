@@ -23,6 +23,7 @@ public class FetchAddressIntentService extends IntentService {
 
     private ResultReceiver resultReceiver;
     EditText t;
+    DatabaseHelper db = new DatabaseHelper(this);
 
     public FetchAddressIntentService() {
         super("FetchAddressIntentService");

@@ -9,7 +9,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -19,14 +21,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+
+
+
+
+
+
 
 public class CittaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     DatabaseHelper db;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -41,12 +53,16 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     PageAdapterUtente pageAdapterUtente;
     TabItem tabMonumento, tabRistoranti, tabHotelBB;
 
+
     public String citta, cittaSearch, cittaLista, cittaDB;
 
     TextView nome;
     TextView cognome;
     View hView;
     String email;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +73,14 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         cittaLista = getIntent().getExtras().getString("cittaLista");
         cittaDB = getIntent().getExtras().getString("cittaDB");
         email = getIntent().getExtras().getString("email");
+
+        if((cittaSearch == null) && (cittaLista == null)) {
+            citta = cittaDB;
+        } else if(cittaSearch == null){
+            citta = cittaLista;
+        } else {
+            citta = cittaSearch;
+        }
 
         db = new DatabaseHelper(this);
 
@@ -134,6 +158,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+
     }
 
     @Override
@@ -192,10 +217,8 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             Bitmap bitmap=null;
 
             try{
-
                 InputStream inputStream = new java.net.URL(url).openStream();
                 bitmap = BitmapFactory.decodeStream(inputStream);
-
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -213,5 +236,10 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             super.onPostExecute(bitmap);
         }
     }
+
+
+
+
+
 
 }

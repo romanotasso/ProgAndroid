@@ -2,6 +2,9 @@ package com.example.android;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,7 +22,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +34,7 @@ public class GastronomiaFragmentUtente extends Fragment {
 
     ListView myList;
     Cursor cittaRist;
-    //ArrayAdapter adapter;
-    //int images [] = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};
+    public ArrayList<Bitmap> foto;
     ArrayList<String> rist;
     DatabaseHelper db;
     ImageButton button;
@@ -46,6 +51,8 @@ public class GastronomiaFragmentUtente extends Fragment {
 
         db = new DatabaseHelper(getContext());
 
+        String view1 = getActivity().getIntent().getExtras().getString("cittaDB");
+        foto = new ArrayList<Bitmap>();
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
         cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
@@ -69,8 +76,6 @@ public class GastronomiaFragmentUtente extends Fragment {
             rist.add(cittaRist.getString(0));
         }
 
-        MyAdapter adapter = new MyAdapter(getContext(), rist/*, images*/);
-        myList.setAdapter(adapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -85,21 +90,23 @@ public class GastronomiaFragmentUtente extends Fragment {
                 }, 2000);
             }
         });
+        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+        backgroudWorkerPhoto.context = getContext();
+        backgroudWorkerPhoto.rist.addAll(rist);
+        backgroudWorkerPhoto.nomeCitta = citta;
+        backgroudWorkerPhoto.execute();
 
         return  view;
     }
 
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
-        //int rImg[];
         ArrayList<String> nomePunto;
-        //Bitmap immagine[];
 
         MyAdapter(Context c, ArrayList<String> gastronomia/*, int imgs[]*/) {
-            super(c, R.layout.row, R.id.textViewDatiCitta, gastronomia);
+            super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = gastronomia;
-            //this. rImg = imgs;
         }
 
         @NonNull
@@ -109,10 +116,9 @@ public class GastronomiaFragmentUtente extends Fragment {
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            images.setImageBitmap(foto.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             button = row.findViewById(R.id.id);
-
-            //images.setImageResource(rImg[position]);
             nome.setText(nomePunto.get(position));
             cittaNome.setText(citta);
 
@@ -139,9 +145,64 @@ public class GastronomiaFragmentUtente extends Fragment {
                     rist.add(cittaRist.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), rist/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), rist);
                 myList.setAdapter(adapter);
                 break;
         }
     }
+
+    public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
+
+
+        Context context;
+        String nomeCitta;
+        ArrayList<String> rist = new ArrayList<>();
+        final static String url_photoGastronomia = "http://progandroid.altervista.org/progandorid/FotoGastronomia/";
+
+
+        @Override
+        public ArrayList<Bitmap> doInBackground(Void... voids) {
+
+            Bitmap immagine;
+            String url;
+            ArrayList<Bitmap> fotoBack = new ArrayList<Bitmap>();
+
+            try {
+                for (int i = 0; i < rist.size(); i = i + 1) {
+                    String nomeGastronomia =  rist.get(i).replaceAll(" ","%20");
+                    url = url_photoGastronomia + nomeCitta +nomeGastronomia+ "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    immagine = BitmapFactory.decodeStream(inputStream);
+                    if (!(immagine == null)) {
+                        fotoBack.add(i, immagine);
+                    }
+                }
+                return fotoBack;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
+            super.onPostExecute(bitmaps);
+            if(bitmaps!=null){
+                returnFoto(bitmaps);
+            }
+
+        }
+    }
+
+    public void returnFoto(ArrayList<Bitmap> foto){
+
+        this.foto.addAll(foto);
+        MyAdapter adapter = new MyAdapter(getContext(), rist);
+        myList.setAdapter(adapter);
+
+
+    }
+
+
+
 }

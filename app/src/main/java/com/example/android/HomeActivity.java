@@ -5,15 +5,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,23 +17,12 @@ import android.os.ResultReceiver;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.navigation.NavigationView;
-
 import java.io.InputStream;
-import java.util.ArrayList;
+
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     DatabaseHelper db;
@@ -56,7 +41,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //////////////////////////////////////////////////////////////
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
-    private Button attiva_gps;
     private ResultReceiver resultReceiver;
 
     Button buttonCerca;
@@ -178,10 +162,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Bitmap bitmap=null;
 
             try{
-
                 InputStream inputStream = new java.net.URL(url).openStream();
                 bitmap = BitmapFactory.decodeStream(inputStream);
-
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();

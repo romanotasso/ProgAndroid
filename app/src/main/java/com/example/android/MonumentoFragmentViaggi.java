@@ -80,15 +80,14 @@ public class MonumentoFragmentViaggi extends Fragment {
 
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
-        //int rImg[];
         ArrayList<String> nomePunto;
-        //Bitmap immagine[];
+
 
         MyAdapter(Context c, ArrayList<String> monumento/*, int imgs[]*/) {
             super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
-            //this. rImg = imgs;
+
         }
 
         @NonNull
@@ -100,7 +99,7 @@ public class MonumentoFragmentViaggi extends Fragment {
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             button = row.findViewById(R.id.id);
 
-            //images.setImageResource(rImg[position]);
+
             nome.setText(nomePunto.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);

@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
             }else{
                 BackgroudWorker backgroudWorker = new BackgroudWorker(this);
                 backgroudWorker.execute(type,email,password);
-
             }
         }
     }
