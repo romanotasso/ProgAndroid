@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GastronomiaFragmentUtente"
+    tools:context=".GastronomiaFragmentViaggi"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
         <ListView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:id="@+id/listaRistoranti"/>
+            android:id="@+id/listaGastronomiaViaggi"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

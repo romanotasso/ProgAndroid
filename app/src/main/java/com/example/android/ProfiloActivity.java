@@ -43,7 +43,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
 
-    String e;
+    String emailExtras;
 
     View hView;
     Button b;
@@ -55,7 +55,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
         db = new DatabaseHelper(this);
 
-        e = getIntent().getExtras().getString("email");
+        emailExtras = getIntent().getExtras().getString("email");
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,8 +68,8 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
 
-        nome.setText(db.getNome(e));
-        cognome.setText(db.getCognome(e));
+        nome.setText(db.getNome(emailExtras));
+        cognome.setText(db.getCognome(emailExtras));
 
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
@@ -83,12 +83,12 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         actionBarDrawerToggle.syncState();
 
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        ProfiloActivity.DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
+        ProfiloActivity.DownloadImage downloadImage = new DownloadImage(emailExtras);
         downloadImage.execute();
 
         navigationView.setCheckedItem(R.id.profilo);
 
-        cursor = db.getAllDataUtente(e);
+        cursor = db.getAllDataUtente(emailExtras);
         nome = findViewById(R.id.nome);
         cognome = findViewById(R.id.cognome);
         email = findViewById(R.id.email);
@@ -127,14 +127,19 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         switch (menuItem.getItemId()){
             case R.id.home:
                 Intent intentHome = new Intent(ProfiloActivity.this, HomeActivity.class);
-                intentHome.putExtra("email",getIntent().getExtras().getString("email"));
+                intentHome.putExtra("email", emailExtras);
                 startActivity(intentHome);
+                break;
+            case R.id.viaggi:
+                Intent intentViaggi = new Intent(ProfiloActivity.this, IMieiViaggiActivity.class);
+                intentViaggi.putExtra("email", emailExtras);
+                startActivity(intentViaggi);
                 break;
             case R.id.profilo:
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(ProfiloActivity.this, SettingActivity.class);
-                intentImpo.putExtra("email",getIntent().getExtras().getString("email"));
+                intentImpo.putExtra("email",emailExtras);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:

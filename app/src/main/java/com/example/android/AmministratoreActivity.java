@@ -11,17 +11,14 @@ public class AmministratoreActivity extends AppCompatActivity {
 
     DatabaseHelper db;
     Button mButtonDati;
-    Button mButtonCancella;
     Button mButtonInserisci;
     Button mButtomLogout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amministratore);
         db = new DatabaseHelper(this);
-        mButtonCancella = findViewById(R.id.button_cancella);
         mButtonInserisci = findViewById(R.id.button_inserisci);
         mButtonDati = findViewById(R.id.button_dati);
         mButtomLogout = findViewById(R.id.buttomLogout);
@@ -29,15 +26,7 @@ public class AmministratoreActivity extends AppCompatActivity {
         mButtonDati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AmministratoreActivity.this, VisualizzaDatiAmministratoreActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mButtonCancella.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AmministratoreActivity.this, CancellaAmministratoreActivity.class);
+                Intent intent = new Intent(AmministratoreActivity.this, VisualizzaDatiCMRHActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +46,5 @@ public class AmministratoreActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
 }

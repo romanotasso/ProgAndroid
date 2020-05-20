@@ -1,7 +1,6 @@
 package com.example.android;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,54 +21,48 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MonumentoFragmentUtente extends Fragment {
+public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
 
+    DatabaseHelper db;
     ListView myList;
     Cursor cittaMonu;
-    //ArrayAdapter adapter;
     ArrayList<String> monumento;
-    int images [] = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};
-    DatabaseHelper db;
-    ImageButton button;
+    ArrayList<String> citta;
 
-    public String citta, cittaSearch, cittaLista, cittaDB, email;
+    MyAdapter adapter;
 
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_monumento_amministratore_visualizza, container, false);
 
         db = new DatabaseHelper(getContext());
 
-        email = getActivity().getIntent().getExtras().getString("email");
-        cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
-        cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
-        cittaDB = getActivity().getIntent().getExtras().getString("cittaDB");
-        if((cittaSearch == null) && (cittaLista == null)) {
-            citta = cittaDB;
-        } else if(cittaSearch == null){
-            citta = cittaLista;
-        } else {
-            citta = cittaSearch;
-        }
-
         refreshLayout = view.findViewById(R.id.swipe);
 
-        myList = view.findViewById(R.id.listaMonumento);
+        myList = view.findViewById(R.id.listaMonumentoVisualizza);
         myList.setVisibility(View.VISIBLE);
-        cittaMonu = db.getAllDataMonumentiCitta(citta);
+        cittaMonu = db.getAllDataMonumenti();
         monumento = new ArrayList<String>();
+        citta = new ArrayList<String>();
 
-        for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+        for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
             monumento.add(cittaMonu.getString(0));
         }
 
-        MyAdapter adapter = new MyAdapter(getContext(), monumento, images);
+        for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+            citta.add(cittaMonu.getString(1));
+        }
+
+
+        final MyAdapter adapter = new MyAdapter(getContext(), monumento, citta/*, images*/);
         myList.setAdapter(adapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -87,46 +79,46 @@ public class MonumentoFragmentUtente extends Fragment {
             }
         });
 
-        return  view;
+        return view;
     }
 
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
-        int rImg[];
+        //int rImg[];
         ArrayList<String> nomePunto;
+        ArrayList<String> cittaLista;
         //Bitmap immagine[];
 
-        MyAdapter(Context c, ArrayList<String> monumento, int imgs[]) {
+        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> citta/*, int imgs[]*/) {
             super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
-            //this. rImg = imgs;
+            this.cittaLista = citta;
+            // this. rImg = imgs;
         }
 
         @NonNull
         @Override
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
+            View row = layoutInflater.inflate(R.layout.row, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
-            button = row.findViewById(R.id.id);
-
-            //images.setImageResource(rImg[position]);
+            TextView citta = row.findViewById(R.id.textViewCitta);
+            ImageButton cancella = row.findViewById(R.id.id);
             nome.setText(nomePunto.get(position));
-            TextView cittaNome = row.findViewById(R.id.textViewCitta);
-            cittaNome.setText(citta);
+            citta.setText(cittaLista.get(position));
 
-            button.setOnClickListener(new View.OnClickListener() {
+            final String nomeInteresse = nomePunto.get(position);
+            final Context context = getContext();
+
+            cancella.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Monumento");
+                    final CancellaDialogMonumento cancellaDialogMonumento = new CancellaDialogMonumento(getActivity(),context, nomeInteresse);
+                    cancellaDialogMonumento.startLoadingDialog();
                 }
             });
-
             return row;
         }
     }
@@ -134,17 +126,16 @@ public class MonumentoFragmentUtente extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaMonu = db.getAllDataMonumentiCitta(citta);
+                cittaMonu = db.getAllDataMonumenti();
                 monumento = new ArrayList<String>();
 
                 for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
                     monumento.add(cittaMonu.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento, images);
+                final MyAdapter adapter = new MyAdapter(getContext(), monumento, citta/*, images*/);
                 myList.setAdapter(adapter);
                 break;
         }
     }
-
 }

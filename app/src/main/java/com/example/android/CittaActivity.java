@@ -73,7 +73,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
 
-        email = getIntent().getExtras().getString("email");
         hView=navigationView.getHeaderView(0);
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
@@ -145,22 +144,27 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             case R.id.citta:
                 break;
             case R.id.home:
-                Intent intentHome = new Intent(this, HomeActivity.class);
+                Intent intentHome = new Intent(CittaActivity.this, HomeActivity.class);
                 intentHome.putExtra("email", email);
                 startActivity(intentHome);
                 break;
+            case R.id.viaggi:
+                Intent intentViaggi = new Intent(CittaActivity.this, IMieiViaggiActivity.class);
+                intentViaggi.putExtra("email", email);
+                startActivity(intentViaggi);
+                break;
             case R.id.cerca:
-                Intent intentCerca = new Intent(this, CercaActivity.class);
+                Intent intentCerca = new Intent(CittaActivity.this, CercaActivity.class);
                 intentCerca.putExtra("email", email);
                 startActivity(intentCerca);
                 break;
             case R.id.profilo:
-                Intent intentProfilo = new Intent(this, ProfiloActivity.class);
+                Intent intentProfilo = new Intent(CittaActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(this, SettingActivity.class);
+                Intent intentImpo = new Intent(CittaActivity.this, SettingActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;

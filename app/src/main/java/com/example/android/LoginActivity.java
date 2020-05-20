@@ -28,6 +28,27 @@ public class LoginActivity extends AppCompatActivity {
         mTextPassword = findViewById(R.id.edittext_password);
         mButtonLogin = findViewById(R.id.button_login);
         mTextViewRegister = findViewById(R.id.textview_register);
+
+        BackgroudWorker backgroudWorkerUtente = new BackgroudWorker(this);
+        String typeUtente = "aggiornamentoDatiUtente";
+        backgroudWorkerUtente.execute(typeUtente);
+
+        BackgroudWorker backgroudWorkerCitta = new BackgroudWorker(this);
+        String typeCitta = "aggiornamentoDatiCitta";
+        backgroudWorkerCitta.execute(typeCitta);
+
+        BackgroudWorker backgroudWorkerHotel = new BackgroudWorker(this);
+        String typeHotel = "aggiornamentoDatiHotel";
+        backgroudWorkerHotel.execute(typeHotel);
+
+        BackgroudWorker backgroudWorkerGastronomia = new BackgroudWorker(this);
+        String typeGastronomia = "aggiornamentoDatiGastronomia";
+        backgroudWorkerGastronomia.execute(typeGastronomia);
+
+        BackgroudWorker backgroudWorkerMonumento = new BackgroudWorker(this);
+        String typeMonumenti = "aggiornamentoDatiMonumenti";
+        backgroudWorkerMonumento.execute(typeMonumenti);
+
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(amministratoreIntent);
                 finish();
             }else{
-                BackgroudWorker backgroudWorker= new BackgroudWorker(this);
+                BackgroudWorker backgroudWorker = new BackgroudWorker(this);
                 backgroudWorker.execute(type,email,password);
 
             }

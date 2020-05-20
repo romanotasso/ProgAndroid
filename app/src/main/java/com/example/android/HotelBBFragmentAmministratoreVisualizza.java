@@ -25,51 +25,39 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HotelBBFragmentUtente extends Fragment {
+public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
 
+    DatabaseHelper db;
     ListView myList;
     Cursor cittaHotel;
-    int images [] = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};
     ArrayList<String> hotel;
-    DatabaseHelper db;
-    ImageButton button;
-
-    public String citta, cittaSearch, cittaLista, cittaDB, email;
-
+    ArrayList<String> citta;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_hotel_b_b_utente, container, false);
+        View view = inflater.inflate(R.layout.fragment_hotel_b_b_amministratore_visualizza, container, false);
 
         db = new DatabaseHelper(getContext());
 
-        email = getActivity().getIntent().getExtras().getString("email");
-        cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
-        cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
-        cittaDB = getActivity().getIntent().getExtras().getString("cittaDB");
-        if ((cittaSearch == null) && (cittaLista == null)) {
-            citta = cittaDB;
-        } else if (cittaSearch == null) {
-            citta = cittaLista;
-        } else {
-            citta = cittaSearch;
-        }
-
-        refreshLayout = view.findViewById(R.id.swipe);
-
-        myList = view.findViewById(R.id.listaHotelBB);
+        myList = view.findViewById(R.id.listaHotelBBVisualizza);
         myList.setVisibility(View.VISIBLE);
-        cittaHotel = db.getAllDataHotelBBCitta(citta);
+        cittaHotel = db.getAllDataHotelBB();
         hotel = new ArrayList<String>();
+        refreshLayout = view.findViewById(R.id.swipe);
+        citta = new ArrayList<String>();
 
         for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
             hotel.add(cittaHotel.getString(0));
         }
 
-        MyAdapter adapter = new MyAdapter(getContext(), hotel/*, images*/);
+        for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+            citta.add(cittaHotel.getString(1));
+        }
+
+        MyAdapter adapter = new MyAdapter(getContext(), hotel, citta/*, images*/);
         myList.setAdapter(adapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -89,41 +77,41 @@ public class HotelBBFragmentUtente extends Fragment {
         return view;
     }
 
-
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
-        //int rImg[];
         ArrayList<String> nomePunto;
-        //Bitmap immagine[];
+        ArrayList<String> cittaLista;
 
-        MyAdapter(Context c, ArrayList<String> hotel/*, int imgs[]*/) {
+        MyAdapter(Context c, ArrayList<String> hotel, ArrayList<String> citta/*, int imgs[]*/) {
             super(c, R.layout.row, R.id.textViewDatiCitta, hotel);
             this.context = c;
             this.nomePunto = hotel;
-           // this. rImg = imgs;
+            this.cittaLista = citta;
         }
 
         @NonNull
         @Override
-        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
+            View row = layoutInflater.inflate(R.layout.row, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
-            TextView cittaNome = row.findViewById(R.id.textViewCitta);
-            button = row.findViewById(R.id.id);
+            TextView citta = row.findViewById(R.id.textViewCitta);
+
+            ImageButton cancella = row.findViewById(R.id.id);
+            citta.setText(cittaLista.get(position));
+
+            final String nomeInteresse = nomePunto.get(position);
+            final Context context = getContext();
 
             //images.setImageResource(rImg[position]);
             nome.setText(nomePunto.get(position));
-            cittaNome.setText(citta);
 
-            button.setOnClickListener(new View.OnClickListener() {
+            cancella.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Hotel");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Hotel");
+                    final CancellaDialogHotel cancellaDialog = new CancellaDialogHotel(getActivity(), context, nomeInteresse);
+                    cancellaDialog.startLoadingDialog();
                 }
             });
             return row;
@@ -133,14 +121,14 @@ public class HotelBBFragmentUtente extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaHotel = db.getAllDataHotelBBCitta(citta);
+                cittaHotel = db.getAllDataHotelBB();
                 hotel = new ArrayList<String>();
 
                 for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
                     hotel.add(cittaHotel.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), hotel, citta);
                 myList.setAdapter(adapter);
                 break;
         }

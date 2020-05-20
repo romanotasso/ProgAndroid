@@ -21,8 +21,6 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
     EditText mEditHotel;
     EditText mEditMonumento;
     EditText mEditGastronomia;
-    EditText mEditEmail;
-    EditText mEditPassword;
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -42,8 +40,8 @@ public class InserisciAmministratoreActivity extends AppCompatActivity {
         mEditHotel = findViewById(R.id.edittext_hotel);
         mEditMonumento = findViewById(R.id.edittext_monumenti);
         mButtonInserisci = findViewById(R.id.button_inserisci);
-        db = new DatabaseHelper(this);
 
+        db = new DatabaseHelper(this);
 
         tabLayout = findViewById(R.id.tabLayoutAmministatore);
         tabMonumento = findViewById(R.id.monumentiAmministatore);

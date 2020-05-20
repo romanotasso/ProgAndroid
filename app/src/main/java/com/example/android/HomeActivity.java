@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     ImageView immagineProfilo;
     View hView;
 
-    String email1;
+    String email;
     //////////////////////////////////////////////////////////////
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
@@ -74,6 +74,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        email = getIntent().getExtras().getString("email");
+
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
 
@@ -81,17 +83,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        HomeActivity.DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
+        HomeActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
-        nome.setText(db.getNome(getIntent().getExtras().getString("email")));
-        cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
+        nome.setText(db.getNome(email));
+        cognome.setText(db.getCognome(email));
         navigationView.setNavigationItemSelectedListener(this);
-
-        email1 = getIntent().getExtras().getString("email");
 
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
         menu.findItem(R.id.cerca).setVisible(false);
+        menu.findItem(R.id.viaggi).setVisible(false);
 
         navigationView.bringToFront();
 
@@ -107,8 +108,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intentCerca = new Intent(HomeActivity.this, CercaActivity.class);
-                intentCerca.putExtra("email",getIntent().getExtras().getString("email"));
+                intentCerca.putExtra("email",email);
                 startActivity(intentCerca);
+            }
+        });
+        buttonViaggi = findViewById(R.id.i_miei_viaggi);
+        buttonViaggi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentViaggi = new Intent(HomeActivity.this, IMieiViaggiActivity.class);
+                intentViaggi.putExtra("email", email);
+                startActivity(intentViaggi);
             }
         });
     }
@@ -129,14 +139,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()){
             case R.id.home:
                 break;
+            case R.id.viaggi:
+                Intent intentViaggi = new Intent(HomeActivity.this, IMieiViaggiActivity.class);
+                intentViaggi.putExtra("email", email);
+                startActivity(intentViaggi);
+                break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(HomeActivity.this, ProfiloActivity.class);
-                intentProfilo.putExtra("email", getIntent().getExtras().getString("email"));
+                intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(HomeActivity.this, SettingActivity.class);
-                intentImpo.putExtra("email", getIntent().getExtras().getString("email"));
+                intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:

@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Home" />
         <item
+            android:id="@+id/viaggi"
+            android:icon="@drawable/ic_viaggi"
+            android:title="I miei viaggi" />
+        <item
             android:id="@+id/cerca"
             android:icon="@drawable/ic_cerca"
             android:title="Cerca" />

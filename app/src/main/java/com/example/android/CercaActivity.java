@@ -64,7 +64,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
     ImageView immagineProfilo;
     View hView;
 
-    String email1;
+    String email;
     //////////////////////////////////////////////////////////////
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
     private TextView textLatLong, textAddress;
@@ -83,6 +83,8 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        email = getIntent().getExtras().getString("email");
+
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
 
@@ -90,13 +92,13 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
+        DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
-        nome.setText(db.getNome(getIntent().getExtras().getString("email")));
-        cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
+        nome.setText(db.getNome(email));
+        cognome.setText(db.getCognome(email));
         navigationView.setNavigationItemSelectedListener(this);
 
-        email1 = getIntent().getExtras().getString("email");
+
 
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
@@ -130,7 +132,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 if (!check) {
                     Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
                     intent.putExtra("cittaSearch", query);
-                    intent.putExtra("email", email1);
+                    intent.putExtra("email", email);
                     Toast.makeText(CercaActivity.this, "Città " + query + " presente", Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 } else {
@@ -162,7 +164,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 String città = adapterView.getItemAtPosition(i).toString();
                 Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
                 intent.putExtra("cittaLista", città);
-                intent.putExtra("email", email1);
+                intent.putExtra("email", email);
                 Toast.makeText(CercaActivity.this, "Città " + città + " presente", Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
@@ -214,19 +216,24 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         switch (menuItem.getItemId()){
             case R.id.home:
                 Intent intentHome = new Intent(CercaActivity.this, HomeActivity.class);
-                intentHome.putExtra("email", email1);
+                intentHome.putExtra("email", email);
                 startActivity(intentHome);
+                break;
+            case R.id.viaggi:
+                Intent intentViaggi = new Intent(CercaActivity.this, IMieiViaggiActivity.class);
+                intentViaggi.putExtra("email", email);
+                startActivity(intentViaggi);
                 break;
             case R.id.cerca:
                 break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(CercaActivity.this, ProfiloActivity.class);
-                intentProfilo.putExtra("email", email1);
+                intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(CercaActivity.this, SettingActivity.class);
-                intentImpo.putExtra("email", email1);
+                intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
@@ -310,11 +317,11 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
 
     public void onChecKCitta(View view) {
         String indirizzo = textAddress.getText().toString();
-        String email = email1;
+        String emailCheck = email;
         String type = "checkCitta";
 
         BackgroudWorker backgroudWorker = new BackgroudWorker(this);
-        backgroudWorker.execute(type, indirizzo, email);
+        backgroudWorker.execute(type, indirizzo, emailCheck);
 
     }
 

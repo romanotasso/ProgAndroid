@@ -23,6 +23,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,16 +40,6 @@
             android:textAlignment="center"
             android:textSize="25sp"
             android:textStyle="italic|bold" />
-
-        <TextView
-            android:id="@+id/textViewCitta"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_horizontal"
-            android:text="@string/punto_di_interesse"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            android:textStyle="italic" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,7 +57,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_cancella"
-            android:background="@color/white"/>
+            android:src="@drawable/ic_cancella"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".IMieiViaggiActivity"></activity>
+        <activity android:name=".VisualizzaViaggiActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".VisualizzaDatiCMRHActivity"
+            android:parentActivityName=".AmministratoreActivity" />
+        <activity
+            android:name=".IMieiViaggiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -1,6 +1,7 @@
 package com.example.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -18,58 +19,46 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GastronomiaFragmentUtente extends Fragment {
+public class MonumentoFragmentViaggi extends Fragment {
 
     ListView myList;
-    Cursor cittaRist;
-    //ArrayAdapter adapter;
-    //int images [] = {R.drawable.ic_launcher_background, R.drawable.ic_launcher_foreground};
-    ArrayList<String> rist;
+    Cursor cittaMonu;
+    ArrayList<String> monumento;
     DatabaseHelper db;
     ImageButton button;
-
-    public String citta, cittaSearch, cittaLista, cittaDB,email;
+    String citta, email;
 
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_gastronomia_utente, container, false);
+        View view = inflater.inflate(R.layout.fragment_monumento_viaggi, container, false);
 
         db = new DatabaseHelper(getContext());
-
         email = getActivity().getIntent().getExtras().getString("email");
-        cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
-        cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
-        cittaDB = getActivity().getIntent().getExtras().getString("cittaDB");
-        if((cittaSearch == null) && (cittaLista == null)) {
-            citta = cittaDB;
-        } else if(cittaSearch == null){
-            citta = cittaLista;
-        } else {
-            citta = cittaSearch;
-        }
+        citta = getActivity().getIntent().getExtras().getString("citta");
 
         refreshLayout = view.findViewById(R.id.swipe);
 
-        myList = view.findViewById(R.id.listaRistoranti);
+        myList = view.findViewById(R.id.listaMonumentoViaggi);
         myList.setVisibility(View.VISIBLE);
-        cittaRist = db.getAllDataRistorantiCitta(citta);
-        rist = new ArrayList<String>();
+        cittaMonu = db.getAllViaggiMonumento(citta, email,"Monumento");
+        monumento = new ArrayList<String>();
 
-        for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
-            rist.add(cittaRist.getString(0));
+        for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+            monumento.add(cittaMonu.getString(0));
         }
 
-        MyAdapter adapter = new MyAdapter(getContext(), rist/*, images*/);
+        MyAdapter adapter = new MyAdapter(getContext(), monumento/*, images*/);
         myList.setAdapter(adapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -86,7 +75,7 @@ public class GastronomiaFragmentUtente extends Fragment {
             }
         });
 
-        return  view;
+        return view;
     }
 
     class MyAdapter extends ArrayAdapter<String> {
@@ -95,10 +84,10 @@ public class GastronomiaFragmentUtente extends Fragment {
         ArrayList<String> nomePunto;
         //Bitmap immagine[];
 
-        MyAdapter(Context c, ArrayList<String> gastronomia/*, int imgs[]*/) {
-            super(c, R.layout.row, R.id.textViewDatiCitta, gastronomia);
+        MyAdapter(Context c, ArrayList<String> monumento/*, int imgs[]*/) {
+            super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
             this.context = c;
-            this.nomePunto = gastronomia;
+            this.nomePunto = monumento;
             //this. rImg = imgs;
         }
 
@@ -106,25 +95,25 @@ public class GastronomiaFragmentUtente extends Fragment {
         @Override
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
+            View row = layoutInflater.inflate(R.layout.row, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
-            TextView cittaNome = row.findViewById(R.id.textViewCitta);
             button = row.findViewById(R.id.id);
 
             //images.setImageResource(rImg[position]);
             nome.setText(nomePunto.get(position));
+            TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
+            final String monumento = nomePunto.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Gastronomia");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Gastronomia");
+                    final CancellaDialogMonumentoViaggio cancellaDialogMonumento = new CancellaDialogMonumentoViaggio(getActivity(), context, citta, email, monumento);
+                    cancellaDialogMonumento.startLoadingDialog();
                 }
             });
+
             return row;
         }
     }
@@ -132,14 +121,14 @@ public class GastronomiaFragmentUtente extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaRist = db.getAllDataRistorantiCitta(citta);
-                rist = new ArrayList<String>();
+                cittaMonu = db.getAllViaggiMonumento(citta, email,"Monumento");
+                monumento = new ArrayList<String>();
 
-                for (cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()) {
-                    rist.add(cittaRist.getString(0));
+                for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                    monumento.add(cittaMonu.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), rist/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), monumento/*, images*/);
                 myList.setAdapter(adapter);
                 break;
         }

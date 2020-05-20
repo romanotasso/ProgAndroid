@@ -130,6 +130,11 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
                 intentHome.putExtra("email",email);
                 startActivity(intentHome);
                 break;
+            case R.id.viaggi:
+                Intent intentViaggi = new Intent(SettingActivity.this, IMieiViaggiActivity.class);
+                intentViaggi.putExtra("email", email);
+                startActivity(intentViaggi);
+                break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(SettingActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email",email);

@@ -4,66 +4,68 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class IMieiViaggiActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class VisualizzaViaggiActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-     DatabaseHelper db;
-     ListView myList;
-     ArrayAdapter adapter;
-     Cursor cittaLista;
-     ArrayList<String> citta;
+    DatabaseHelper db;
+    ListView myList;
+    ArrayAdapter adapter;
+    Cursor cittaLista;
+    ArrayList<String> citta;
 
-     DrawerLayout drawerLayout;
-     ActionBarDrawerToggle actionBarDrawerToggle;
-     Toolbar toolbar;
-     NavigationView navigationView;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    Toolbar toolbar;
+    NavigationView navigationView;
 
-     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
-     ImageView immagineProfilo;
+    String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
+    ImageView immagineProfilo;
 
-     TextView nome;
-     TextView cognome;
-     View hView;
-     String email;
+    TextView nome;
+    TextView cognome;
+    View hView;
+    String email;
+
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    PageAdapterViaggi pageAdapterViaggi;
+    TabItem tabMonumento, tabRistoranti, tabHotelBB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_i_miei_viaggi);
+        setContentView(R.layout.activity_visualizza_viaggi);
 
         db = new DatabaseHelper(this);
 
         email = getIntent().getExtras().getString("email");
-
-        myList = findViewById(R.id.listaViaggi);
-        myList.setVisibility(View.VISIBLE);
-        cittaLista = db.getAllDataViaggi(email);
-        citta = new ArrayList<String>();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,7 +77,7 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        IMieiViaggiActivity.DownloadImage downloadImage = new DownloadImage(email);
+        VisualizzaViaggiActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
         nome.setText(db.getNome(email));
         cognome.setText(db.getCognome(email));
@@ -94,24 +96,51 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
         navigationView.setCheckedItem(R.id.viaggi);
 
-        for(cittaLista.moveToFirst(); !cittaLista.isAfterLast(); cittaLista.moveToNext()){
-            citta.add(cittaLista.getString(0));
-        }
+        tabLayout = findViewById(R.id.tabLayoutVisualizzaViaggi);
+        tabMonumento = findViewById(R.id.monumentiVisualizzaViaggi);
+        tabRistoranti = findViewById(R.id.gastronomiaVisualizzaViaggi);
+        tabHotelBB = findViewById(R.id.hotel_bbVisualizzaViaggi);
+        viewPager = findViewById(R.id.viewPagerVisualizzaViaggi);
 
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,citta);
-        myList.setAdapter(adapter);
+        pageAdapterViaggi = new PageAdapterViaggi(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapterViaggi);
 
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String città = adapterView.getItemAtPosition(i).toString();
-                Intent intent = new Intent(IMieiViaggiActivity.this, VisualizzaViaggiActivity.class);
-                intent.putExtra("email", email);
-                intent.putExtra("citta", città);
-                startActivity(intent);
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    }
+                } else if (tab.getPosition() == 1) {
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    }
+                } else {
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
     @Override
@@ -129,24 +158,24 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
         switch (menuItem.getItemId()) {
             case R.id.home:
-                Intent intentHome = new Intent(this, HomeActivity.class);
+                Intent intentHome = new Intent(VisualizzaViaggiActivity.this, HomeActivity.class);
                 intentHome.putExtra("email", email);
                 startActivity(intentHome);
                 break;
             case R.id.viaggi:
                 break;
             case R.id.profilo:
-                Intent intentProfilo = new Intent(this, ProfiloActivity.class);
+                Intent intentProfilo = new Intent(VisualizzaViaggiActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(this, SettingActivity.class);
+                Intent intentImpo = new Intent(VisualizzaViaggiActivity.this, SettingActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
-                Intent h = new Intent(IMieiViaggiActivity.this, LoginActivity.class);
+                Intent h = new Intent(VisualizzaViaggiActivity.this, LoginActivity.class);
                 startActivity(h);
                 finish();
                 break;

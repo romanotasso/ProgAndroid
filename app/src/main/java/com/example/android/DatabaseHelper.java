@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
-        db.execSQL("CREATE TABLE " + TABELLA_VIAGGI + "(email text, citta TEXT, nome TEXT, PRIMARY KEY(email,citta), FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome), FOREIGN KEY (email) REFERENCES  " + TABELLA_UTENTE + " (email))");
+        db.execSQL("CREATE TABLE " + TABELLA_VIAGGI + "(email text, citta TEXT, nome TEXT, tipologia TEXT, PRIMARY KEY(email, citta, nome), FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome), FOREIGN KEY (email) REFERENCES  " + TABELLA_UTENTE + " (email))");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -300,21 +300,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*Sezione Viaggi*/
-    public boolean inserisciViaggio(String email,String nome_citta, String nome){
+    public boolean inserisciViaggio(String email,String nome_citta, String nome, String tipologia){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentViaggio = new ContentValues();
         contentViaggio.put("email", email);
         contentViaggio.put("citta", nome_citta);
         contentViaggio.put("nome", nome);
+        contentViaggio.put("tipologia", tipologia);
         long ins = db.insert(TABELLA_VIAGGI, null, contentViaggio);
         if(ins==-1) return  false;
         else return true;
     }
 
-    public Cursor getAllDataViaggi(){
+    public Cursor getAllDataViaggi(String email){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_VIAGGI , new String[]{});
+        Cursor res = db.rawQuery("SELECT DISTINCT citta FROM " + TABELLA_VIAGGI + " WHERE email = ?" , new String[]{email});
         return res;
+    }
+
+    public Cursor getAllViaggiMonumento(String citta, String email, String tipologia){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ?" , new String[]{citta, email, tipologia});
+        return res;
+    }
+
+    public Cursor getAllViaggiGastronomia(String citta, String email, String tipologia){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ?" , new String[]{citta, email, tipologia});
+        return res;
+    }
+
+    public Cursor getAllViaggiHotel(String citta, String email, String tipologia){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ?" , new String[]{citta, email, tipologia});
+        return res;
+    }
+
+    public Integer deleteViaggio (String citta, String email, String nome, String tipologia) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return  db.delete(TABELLA_VIAGGI, "nome = ? and citta = ? and email = ? and tipologia = ?", new String[]{nome, citta, email, tipologia});
     }
 
 }
