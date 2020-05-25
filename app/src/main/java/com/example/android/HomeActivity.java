@@ -70,7 +70,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         HomeActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
         nome.setText(db.getNome(email));
+        db.close();
         cognome.setText(db.getCognome(email));
+        db.close();
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();

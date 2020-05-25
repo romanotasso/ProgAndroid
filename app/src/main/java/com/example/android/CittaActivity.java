@@ -42,7 +42,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     PageAdapterUtente pageAdapterUtente;
     TabItem tabMonumento, tabRistoranti, tabHotelBB;
 
-
     public String citta, cittaSearch, cittaLista, cittaDB;
 
     TextView nome;
@@ -88,8 +87,9 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         cognome = hView.findViewById(R.id.textCognome);
 
         nome.setText(db.getNome(email));
+        db.close();
         cognome.setText(db.getCognome(email));
-
+        db.close();
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
         CittaActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();

@@ -95,7 +95,9 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         downloadImage.execute();
 
         nome.setText(db.getNome(getIntent().getExtras().getString("email")));
+        db.close();
         cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
+        db.close();
         navigationView.setNavigationItemSelectedListener(this);
         email1 = getIntent().getExtras().getString("email");
 
@@ -118,6 +120,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         for (cittaHome.moveToFirst(); !cittaHome.isAfterLast(); cittaHome.moveToNext()) {
             citta.add(cittaHome.getString(0));
         }
+        db.close();
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, citta);
         myList.setAdapter(adapter);
@@ -142,11 +145,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
                     myList.setVisibility(View.GONE);
-                    //findViewById(R.id.attiva_gps).setVisibility(View.VISIBLE);
-                    //findViewById(R.id.checkCitta).setVisibility(View.VISIBLE);
                 } else {
-                    //findViewById(R.id.attiva_gps).setVisibility(View.GONE);
-                    //findViewById(R.id.checkCitta).setVisibility(View.GONE);
                     adapter.getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);
                 }
@@ -170,7 +169,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         resultReceiver = new AddressResultReciver(new Handler());
         textLatLong = findViewById(R.id.textLatLog);
         textAddress = findViewById(R.id.textAddress);
-        //attiva_gps = findViewById(R.id.attiva_gps);
+
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(CercaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
@@ -220,6 +219,11 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 Intent h = new Intent(CercaActivity.this, LoginActivity.class);
                 startActivity(h);
                 finish();
+                break;
+            case  R.id.viaggi:
+                Intent intentIMieiViaggi = new Intent(CercaActivity.this,IMieiViaggiActivity.class);
+                intentIMieiViaggi.putExtra("email", email1);
+                startActivity(intentIMieiViaggi);
                 break;
         }
         return true;
@@ -280,6 +284,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
             if (resultCode == Costanti.SUCCESS_RESULT) {
                 textAddress.setText(resultData.getString(Costanti.RESULT_DATA_KEY));
                 if(!db.checkCitta(resultData.getString(Costanti.RESULT_DATA_KEY))){
+                    db.close();
                     LoadingDialog loadingDialog = new LoadingDialog(CercaActivity.this,resultData.getString(Costanti.RESULT_DATA_KEY),email1);
                     loadingDialog.startLoadingDialog();
                 }

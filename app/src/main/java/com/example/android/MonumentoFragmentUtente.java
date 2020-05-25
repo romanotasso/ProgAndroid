@@ -1,18 +1,15 @@
 package com.example.android;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +30,11 @@ public class MonumentoFragmentUtente extends Fragment{
     Cursor cittaMonu;
     ArrayList<String> monumento;
     DatabaseHelper db;
+    MyAdapter adapter;
     ImageButton button;
     public  ArrayList<Bitmap> foto;
+
+
 
     public String citta, cittaSearch, cittaLista, cittaDB, email;
 
@@ -43,8 +43,8 @@ public class MonumentoFragmentUtente extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
 
+        View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
         db = new DatabaseHelper(getContext());
 
         foto = new ArrayList<Bitmap>();
@@ -68,11 +68,10 @@ public class MonumentoFragmentUtente extends Fragment{
         cittaMonu = db.getAllDataMonumentiCitta(citta);
         monumento = new ArrayList<String>();
 
-
         for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
             monumento.add(cittaMonu.getString(0));
         }
-
+        db.close();
 
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getContext();
@@ -101,12 +100,10 @@ public class MonumentoFragmentUtente extends Fragment{
     class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
-
         ArrayList<String> nomePunto;
 
-
-        MyAdapter(Context c, ArrayList<String> monumento) {
-            super(c, R.layout.row_utente, R.id.textViewDatiCitta, monumento);
+        MyAdapter(Context c, ArrayList<String> gastronomia) {
+            super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = monumento;
         }
@@ -116,22 +113,21 @@ public class MonumentoFragmentUtente extends Fragment{
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
-
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             button = row.findViewById(R.id.id);
-            TextView cittaNome = row.findViewById(R.id.textViewCitta);
-
             images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
+            TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
-            final String monumento = nomePunto.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), context, citta, email, monumento);
-                    viaggioMonumento.startLoadingDialog();
+                    String type = "inserisciViaggio";
+                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");
+                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Monumento");
                 }
             });
 
@@ -182,7 +178,7 @@ public class MonumentoFragmentUtente extends Fragment{
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.foto.addAll(foto);
-        MyAdapter adapter = new MyAdapter(getContext(),monumento);
+         adapter = new MyAdapter(getContext(),monumento);
         myList.setAdapter(adapter);
 
     }
@@ -202,5 +198,4 @@ public class MonumentoFragmentUtente extends Fragment{
                 break;
         }
     }
-
 }

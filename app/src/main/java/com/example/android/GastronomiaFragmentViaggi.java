@@ -2,6 +2,9 @@ package com.example.android;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -33,7 +38,8 @@ public class GastronomiaFragmentViaggi extends Fragment {
     DatabaseHelper db;
     ImageButton button;
     String citta, email;
-
+    MyAdapter adapter;
+    ArrayList<Bitmap> fotoGastronomia;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 
@@ -52,13 +58,17 @@ public class GastronomiaFragmentViaggi extends Fragment {
         myList.setVisibility(View.VISIBLE);
         cittaRist = db.getAllViaggiGastronomia(citta, email,"Gastronomia");
         gastronomia = new ArrayList<String>();
+        fotoGastronomia = new ArrayList<Bitmap>();
 
         for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
             gastronomia.add(cittaRist.getString(0));
         }
 
-        MyAdapter adapter = new MyAdapter(getContext(), gastronomia/*, images*/);
-        myList.setAdapter(adapter);
+        BackgroundWorker backgroundWorker = new BackgroundWorker();
+        backgroundWorker.context = getContext();
+        backgroundWorker.citta = citta;
+        backgroundWorker.nomiGastronomia = gastronomia;
+        backgroundWorker.execute();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -79,15 +89,13 @@ public class GastronomiaFragmentViaggi extends Fragment {
 
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
-        //int rImg[];
         ArrayList<String> nomePunto;
-        //Bitmap immagine[];
 
         MyAdapter(Context c, ArrayList<String> monumento/*, int imgs[]*/) {
             super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
-            //this. rImg = imgs;
+
         }
 
         @NonNull
@@ -98,8 +106,7 @@ public class GastronomiaFragmentViaggi extends Fragment {
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             button = row.findViewById(R.id.id);
-
-            //images.setImageResource(rImg[position]);
+            images.setImageBitmap(fotoGastronomia.get(position));
             nome.setText(nomePunto.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
@@ -116,6 +123,58 @@ public class GastronomiaFragmentViaggi extends Fragment {
             return row;
         }
     }
+
+    public class BackgroundWorker extends AsyncTask<Void,Void,ArrayList<Bitmap>> {
+
+        Context context;
+        ArrayList<String> nomiGastronomia;
+        String citta;
+        final static String url_photoGastronomia = "http://progandroid.altervista.org/progandorid/FotoGastronomia/";
+
+        @Override
+        protected ArrayList<Bitmap> doInBackground(Void... voids) {
+
+            String url;
+            Bitmap immagine;
+            ArrayList<Bitmap> fotoBack = new ArrayList<>();
+
+            try {
+                for (int i = 0; i < nomiGastronomia.size(); i = i + 1) {
+                    String nomeGastronomia =  nomiGastronomia.get(i).replaceAll(" ","%20");
+                    citta.replaceAll(" ","%20");
+                    url = url_photoGastronomia + citta +nomeGastronomia+ "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    immagine = BitmapFactory.decodeStream(inputStream);
+                    if (!(immagine == null)) {
+                        fotoBack.add(i, immagine);
+                    }
+                }
+                return fotoBack;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
+            super.onPostExecute(bitmaps);
+            if(bitmaps!=null){
+                returnFoto(bitmaps);
+            }
+        }
+    }
+
+    public void returnFoto(ArrayList<Bitmap> foto){
+
+        this.fotoGastronomia.addAll(foto);
+        adapter = new MyAdapter(getContext(),gastronomia);
+        myList.setAdapter(adapter);
+
+    }
+
+
+
 
     public void refreshItems() {
         switch (refresh_count) {

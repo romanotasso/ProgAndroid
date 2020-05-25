@@ -103,7 +103,7 @@ public class GastronomiaFragmentUtente extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
 
-        MyAdapter(Context c, ArrayList<String> gastronomia/*, int imgs[]*/) {
+        MyAdapter(Context c, ArrayList<String> gastronomia) {
             super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = gastronomia;
