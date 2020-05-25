@@ -33,8 +33,6 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
     ArrayList<String> monumento;
     ArrayList<String> citta;
 
-    MyAdapter adapter;
-
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 

@@ -164,6 +164,11 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
                 break;
             case R.id.viaggi:
                 break;
+            case R.id.couponMenu:
+                Intent intentCoupon = new Intent(VisualizzaViaggiActivity.this, CouponActivity.class);
+                intentCoupon.putExtra("email", email);
+                startActivity(intentCoupon);
+                break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(VisualizzaViaggiActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);

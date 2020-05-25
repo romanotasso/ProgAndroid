@@ -9,9 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -21,21 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-
-
-
-
-
-
 
 public class CittaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,9 +49,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     TextView cognome;
     View hView;
     String email;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +173,11 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 Intent intentProfilo = new Intent(CittaActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
+                break;
+            case R.id.couponMenu:
+                Intent intentCoupon = new Intent(CittaActivity.this, CouponActivity.class);
+                intentCoupon.putExtra("email", email);
+                startActivity(intentCoupon);
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(CittaActivity.this, SettingActivity.class);

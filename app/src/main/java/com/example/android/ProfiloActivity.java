@@ -39,6 +39,8 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     TextView data;
     TextView email;
     TextView citta;
+    TextView coupon;
+    Button indietro;
 
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
@@ -95,6 +97,17 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         citta = findViewById(R.id.citta);
         sesso = findViewById(R.id.sesso);
         data = findViewById(R.id.data);
+        coupon = findViewById(R.id.coupon);
+        indietro = findViewById(R.id.indietro);
+
+        indietro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfiloActivity.this, HomeActivity.class);
+                intent.putExtra("email", emailExtras);
+                startActivity(intent);
+            }
+        });
 
         if (cursor.getCount() == 0) {
             Toast.makeText(ProfiloActivity.this, "Nessun utente", Toast.LENGTH_SHORT).show();
@@ -107,6 +120,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             citta.setText(cursor.getString(3));
             sesso.setText(cursor.getString(4));
             data.setText(cursor.getString(5));
+            coupon.setText(cursor.getString(6));
         }
 
     }
@@ -134,6 +148,11 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
                 Intent intentViaggi = new Intent(ProfiloActivity.this, IMieiViaggiActivity.class);
                 intentViaggi.putExtra("email", emailExtras);
                 startActivity(intentViaggi);
+                break;
+            case R.id.couponMenu:
+                Intent intentCoupon = new Intent(ProfiloActivity.this, CouponActivity.class);
+                intentCoupon.putExtra("email", emailExtras);
+                startActivity(intentCoupon);
                 break;
             case R.id.profilo:
                 break;

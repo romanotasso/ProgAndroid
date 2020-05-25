@@ -17,96 +17,72 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.BitSet;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GastronomiaFragmentUtente extends Fragment {
+public class MonumentoCouponFragment extends Fragment {
 
     ListView myList;
-    Cursor cittaRist;
-    public ArrayList<Bitmap> foto;
-    ArrayList<String> rist;
+    Cursor cittaMonu;
+    ArrayList<String> monumento;
     DatabaseHelper db;
     ImageButton button;
+    public  ArrayList<Bitmap> foto;
 
-    public String citta, cittaSearch, cittaLista, cittaDB,email;
-
-    SwipeRefreshLayout refreshLayout;
-    int refresh_count = 0;
+    public String coupon, email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_gastronomia_utente, container, false);
+        View view = inflater.inflate(R.layout.fragment_monumento_coupon, container, false);
 
         db = new DatabaseHelper(getContext());
-
-
         foto = new ArrayList<Bitmap>();
         email = getActivity().getIntent().getExtras().getString("email");
-        cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
-        cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
-        cittaDB = getActivity().getIntent().getExtras().getString("cittaDB");
-        if((cittaSearch == null) && (cittaLista == null)) {
-            citta = cittaDB;
-        } else if(cittaSearch == null){
-            citta = cittaLista;
-        } else {
-            citta = cittaSearch;
-        }
+        coupon = getActivity().getIntent().getExtras().getString("coupon");
+        coupon = coupon.substring(0, 1).toUpperCase() + coupon.substring(1).toLowerCase();
 
-        refreshLayout = view.findViewById(R.id.swipe);
-
-        myList = view.findViewById(R.id.listaRistoranti);
+        myList = view.findViewById(R.id.listaMonumentoCoupon);
         myList.setVisibility(View.VISIBLE);
-        cittaRist = db.getAllDataRistorantiCitta(citta);
-        rist = new ArrayList<String>();
+        cittaMonu = db.getDataCouponMonumento(coupon);
+        monumento = new ArrayList<String>();
 
-        for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
-            rist.add(cittaRist.getString(0));
+        for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+            monumento.add(cittaMonu.getString(0));
         }
 
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshItems();
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshLayout.setRefreshing(false);
-                    }
-                }, 2000);
-            }
-        });
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getContext();
-        backgroudWorkerPhoto.rist.addAll(rist);
-        backgroudWorkerPhoto.nomeCitta = citta;
+        backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+        backgroudWorkerPhoto.nomeCitta = coupon;
         backgroudWorkerPhoto.execute();
 
-        return  view;
+        return view;
     }
 
     class MyAdapter extends ArrayAdapter<String> {
+
         Context context;
+
         ArrayList<String> nomePunto;
 
-        MyAdapter(Context c, ArrayList<String> gastronomia/*, int imgs[]*/) {
-            super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
+
+        MyAdapter(Context c, ArrayList<String> monumento) {
+            super(c, R.layout.row_utente, R.id.textViewDatiCitta, monumento);
             this.context = c;
-            this.nomePunto = gastronomia;
+            this.nomePunto = monumento;
         }
 
         @NonNull
@@ -116,41 +92,26 @@ public class GastronomiaFragmentUtente extends Fragment {
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
-            images.setImageBitmap(foto.get(position));
-            TextView cittaNome = row.findViewById(R.id.textViewCitta);
             button = row.findViewById(R.id.id);
+            images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
-            cittaNome.setText(citta);
-            final String gastronomia = nomePunto.get(position);
+            TextView cittaNome = row.findViewById(R.id.textViewCitta);
+            cittaNome.setText(coupon);
+            final String monumento = nomePunto.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AggiungiViaggioGastronomia viaggioGastronomia = new AggiungiViaggioGastronomia(getActivity(), context, citta, email, gastronomia);
-                    viaggioGastronomia.startLoadingDialog();
+                    final AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), context, coupon, email, monumento);
+                    viaggioMonumento.startLoadingDialog();
                     /*String type = "inserisciViaggio";
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Gastronomia");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Gastronomia");*/
+                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");
+                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Monumento");*/
                 }
             });
+
             return row;
-        }
-    }
-
-    public void refreshItems() {
-        switch (refresh_count) {
-            default:
-                cittaRist = db.getAllDataRistorantiCitta(citta);
-                rist = new ArrayList<String>();
-
-                for (cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()) {
-                    rist.add(cittaRist.getString(0));
-                }
-
-                final MyAdapter adapter = new MyAdapter(getContext(), rist);
-                myList.setAdapter(adapter);
-                break;
         }
     }
 
@@ -159,8 +120,8 @@ public class GastronomiaFragmentUtente extends Fragment {
 
         Context context;
         String nomeCitta;
-        ArrayList<String> rist = new ArrayList<>();
-        final static String url_photoGastronomia = "http://progandroid.altervista.org/progandorid/FotoGastronomia/";
+        ArrayList<String> nomeMonumenti = new ArrayList<>();
+        final static String url_photoMonumento = "http://progandroid.altervista.org/progandorid/FotoMonumenti/";
 
 
         @Override
@@ -171,9 +132,9 @@ public class GastronomiaFragmentUtente extends Fragment {
             ArrayList<Bitmap> fotoBack = new ArrayList<Bitmap>();
 
             try {
-                for (int i = 0; i < rist.size(); i = i + 1) {
-                    String nomeGastronomia =  rist.get(i).replaceAll(" ","%20");
-                    url = url_photoGastronomia + nomeCitta +nomeGastronomia+ "JPG";
+                for (int i = 0; i < nomeMonumenti.size(); i = i + 1) {
+                    String nomeMonumento =  nomeMonumenti.get(i).replaceAll(" ","%20");
+                    url = url_photoMonumento + nomeCitta + nomeMonumento + "JPG";
                     InputStream inputStream = new java.net.URL(url).openStream();
                     immagine = BitmapFactory.decodeStream(inputStream);
                     if (!(immagine == null)) {
@@ -193,19 +154,15 @@ public class GastronomiaFragmentUtente extends Fragment {
             if(bitmaps!=null){
                 returnFoto(bitmaps);
             }
-
         }
     }
 
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.foto.addAll(foto);
-        MyAdapter adapter = new MyAdapter(getContext(), rist);
+        MyAdapter adapter = new MyAdapter(getContext(),monumento);
         myList.setAdapter(adapter);
 
-
     }
-
-
 
 }

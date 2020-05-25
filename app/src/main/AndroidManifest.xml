@@ -15,8 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VisualizzaViaggiActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".VisualizzaUtenteActivity"
+            android:parentActivityName=".VisualizzaDatiAmministratoreActivity"/>
+        <activity
+            android:name=".VisualizzaCouponActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CouponActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VisualizzaViaggiActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisualizzaDatiCMRHActivity"
             android:parentActivityName=".AmministratoreActivity" />
@@ -47,16 +57,16 @@
         <activity android:name=".AmministratoreActivity" />
         <activity
             android:name=".RegisterPhotoActivity"
-            android:parentActivityName=".RegisterActivity" />
+            android:parentActivityName=".RegisterEmailPassActivity" />
         <activity
             android:name=".CercaActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
-            android:parentActivityName=".RegisterEmailPassActivity" />
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".RegisterEmailPassActivity"
-            android:parentActivityName=".LoginActivity" />
+            android:parentActivityName=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

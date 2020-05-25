@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,6 +36,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class RegisterPhotoActivity extends AppCompatActivity {
@@ -62,7 +65,12 @@ public class RegisterPhotoActivity extends AppCompatActivity {
     }
 
     public void skipPhoto(View view) {
-
+        ArrayList<String> coupon = new ArrayList<String>();
+        coupon.add("MILANO");
+        coupon.add("ALTAMURA");
+        coupon.add("BARI");
+        coupon.add("ROMA");
+        final Random random = new Random();
         String str_nome = getIntent().getExtras().getString("nome");
         String str_cognome = getIntent().getExtras().getString("cognome");
         String str_email = getIntent().getExtras().getString("email");
@@ -70,9 +78,13 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         String str_citta = getIntent().getExtras().getString("citta");
         String str_sesso = getIntent().getExtras().getString("sesso");
         String str_data = getIntent().getExtras().getString("data_nascita");
+        String couponUtente = coupon.get(random.nextInt(4));
         String type = "register";
 
         if (filepath == null) {
+            Bitmap image = ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_profilo)).getBitmap();
+            new updateImage(image, str_email).execute();
+
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type
                     , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
@@ -81,13 +93,15 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     , str_pass
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
-                    str_data);
+                    str_data,
+                    couponUtente);
             db.inserisciUtente(str_email,
                     str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
                     , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
-                    str_data);
+                    str_data,
+                    couponUtente);
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
@@ -105,13 +119,14 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     , str_pass
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
-                    str_data);
+                    str_data,
+                    couponUtente);
             db.inserisciUtente(str_email,
                     str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
                     , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
-                    str_data);
+                    str_data, couponUtente);
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();

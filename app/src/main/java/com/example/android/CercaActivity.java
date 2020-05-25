@@ -206,6 +206,11 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 intentProfilo.putExtra("email", email1);
                 startActivity(intentProfilo);
                 break;
+            case R.id.couponMenu:
+                Intent intentCoupon = new Intent(CercaActivity.this, CouponActivity.class);
+                intentCoupon.putExtra("email", email1);
+                startActivity(intentCoupon);
+                break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(CercaActivity.this, SettingActivity.class);
                 intentImpo.putExtra("email", email1);

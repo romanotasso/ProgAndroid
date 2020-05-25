@@ -26,7 +26,7 @@ public class AmministratoreActivity extends AppCompatActivity {
         mButtonDati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AmministratoreActivity.this, VisualizzaDatiCMRHActivity.class);
+                Intent intent = new Intent(AmministratoreActivity.this, VisualizzaDatiAmministratoreActivity.class);
                 startActivity(intent);
             }
         });

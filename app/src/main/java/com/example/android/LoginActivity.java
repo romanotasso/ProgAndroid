@@ -49,10 +49,14 @@ public class LoginActivity extends AppCompatActivity {
         String typeMonumenti = "aggiornamentoDatiMonumenti";
         backgroudWorkerMonumento.execute(typeMonumenti);
 
+        BackgroudWorker backgroudWorkerViaggio = new BackgroudWorker(this);
+        String typeViaggio = "aggiornamentoDatiViaggio";
+        backgroudWorkerViaggio.execute(typeViaggio);
+
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(LoginActivity.this, RegisterEmailPassActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
             }
         });

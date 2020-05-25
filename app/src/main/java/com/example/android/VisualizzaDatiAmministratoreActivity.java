@@ -3,6 +3,7 @@ package com.example.android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -10,10 +11,7 @@ import android.widget.Button;
 
 public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
 
-    Button mButtonCittà;
-    Button mButtonMonumenti;
-    Button mButtonGastronomia;
-    Button mButtonHotelBB;
+    Button mButton;
     Button mButtonUtente;
     DatabaseHelper db;
 
@@ -25,15 +23,28 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new DatabaseHelper(this);
-        mButtonCittà = findViewById(R.id.button_dati_città);
-        mButtonMonumenti = findViewById(R.id.button_dati_monumenti);
-        mButtonGastronomia = findViewById(R.id.button_dati_gastronomia);
-        mButtonHotelBB = findViewById(R.id.button_dati_hotelBB);
-        mButtonUtente = findViewById(R.id.button_dati_utente);
+        mButton = findViewById(R.id.button_dati);
+        mButtonUtente = findViewById(R.id.button_utente);
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentPunto = new Intent(VisualizzaDatiAmministratoreActivity.this, VisualizzaDatiCMRHActivity.class);
+                startActivity(intentPunto);
+            }
+        });
+
+        mButtonUtente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentUtente = new Intent(VisualizzaDatiAmministratoreActivity.this, VisualizzaUtenteActivity.class);
+                startActivity(intentUtente);
+            }
+        });
 
     }
 
-    public void showMessage(String  title, String message){
+    /*public void showMessage(String  title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(title);
@@ -140,5 +151,5 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
             buffer.append("Citta: " + res.getString(1) + "\n\n");
         }
         showMessage("Dati:",buffer.toString());
-    }
+    }*/
 }

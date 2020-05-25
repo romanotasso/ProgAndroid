@@ -36,8 +36,6 @@ public class MonumentoFragmentUtente extends Fragment{
     ImageButton button;
     public  ArrayList<Bitmap> foto;
 
-
-
     public String citta, cittaSearch, cittaLista, cittaDB, email;
 
     SwipeRefreshLayout refreshLayout;
@@ -107,8 +105,8 @@ public class MonumentoFragmentUtente extends Fragment{
         ArrayList<String> nomePunto;
 
 
-        MyAdapter(Context c, ArrayList<String> gastronomia) {
-            super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
+        MyAdapter(Context c, ArrayList<String> monumento) {
+            super(c, R.layout.row_utente, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
         }
@@ -118,21 +116,22 @@ public class MonumentoFragmentUtente extends Fragment{
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
+
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             button = row.findViewById(R.id.id);
+            TextView cittaNome = row.findViewById(R.id.textViewCitta);
+
             images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
-            TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
+            final String monumento = nomePunto.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Monumento");
+                    final AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), context, citta, email, monumento);
+                    viaggioMonumento.startLoadingDialog();
                 }
             });
 
@@ -142,12 +141,10 @@ public class MonumentoFragmentUtente extends Fragment{
 
     public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
 
-
         Context context;
         String nomeCitta;
         ArrayList<String> nomeMonumenti = new ArrayList<>();
         final static String url_photoMonumento = "http://progandroid.altervista.org/progandorid/FotoMonumenti/";
-
 
         @Override
         public ArrayList<Bitmap> doInBackground(Void... voids) {
@@ -189,9 +186,6 @@ public class MonumentoFragmentUtente extends Fragment{
         myList.setAdapter(adapter);
 
     }
-
-
-
 
     public void refreshItems() {
         switch (refresh_count) {

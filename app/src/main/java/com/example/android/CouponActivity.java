@@ -1,31 +1,41 @@
 package com.example.android;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.ResultReceiver;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.material.navigation.NavigationView;
+
 import java.io.InputStream;
 
+public class CouponActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    EditText inserisci;
     DatabaseHelper db;
+    Button button;
+    final static String couponMilano = "MILANO";
+    final static String couponAltamura = "ALTAMURA";
+    final static String couponBari = "BARI";
+    final static String couponRoma = "ROMA";
+
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
@@ -38,22 +48,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     View hView;
 
     String email;
-    //////////////////////////////////////////////////////////////
-    private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    private TextView textLatLong, textAddress;
-    private ResultReceiver resultReceiver;
 
-    Button buttonCerca;
-    Button buttonViaggi;
-    Button buttonCoupon;
-
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_coupon);
 
         db = new DatabaseHelper(this);
+        inserisci = findViewById(R.id.inserisci_coupon);
+        button = findViewById(R.id.coupon);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         nome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        HomeActivity.DownloadImage downloadImage = new DownloadImage(email);
+        CouponActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
         nome.setText(db.getNome(email));
         cognome.setText(db.getCognome(email));
@@ -76,8 +79,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
         menu.findItem(R.id.cerca).setVisible(false);
-        menu.findItem(R.id.viaggi).setVisible(false);
-        menu.findItem(R.id.couponMenu).setVisible(false);
 
         navigationView.bringToFront();
 
@@ -86,33 +87,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
 
-        navigationView.setCheckedItem(R.id.home);
+        navigationView.setCheckedItem(R.id.couponMenu);
 
-        buttonCerca = findViewById(R.id.esplora);
-        buttonCerca.setOnClickListener(new View.OnClickListener() {
+        Cursor couponDB = db.getCouponUtente(email);
+        String coupon = null;
+
+        for(couponDB.moveToFirst(); !couponDB.isAfterLast(); couponDB.moveToNext()){
+           coupon = couponDB.getString(0);
+        }
+
+        final String finalCoupon = coupon;
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentCerca = new Intent(HomeActivity.this, CercaActivity.class);
-                intentCerca.putExtra("email",email);
-                startActivity(intentCerca);
-            }
-        });
-        buttonViaggi = findViewById(R.id.i_miei_viaggi);
-        buttonViaggi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentViaggi = new Intent(HomeActivity.this, IMieiViaggiActivity.class);
-                intentViaggi.putExtra("email", email);
-                startActivity(intentViaggi);
-            }
-        });
-        buttonCoupon = findViewById(R.id.coupon);
-        buttonCoupon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentCoupon = new Intent(HomeActivity.this, CouponActivity.class);
-                intentCoupon.putExtra("email", email);
-                startActivity(intentCoupon);
+                if (inserisci.getText().toString().trim().isEmpty()){
+                    Toast.makeText(CouponActivity.this, "Inserire coupon. Lo trovi nel tuo profilo!", Toast.LENGTH_SHORT).show();
+                } else if ((finalCoupon.equals(couponAltamura)) || (finalCoupon.equals(couponRoma)) || (finalCoupon.equals(couponMilano)) || (finalCoupon.equals(couponBari))) {
+                    Intent intent = new Intent(CouponActivity.this, VisualizzaCouponActivity.class);
+                    intent.putExtra("coupon", finalCoupon);
+                    intent.putExtra("email", email);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(CouponActivity.this, "Coupon non valido", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -133,24 +130,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()){
             case R.id.home:
-                break;
+                Intent intentHome = new Intent(CouponActivity.this, HomeActivity.class);
+                intentHome.putExtra("email", email);
+                startActivity(intentHome);
             case R.id.viaggi:
-                Intent intentViaggi = new Intent(HomeActivity.this, IMieiViaggiActivity.class);
+                Intent intentViaggi = new Intent(CouponActivity.this, IMieiViaggiActivity.class);
                 intentViaggi.putExtra("email", email);
                 startActivity(intentViaggi);
                 break;
+            case R.id.couponMenu:
+                break;
             case R.id.profilo:
-                Intent intentProfilo = new Intent(HomeActivity.this, ProfiloActivity.class);
+                Intent intentProfilo = new Intent(CouponActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(HomeActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(CouponActivity.this, SettingActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
-                Intent h = new Intent(HomeActivity.this, LoginActivity.class);
+                Intent h = new Intent(CouponActivity.this, LoginActivity.class);
                 startActivity(h);
                 finish();
                 break;

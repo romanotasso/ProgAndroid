@@ -29,9 +29,14 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
     final static int VALORE_CITTA = 3;
     final static int VALORE_SESSO = 4;
     final static int VALORE_DATA = 5;
+    final static int VALORE_COUPON = 6;
     final static int VALORE_NOME_CITTA = 0;
     final static int VALORE_NOME_MHG = 0;
     final static int VALORE_CITTA_MHG = 1;
+    final static int VALORE_EMAIL_VIAGGIO = 0;
+    final static int VALORE_CITTA_VIAGGIO = 1;
+    final static int VALORE_NOME_VIAGGIO = 2;
+    final static int VALORE_TIPOLOGIA_VIAGGIO = 3;
 
     String emailDati;
     String cittaDati;
@@ -63,6 +68,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
         String checkCitta = "http://progandroid.altervista.org/progandorid/checkCitta.php";
         String inserisciViaggio = "http://progandroid.altervista.org/progandorid/inserimentoViaggi.php";
         String deleteViaggio = "http://progandroid.altervista.org/progandorid/cancellazioneViaggi.php";
+        String riceviDatiViaggio = "http://progandroid.altervista.org/progandorid/fornisciDatiViaggio.php";
 
         d = new DatabaseHelper(context.getApplicationContext());
 
@@ -296,7 +302,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String result = "";
                 String line = "";
                 int i = 0;
-                String valori[] = new String[6];
+                String valori[] = new String[7];
                 d.updateDatiUtente();
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -317,7 +323,10 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         i = i + 1;
                     } else if (i == VALORE_DATA) {
                         valori[i] = line;
-                        d.inserisciUtente(valori[0], valori[1], valori[2], valori[3], valori[4], valori[5]);
+                        i = i +1;
+                    } else if (i == VALORE_COUPON) {
+                        valori[i] = line;
+                        d.inserisciUtente(valori[0], valori[1], valori[2], valori[3], valori[4], valori[5], valori[6]);
                         i = 0;
                     }
                 }
@@ -403,6 +412,49 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
         }
+        if (type.equals("aggiornamentoDatiViaggio")) {
+            try {
+                URL url = new URL(riceviDatiViaggio);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                String result = "";
+                String line = "";
+                int i = 0;
+                String valori[] = new String[5];
+                d.updateDatiViaggio();
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                    if (i == VALORE_EMAIL_VIAGGIO) {
+                        valori[i] = line;
+                        i = i + 1;
+                    } else if (i == VALORE_CITTA_VIAGGIO) {
+                        valori[i] = line;
+                        i = i + 1;
+                    } else if (i == VALORE_NOME_VIAGGIO) {
+                        valori[i] = line;
+                        i = i + 1;
+                    } else if (i == VALORE_TIPOLOGIA_VIAGGIO) {
+                        valori[i] = line;
+                        d.inserisciViaggio(valori[0], valori[1], valori[2], valori[3]);
+                        i = 0;
+                    }
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         if (type.equals("login")) {
             try {
                 String email = params[1];
@@ -446,6 +498,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String citta = params[5];
                 String sesso = params[6];
                 String data = params[7];
+                String coupon = params [8];
                 URL url = new URL(register_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -459,10 +512,11 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
                         + URLEncoder.encode("citta", "UTF-8") + "=" + URLEncoder.encode(citta, "UTF-8") + "&"
                         + URLEncoder.encode("sesso", "UTF-8") + "=" + URLEncoder.encode(sesso, "UTF-8") + "&"
-                        + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8");
+                        + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8") + "&"
+                        + URLEncoder.encode("coupon", "UTF-8") + "=" + URLEncoder.encode(coupon, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
-                d.inserisciUtente(email, nome, cognome, citta, sesso, data);
+                d.inserisciUtente(email, nome, cognome, citta, sesso, data, coupon);
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();

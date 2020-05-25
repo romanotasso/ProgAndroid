@@ -27,6 +27,7 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
     private EditText confPassword;
     private Button avanti;
     TextInputLayout passwordUp;
+    DatabaseHelper db;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,32 +39,48 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
         confPassword = (EditText) findViewById(R.id.reg_confpass);
         avanti = (Button) findViewById(R.id.button_avanti);
         passwordUp = findViewById(R.id.setPasswordUp);
+        db = new DatabaseHelper(this);
     }
 
     public void nextStepRegistation(View view) {
 
-
+        String nome = getIntent().getExtras().getString("email");
+        String cognome = getIntent().getExtras().getString("email");
+        String sesso = getIntent().getExtras().getString("email");
+        String data = getIntent().getExtras().getString("email");
+        String citta = getIntent().getExtras().getString("email");
         String str_pass = password.getText().toString();
         String str_confpass = confPassword.getText().toString();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if(validateEmail(email)){
-            if(!str_pass.isEmpty()){
-                passwordUp.setPasswordVisibilityToggleEnabled(true);
-                if(str_pass.equals(str_confpass)){
-                    Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-                    intent.putExtra("email",email.getText().toString());
-                    intent.putExtra("password",str_pass);
-                    startActivity(intent);
+        if (db.checkEmail(email.getText().toString())){
+            if(validateEmail(email)){
+                if(!str_pass.isEmpty()){
+                    passwordUp.setPasswordVisibilityToggleEnabled(true);
+                    if(str_pass.equals(str_confpass)){
+                        Intent intent = new Intent(getApplicationContext(),RegisterPhotoActivity.class);
+                        intent.putExtra("email", email.getText().toString());
+                        intent.putExtra("password", str_pass);
+                        intent.putExtra("nome",nome);
+                        intent.putExtra("cognome",cognome);
+                        intent.putExtra("sesso",sesso);
+                        intent.putExtra("data_nascita",data);
+                        intent.putExtra("citta",citta);
+                        startActivity(intent);
+                    }else {
+                        confPassword.setError("Password non corrispondenti");
+                    }
                 }else {
-                    confPassword.setError("Password non corrispondenti");
+                    passwordUp.setPasswordVisibilityToggleEnabled(false);
+                    password.setError("Campo obbligatorio");
                 }
-            }else {
-                passwordUp.setPasswordVisibilityToggleEnabled(false);
-                password.setError("Campo obbligatorio");
             }
+        } else {
+            Toast.makeText(getApplicationContext(), "E-mail già presente", Toast.LENGTH_LONG).show();
         }
+
+
 
 
 

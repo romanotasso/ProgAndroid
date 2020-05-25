@@ -78,8 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         String str_nome = mTextNome.getText().toString();
         String str_cognome = mTextCognome.getText().toString();
-        String str_email = getIntent().getExtras().getString("email");
-        String str_pass = getIntent().getExtras().getString("password");
         String str_citta = mTextCitta.getText().toString();
         int radioID = radioGroup.getCheckedRadioButtonId();
         radioButtonSesso = findViewById(radioID);
@@ -87,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
         String str_data = mTextDataNascita.getText().toString();
         //String type = "register";
 
-        if (str_nome.trim().isEmpty() || str_cognome.trim().isEmpty() || str_citta.trim().isEmpty() || str_email.trim().isEmpty() || str_pass.trim().isEmpty() || str_sesso.trim().isEmpty() || str_data.trim().isEmpty()) {
+        if (str_nome.trim().isEmpty() || str_cognome.trim().isEmpty() || str_citta.trim().isEmpty() || str_sesso.trim().isEmpty() || str_data.trim().isEmpty()) {
             if (str_nome.trim().isEmpty()) {
                 mTextNome.setError("CAMPO OBBLIGATORIO");
             }
@@ -114,11 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
                         , str_sesso,
                         str_data);
 */
-            Intent intent = new Intent(getApplicationContext(),RegisterPhotoActivity.class);
+            Intent intent = new Intent(getApplicationContext(),RegisterEmailPassActivity.class);
             intent.putExtra("nome",str_nome);
             intent.putExtra("cognome",str_cognome);
-            intent.putExtra("email",str_email);
-            intent.putExtra("password",str_pass);
             intent.putExtra("sesso",str_sesso);
             intent.putExtra("data_nascita",str_data);
             intent.putExtra("citta",str_citta);

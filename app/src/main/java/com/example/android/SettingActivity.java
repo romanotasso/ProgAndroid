@@ -135,6 +135,11 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
                 intentViaggi.putExtra("email", email);
                 startActivity(intentViaggi);
                 break;
+            case R.id.couponMenu:
+                Intent intentCoupon = new Intent(SettingActivity.this, CouponActivity.class);
+                intentCoupon.putExtra("email", email);
+                startActivity(intentCoupon);
+                break;
             case R.id.profilo:
                 Intent intentProfilo = new Intent(SettingActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email",email);

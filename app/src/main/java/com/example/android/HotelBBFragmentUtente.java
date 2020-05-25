@@ -128,14 +128,17 @@ public class HotelBBFragmentUtente extends Fragment {
             nome.setText(nomePunto.get(position));
             images.setImageBitmap(foto.get(position));
             cittaNome.setText(citta);
+            final String hotel = nomePunto.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type = "inserisciViaggio";
+                    AggiungiViaggioHotel viaggioHotel = new AggiungiViaggioHotel(getActivity(), context, citta, email, hotel);
+                    viaggioHotel.startLoadingDialog();
+                    /*String type = "inserisciViaggio";
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                     backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Hotel");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Hotel");
+                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Hotel");*/
                 }
             });
             return row;

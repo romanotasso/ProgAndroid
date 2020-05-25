@@ -25,7 +25,7 @@ public class LoadingDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("Sei ad "+ citta);
-        builder.setCancelable(true);
+        builder.setCancelable(false);
         builder.setPositiveButton("Vai alla scheda", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

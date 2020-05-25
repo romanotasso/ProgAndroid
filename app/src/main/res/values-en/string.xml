@@ -47,4 +47,7 @@
     <string name="aggiorna">Update</string>
     <string name="punto_gastronomia">Gastronomy point</string>
     <string name="punto_di_interesse">Point of interest</string>
+    <string name="coupon">Coupon</string>
+    <string name="torna_alla_home">Back to Home</string>
+    <string name="inserisci_coupon">Insert coupon</string>
 </resources>

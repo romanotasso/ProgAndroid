@@ -129,19 +129,24 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
         switch (menuItem.getItemId()) {
             case R.id.home:
-                Intent intentHome = new Intent(this, HomeActivity.class);
+                Intent intentHome = new Intent(IMieiViaggiActivity.this, HomeActivity.class);
                 intentHome.putExtra("email", email);
                 startActivity(intentHome);
                 break;
             case R.id.viaggi:
                 break;
+            case R.id.couponMenu:
+                Intent intentCoupon = new Intent(IMieiViaggiActivity.this, CouponActivity.class);
+                intentCoupon.putExtra("email", email);
+                startActivity(intentCoupon);
+                break;
             case R.id.profilo:
-                Intent intentProfilo = new Intent(this, ProfiloActivity.class);
+                Intent intentProfilo = new Intent(IMieiViaggiActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(this, SettingActivity.class);
+                Intent intentImpo = new Intent(IMieiViaggiActivity.this, SettingActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
