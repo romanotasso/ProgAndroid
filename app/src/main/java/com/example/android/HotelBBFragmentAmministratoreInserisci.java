@@ -84,7 +84,7 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
                                 db.inserisciHotelBB(hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase());
                                 BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                                 backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia, hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase());
-                                Toast.makeText(getContext(), "Hotel/B&B inserito con successo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.inserisci_hotel, Toast.LENGTH_SHORT).show();
                                 Bitmap image = ((BitmapDrawable)photoHotel.getDrawable()).getBitmap();
                                 new updateImage(image,citta,hotelbb).execute();
                             }else {

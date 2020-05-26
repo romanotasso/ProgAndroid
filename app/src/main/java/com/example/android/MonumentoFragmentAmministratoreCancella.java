@@ -55,7 +55,7 @@ public class MonumentoFragmentAmministratoreCancella extends Fragment {
                     if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         if ((!db.checkMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase()))) {
                             db.deleteMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase());
-                            Toast.makeText(getContext(), "Monumento eliminato con successo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.elimina_monumento, Toast.LENGTH_SHORT).show();
                             String path = (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())+(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase())+ "JPG";
                             deleteImageMonumento deleteImageMonumento = new deleteImageMonumento(path);
                             deleteImageMonumento.execute();

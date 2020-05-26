@@ -80,7 +80,7 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                     if (db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         if (count == 1) {
                             db.inserisciCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
-                            Toast.makeText(getContext(), "Città inserita con successo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.inserisci_citta, Toast.LENGTH_SHORT).show();
                             BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                             backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
                             Bitmap image = ((BitmapDrawable) photoCitta.getDrawable()).getBitmap();
@@ -90,7 +90,7 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                         }
 
                     } else {
-                        mEditCitta.setError("Citta gia presente");
+                        mEditCitta.setError("Citta già presente");
                         mEditCitta.findFocus();
                     }
                 }
@@ -139,7 +139,7 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                         PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery();
                 } else {
-                    Toast.makeText(getContext(), "Permesso negato", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.permesso_negato, Toast.LENGTH_SHORT).show();
                 }
             }
         }

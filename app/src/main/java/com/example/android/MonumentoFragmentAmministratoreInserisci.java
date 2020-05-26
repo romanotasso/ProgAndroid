@@ -84,7 +84,7 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
                                 db.inserisciMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
                                 BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                                 backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), gastronomia , hotelbb);
-                                Toast.makeText(getContext(), "Monumento inserito con successo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.inserisci_monumento, Toast.LENGTH_SHORT).show();
                                 Bitmap image = ((BitmapDrawable)photoMonumento.getDrawable()).getBitmap();
                                 new updateImage(image,citta,monumento).execute();
                             }else{

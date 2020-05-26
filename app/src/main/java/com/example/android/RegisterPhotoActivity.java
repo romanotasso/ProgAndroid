@@ -98,7 +98,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     "1");
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.registrazione_successo, Toast.LENGTH_SHORT).show();
             startActivity(intent);
         } else {
 
@@ -123,7 +123,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     str_data, couponUtente,"0");
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.registrazione_successo, Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
     }
@@ -160,7 +160,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                         PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery();
                 } else {
-                    Toast.makeText(this, "Permesso negato", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.permesso_negato, Toast.LENGTH_SHORT).show();
                 }
             }
         }

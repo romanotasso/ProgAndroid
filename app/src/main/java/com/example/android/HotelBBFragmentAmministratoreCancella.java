@@ -56,7 +56,7 @@ public class HotelBBFragmentAmministratoreCancella extends Fragment {
                     if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         if ((!db.checkHotel(hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase()))) {
                             db.deleteHotelBB(hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase());
-                            Toast.makeText(getContext(), "Hotel/B&B eliminato con successo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.elimina_hotel, Toast.LENGTH_SHORT).show();
                             String path = (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())+(hotel = hotel.substring(0, 1).toUpperCase() + hotel.substring(1).toLowerCase())+ "JPG";
                             deleteImageHotel deleteImageMonumento = new deleteImageHotel(path);
                             deleteImageMonumento.execute();

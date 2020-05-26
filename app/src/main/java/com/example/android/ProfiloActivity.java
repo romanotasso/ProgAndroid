@@ -110,7 +110,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         });
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(ProfiloActivity.this, "Nessun utente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfiloActivity.this, R.string.nessun_utente, Toast.LENGTH_SHORT).show();
             return;
         }
         while (cursor.moveToNext()){

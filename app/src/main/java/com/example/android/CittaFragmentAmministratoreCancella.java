@@ -53,7 +53,7 @@ public class CittaFragmentAmministratoreCancella extends Fragment {
                 } else if (!(citta.trim().isEmpty())) {
                     if (!db.checkCitta(citta = citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         db.deleteCitta((citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase()));
-                        Toast.makeText(getContext(), "Citta eliminata con successo", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.elimina_citta, Toast.LENGTH_SHORT).show();
                         String path = (citta= citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase())+ "JPG";
                         deleteImageCitta deleteImageCitta = new deleteImageCitta(path);
                         deleteImageCitta.execute();

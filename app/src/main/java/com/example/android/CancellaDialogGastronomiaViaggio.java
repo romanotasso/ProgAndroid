@@ -25,7 +25,8 @@ public class CancellaDialogGastronomiaViaggio {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final DatabaseHelper db = new DatabaseHelper(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setMessage("Sei sicuro di voler cancellare " + nome + " ?");
+        builder.setTitle(R.string.cancellazione);
+        builder.setMessage(R.string.sei_sicuro_cancellare);
         builder.setCancelable(false);
 
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

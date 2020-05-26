@@ -133,10 +133,10 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                     Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
                     intent.putExtra("cittaSearch", query);
                     intent.putExtra("email", email1);
-                    Toast.makeText(CercaActivity.this, "Città " + query + " presente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CercaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 } else {
-                    Toast.makeText(CercaActivity.this, "Città " + query + " non presente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(CercaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
                 }
                 return false;
             }
@@ -161,7 +161,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
                 intent.putExtra("cittaLista", città);
                 intent.putExtra("email", email1);
-                Toast.makeText(CercaActivity.this, "Città " + città + " presente", Toast.LENGTH_LONG).show();
+                Toast.makeText(CercaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
         });
@@ -235,7 +235,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation();
             } else {
-                Toast.makeText(this, "Permesso non abilitato", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.permesso_non_abilitatto, Toast.LENGTH_SHORT).show();
             }
         }
     }

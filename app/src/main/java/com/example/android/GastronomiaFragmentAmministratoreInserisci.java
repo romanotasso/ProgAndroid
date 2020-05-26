@@ -85,7 +85,7 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
                                 db.inserisciGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
                                 BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                                 backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), hotelbb);
-                                Toast.makeText(getContext(), "Punto gastronomia inserito con successo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.inserisci_gastronomia, Toast.LENGTH_SHORT).show();
                                 Bitmap image = ((BitmapDrawable)photoGastronomia.getDrawable()).getBitmap();
                                 new updateImage(image,citta,gastronomia).execute();
                             }else {

@@ -101,14 +101,14 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View view) {
                 if (inserisci.getText().toString().trim().isEmpty()){
-                    Toast.makeText(CouponActivity.this, "Inserire coupon. Lo trovi nel tuo profilo!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CouponActivity.this, R.string.inserire_coupon, Toast.LENGTH_SHORT).show();
                 } else if ((finalCoupon.equals(couponAltamura)) || (finalCoupon.equals(couponRoma)) || (finalCoupon.equals(couponMilano)) || (finalCoupon.equals(couponBari))) {
                     Intent intent = new Intent(CouponActivity.this, VisualizzaCouponActivity.class);
                     intent.putExtra("coupon", finalCoupon);
                     intent.putExtra("email", email);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(CouponActivity.this, "Coupon non valido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CouponActivity.this, R.string.coupon_non_valido, Toast.LENGTH_SHORT).show();
                 }
             }
         });

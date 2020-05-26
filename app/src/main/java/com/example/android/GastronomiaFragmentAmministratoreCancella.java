@@ -56,7 +56,7 @@ public class GastronomiaFragmentAmministratoreCancella extends Fragment {
                         if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                             if ((!db.checkGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase()))) {
                                 db.deleteGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase());
-                                Toast.makeText(getContext(), "Punto Gastronomia eliminato con successo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.elimina_gastronomia, Toast.LENGTH_SHORT).show();
                                 String path = (citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())+(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase())+ "JPG";
                                 deleteImageGastronomia deleteImageGastronomia = new deleteImageGastronomia(path);
                                 deleteImageGastronomia.execute();

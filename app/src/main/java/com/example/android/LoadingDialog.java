@@ -24,9 +24,9 @@ public class LoadingDialog {
     void startLoadingDialog () {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("Sei ad "+ citta);
+        builder.setMessage("Sei ad " + citta);
         builder.setCancelable(false);
-        builder.setPositiveButton("Vai alla scheda", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.vai_alla_scheda, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(activity, CittaActivity.class);
@@ -37,7 +37,7 @@ public class LoadingDialog {
             }
         });
 
-        builder.setNegativeButton("Chiudi", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.chiudi, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

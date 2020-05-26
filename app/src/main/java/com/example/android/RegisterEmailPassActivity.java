@@ -77,7 +77,7 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
                 }
             }
         } else {
-            Toast.makeText(getApplicationContext(), "E-mail già presente", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.email_gia_presente, Toast.LENGTH_LONG).show();
         }
 
     }

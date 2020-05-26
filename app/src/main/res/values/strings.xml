@@ -49,7 +49,30 @@
     <string name="coupon">Coupon</string>
     <string name="torna_alla_home">Torna alla Home</string>
     <string name="inserisci_coupon">Inserisci coupon</string>
-
-
-
+    <string name="aggiunta_viaggio">Aggiungi viaggio</string>
+    <string name="vuoi_aggiungere">Vuoi aggiungere?</string>
+    <string name="cancellazione">Cancellazione</string>
+    <string name="sei_sicuro_cancellare">Sei sicuro di voler cancellare?</string>
+    <string name="citta_presente">Città presente</string>
+    <string name="citta_non_presente">Città non presente</string>
+    <string name="permesso_non_abilitatto">Permesso non abilitato</string>
+    <string name="campo_obbligatorio">Campo Obbligatorio</string>
+    <string name="permesso_negato">Permesso negato</string>
+    <string name="inserire_coupon">Inserire coupon. Lo trovi nel tuo profilo!</string>
+    <string name="coupon_non_valido">Coupon non valido</string>
+    <string name="elimina_gastronomia">Punto Gastronomia eliminato con successo</string>
+    <string name="inserisci_gastronomia">Punto gastronomia inserito con successo</string>
+    <string name="elimina_citta">Città eliminata con successo</string>
+    <string name="inserisci_citta">Città inserita con successo</string>
+    <string name="elimina_hotel">Hotel/B&amp;B eliminato con successo</string>
+    <string name="inserisci_hotel">Hotel/B&amp;B inserito con successo</string>
+    <string name="sei_ad">Sei ad </string>
+    <string name="chiudi">Chiudi</string>
+    <string name="vai_alla_scheda">Vai alla scheda</string>
+    <string name="elimina_monumento">Monumento eliminato con successo</string>
+    <string name="inserisci_monumento">Monumento inserito con successo</string>
+    <string name="nessun_utente">Nessun utente</string>
+    <string name="email_gia_presente">E-mail già presente</string>
+    <string name="registrazione_successo">Registrazione avvenuta con successo</string>
+    <string name="inserisci_aggiornamento">Inserisci i dati per l\'aggiornamento</string>
 </resources>

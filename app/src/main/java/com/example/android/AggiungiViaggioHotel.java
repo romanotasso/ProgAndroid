@@ -25,7 +25,8 @@ public class AggiungiViaggioHotel {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final DatabaseHelper db = new DatabaseHelper(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setMessage("Vuoi aggiungere " + nome + "?");
+        builder.setTitle(R.string.aggiunta_viaggio);
+        builder.setMessage(R.string.vuoi_aggiungere);
         builder.setCancelable(false);
 
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

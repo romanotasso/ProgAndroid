@@ -70,7 +70,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
                 String type = "UpdateUtente";
 
                 if (email.trim().isEmpty() || password.trim().isEmpty() || nuova_pass.trim().isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Inserisci i dati per l'aggiornamento", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.inserisci_aggiornamento, Toast.LENGTH_SHORT).show();
                 } else {
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getApplicationContext());
                     backgroudWorker.execute(type, email, password, nuova_pass);
