@@ -78,9 +78,6 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         String type = "register";
 
         if (filepath == null) {
-            Bitmap image = ((BitmapDrawable)getResources().getDrawable(R.drawable.ic_profilo)).getBitmap();
-            new updateImage(image, str_email).execute();
-
             BackgroudWorker backgroudWorker = new BackgroudWorker(this);
             backgroudWorker.execute(type
                     , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
@@ -90,14 +87,15 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
                     str_data,
-                    couponUtente);
+                    couponUtente, "1");
             db.inserisciUtente(str_email,
                     str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
                     , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
                     str_data,
-                    couponUtente);
+                    couponUtente,
+                    "1");
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
@@ -116,13 +114,13 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
                     str_data,
-                    couponUtente);
+                    couponUtente, "0");
             db.inserisciUtente(str_email,
                     str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
                     , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
-                    str_data, couponUtente);
+                    str_data, couponUtente, "0");
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
@@ -176,7 +174,6 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null) {
             filepath = data.getData();
             immagineProfilo.setImageURI(filepath);
-
         }
     }
 

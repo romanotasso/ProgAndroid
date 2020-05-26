@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL, dataNascita date NOT NULL, coupon text NOT NULL)");
+        db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL, dataNascita date NOT NULL, coupon text NOT NULL, codiceFoto text NOT NULL)");
         db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(nome text PRIMARY KEY)");
         db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
     /*SEZIONE UTENTE*/
-    public boolean inserisciUtente(String email, String nome, String cognome, String citta, String sesso, String dataNascita, String coupon){
+    public boolean inserisciUtente(String email, String nome, String cognome, String citta, String sesso, String dataNascita, String coupon, String codiceFoto){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentUtente = new ContentValues();
         contentUtente.put("email",email);
@@ -54,6 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentUtente.put("sesso",sesso);
         contentUtente.put("dataNascita", dataNascita);
         contentUtente.put("coupon", coupon);
+        contentUtente.put("codiceFoto", codiceFoto);
         long ins = db.insert(TABELLA_UTENTE, null, contentUtente);
         if(ins==-1) return  false;
         else return true;
@@ -372,6 +373,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_HOTELEBB + " WHERE citta = ? ORDER BY RANDOM() LIMIT 2", new String[]{citta});
         return  res;
+    }
+
+    public String getCodiceFoto(String email){
+
+        String codice ="";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT codiceFoto FROM " + TABELLA_UTENTE + " WHERE email = ?", new String[]{email});
+        if(res!=null && res.getCount()>0){
+            res.moveToFirst();
+            codice = res.getString(0);
+            return codice;
+        }else{
+            return codice;
+        }
     }
 
 }

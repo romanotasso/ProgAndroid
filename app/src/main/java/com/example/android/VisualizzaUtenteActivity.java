@@ -68,13 +68,11 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
             cognome.add(utenteDB.getString(2));
         }
 
-        /*BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getApplicationContext();
         backgroudWorkerPhoto.nomeUtente.addAll(email);
-        backgroudWorkerPhoto.execute();*/
+        backgroudWorkerPhoto.execute();
 
-        MyAdapter myAdapter = new MyAdapter(getApplicationContext(), email, nome, cognome);
-        myList.setAdapter(myAdapter);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -117,29 +115,28 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
             TextView emailUtente = row.findViewById(R.id.textViewEmail);
             TextView nomeUtente = row.findViewById(R.id.textViewNome);
             TextView cognomeUtente = row.findViewById(R.id.textViewCognome);
-            button = row.findViewById(R.id.id);
-
-            //immagineProfilo.setImageBitmap(foto.get(position));
+            button = row.findViewById(R.id.id
+            );
+            immagineProfilo.setImageBitmap(foto.get(position));
             emailUtente.setText(email.get(position));
             nomeUtente.setText(nome.get(position));
             cognomeUtente.setText(cognome.get(position));
 
-            /*VisualizzaUtenteActivity.DownloadImage downloadImage = new DownloadImage(email.get(position));
-            downloadImage.execute();*/
 
-            /*button.setOnClickListener(new View.OnClickListener() {
+
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CancellaDialogUtente dialogUtente = new CancellaDialogUtente(getParent(), getContext(), email.get(position), nome.get(position), cognome.get(position));
+                    CancellaDialogUtente dialogUtente = new CancellaDialogUtente(VisualizzaUtenteActivity.this, getContext(), email.get(position), nome.get(position), cognome.get(position));
                     dialogUtente.startLoadingDialog();
                 }
-            });*/
+            });
 
             return row;
         }
     }
 
-    /*public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
+    public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
 
         Context context;
         ArrayList<String> nomeUtente = new ArrayList<>();
@@ -155,11 +152,18 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
 
             try {
                 for (int i = 0; i < nomeUtente.size(); i = i + 1) {
-                    url = urlDownlaodImageProfilo + email.get(i) + "JPG";
-                    InputStream inputStream = new java.net.URL(url).openStream();
-                    immagine = BitmapFactory.decodeStream(inputStream);
-                    if (!(immagine == null)) {
+                    if(db.getCodiceFoto(nomeUtente.get(i)).equals("1")){
+                        url = urlDownlaodImageProfilo+"standardJPG";
+                        InputStream inputStream = new java.net.URL(url).openStream();
+                        immagine = BitmapFactory.decodeStream(inputStream);
                         fotoBack.add(i, immagine);
+                    }else{
+                        url = urlDownlaodImageProfilo + nomeUtente.get(i) + "JPG";
+                        InputStream inputStream = new java.net.URL(url).openStream();
+                        immagine = BitmapFactory.decodeStream(inputStream);
+                        if (!(immagine == null)) {
+                            fotoBack.add(i, immagine);
+                        }
                     }
                 }
                 return fotoBack;
@@ -184,7 +188,7 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
         MyAdapter myAdapter = new MyAdapter(getApplicationContext(), email, nome, cognome);
         myList.setAdapter(myAdapter);
 
-    }*/
+    }
 
     public void refreshItems() {
         switch (refresh_count) {

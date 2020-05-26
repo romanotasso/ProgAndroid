@@ -145,7 +145,6 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
 
     public class BackgroudWorkerPhoto extends AsyncTask<Void, Void, ArrayList<Bitmap>> {
 
-
         Context context;
         ArrayList<String> citta;
         ArrayList<String> monumenti;

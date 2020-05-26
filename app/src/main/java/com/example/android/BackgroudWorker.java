@@ -30,6 +30,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
     final static int VALORE_SESSO = 4;
     final static int VALORE_DATA = 5;
     final static int VALORE_COUPON = 6;
+    final static int VALORE_CODICE_FOTO = 7;
     final static int VALORE_NOME_CITTA = 0;
     final static int VALORE_NOME_MHG = 0;
     final static int VALORE_CITTA_MHG = 1;
@@ -302,7 +303,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String result = "";
                 String line = "";
                 int i = 0;
-                String valori[] = new String[7];
+                String valori[] = new String[8];
                 d.updateDatiUtente();
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -326,7 +327,10 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         i = i +1;
                     } else if (i == VALORE_COUPON) {
                         valori[i] = line;
-                        d.inserisciUtente(valori[0], valori[1], valori[2], valori[3], valori[4], valori[5], valori[6]);
+                        i = i + 1;
+                    } else if (i == VALORE_CODICE_FOTO) {
+                        valori[i] = line;
+                        d.inserisciUtente(valori[0], valori[1], valori[2], valori[3], valori[4], valori[5], valori[6], valori[7]);
                         i = 0;
                     }
                 }
@@ -499,6 +503,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String sesso = params[6];
                 String data = params[7];
                 String coupon = params [8];
+                String codiceFoto = params[9];
                 URL url = new URL(register_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -513,10 +518,11 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         + URLEncoder.encode("citta", "UTF-8") + "=" + URLEncoder.encode(citta, "UTF-8") + "&"
                         + URLEncoder.encode("sesso", "UTF-8") + "=" + URLEncoder.encode(sesso, "UTF-8") + "&"
                         + URLEncoder.encode("data", "UTF-8") + "=" + URLEncoder.encode(data, "UTF-8") + "&"
-                        + URLEncoder.encode("coupon", "UTF-8") + "=" + URLEncoder.encode(coupon, "UTF-8");
+                        + URLEncoder.encode("coupon", "UTF-8") + "=" + URLEncoder.encode(coupon, "UTF-8") + "&"
+                        + URLEncoder.encode("codiceFoto", "UTF-8") + "=" + URLEncoder.encode(codiceFoto, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
-                d.inserisciUtente(email, nome, cognome, citta, sesso, data, coupon);
+                //d.inserisciUtente(email, nome, cognome, citta, sesso, data, coupon, codiceFoto);
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();

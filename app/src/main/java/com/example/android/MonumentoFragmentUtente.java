@@ -124,10 +124,8 @@ public class MonumentoFragmentUtente extends Fragment{
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Monumento");
+                    AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), getContext(), citta, email, nomePunto.get(position));
+                    viaggioMonumento.startLoadingDialog();
                 }
             });
 

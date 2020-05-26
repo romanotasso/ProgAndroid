@@ -44,11 +44,11 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
 
     public void nextStepRegistation(View view) {
 
-        String nome = getIntent().getExtras().getString("email");
-        String cognome = getIntent().getExtras().getString("email");
-        String sesso = getIntent().getExtras().getString("email");
-        String data = getIntent().getExtras().getString("email");
-        String citta = getIntent().getExtras().getString("email");
+        String nome = getIntent().getExtras().getString("nome");
+        String cognome = getIntent().getExtras().getString("cognome");
+        String sesso = getIntent().getExtras().getString("sesso");
+        String data = getIntent().getExtras().getString("data_nascita");
+        String citta = getIntent().getExtras().getString("citta");
         String str_pass = password.getText().toString();
         String str_confpass = confPassword.getText().toString();
 
@@ -79,10 +79,6 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "E-mail già presente", Toast.LENGTH_LONG).show();
         }
-
-
-
-
 
     }
 
