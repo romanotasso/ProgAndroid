@@ -87,7 +87,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
                     str_data,
-                    couponUtente, "1");
+                    couponUtente,"1");
             db.inserisciUtente(str_email,
                     str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
                     , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
@@ -114,13 +114,13 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
                     str_data,
-                    couponUtente, "0");
+                    couponUtente,"0");
             db.inserisciUtente(str_email,
                     str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
                     , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
                     , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
                     , str_sesso,
-                    str_data, couponUtente, "0");
+                    str_data, couponUtente,"0");
 
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             Toast.makeText(getApplicationContext(), "Registrazione avvenuta con successo", Toast.LENGTH_SHORT).show();
@@ -198,6 +198,8 @@ public class RegisterPhotoActivity extends AppCompatActivity {
             params.add(new Pair<>("email", email));
             params.add(new Pair<>("image", encodedImage));
 
+            String emailCor = email.replaceAll("@","");
+
             try {
 
                 URL url = new URL(URL_UPLOAD);
@@ -207,7 +209,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(encodedImage, "UTF-8");
+                String post_data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(emailCor, "UTF-8") + "&" + URLEncoder.encode("image", "UTF-8") + "=" + URLEncoder.encode(encodedImage, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();

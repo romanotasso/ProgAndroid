@@ -61,7 +61,6 @@ public class CancellaDialogGastronomia {
             }
         });
 
-
         dialog = builder.create();
         dialog.show();
     }

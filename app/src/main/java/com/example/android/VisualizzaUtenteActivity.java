@@ -123,7 +123,6 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
             cognomeUtente.setText(cognome.get(position));
 
 
-
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -158,7 +157,8 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
                         immagine = BitmapFactory.decodeStream(inputStream);
                         fotoBack.add(i, immagine);
                     }else{
-                        url = urlDownlaodImageProfilo + nomeUtente.get(i) + "JPG";
+                        String nomeCor = nomeUtente.get(i).replaceAll("@","");
+                        url = urlDownlaodImageProfilo + nomeCor + "JPG";
                         InputStream inputStream = new java.net.URL(url).openStream();
                         immagine = BitmapFactory.decodeStream(inputStream);
                         if (!(immagine == null)) {
@@ -183,7 +183,7 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
     }
 
     public void returnFoto(ArrayList<Bitmap> foto){
-
+        this.foto.clear();
         this.foto.addAll(foto);
         MyAdapter myAdapter = new MyAdapter(getApplicationContext(), email, nome, cognome);
         myList.setAdapter(myAdapter);
@@ -198,6 +198,7 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
                 nome = new ArrayList<String>();
                 cognome = new ArrayList<String>();
 
+
                 for(utenteDB.moveToFirst(); !utenteDB.isAfterLast(); utenteDB.moveToNext()) {
                     email.add(utenteDB.getString(0));
                 }
@@ -208,9 +209,10 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
                     cognome.add(utenteDB.getString(2));
                 }
 
-                MyAdapter myAdapter = new MyAdapter(getApplicationContext(), email, nome, cognome);
-                myList.setAdapter(myAdapter);
-                break;
+                BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                backgroudWorkerPhoto.context = getApplicationContext();
+                backgroudWorkerPhoto.nomeUtente.addAll(email);
+                backgroudWorkerPhoto.execute();
         }
     }
 }
