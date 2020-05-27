@@ -171,7 +171,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url = urlDownlaodImageProfilo + email + "JPG";
+            String emailSenzaChiocciola = email.replaceAll("@","");
+            String url = urlDownlaodImageProfilo + emailSenzaChiocciola + "JPG";
             Bitmap bitmap=null;
 
             try{

@@ -11,6 +11,16 @@
         android:layout_height="55dp"
         android:background="@color/orange"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
+        <SearchView
+            android:id="@+id/mySearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:iconifiedByDefault="false"
+            android:inputType="textCapWords"
+            android:queryHint="Cerca città"/>
+    </androidx.appcompat.widget.Toolbar>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,6 +33,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     NavigationView navigationView;
     Cursor cursor;
 
+    ImageView immProfiloMiniatura;
     TextView nome;
     TextView cognome;
     TextView sesso;
@@ -85,6 +86,8 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         actionBarDrawerToggle.syncState();
 
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
+        immProfiloMiniatura = findViewById(R.id.immagineProfiloActivityProfilo);
+
         ProfiloActivity.DownloadImage downloadImage = new DownloadImage(emailExtras);
         downloadImage.execute();
 
@@ -92,7 +95,6 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
         cursor = db.getAllDataUtente(emailExtras);
         nome = findViewById(R.id.nome);
-        cognome = findViewById(R.id.cognome);
         email = findViewById(R.id.email);
         citta = findViewById(R.id.citta);
         sesso = findViewById(R.id.sesso);
@@ -175,7 +177,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         String email;
 
         public DownloadImage(String email){
-            this.email = email;
+            this.email = email.replaceAll("@","");
         }
 
         @Override
@@ -201,6 +203,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
             if(bitmap!=null){
                 immagineProfilo.setImageBitmap(bitmap);
+                immProfiloMiniatura.setImageBitmap(bitmap);
             }
 
             super.onPostExecute(bitmap);

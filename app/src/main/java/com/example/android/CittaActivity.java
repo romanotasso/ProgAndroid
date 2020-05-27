@@ -10,21 +10,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class CittaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,10 +41,15 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-
+    SearchView mysearchView;
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
-
+////////
+    Cursor cittaHome;
+    ArrayAdapter adapter;
+    ArrayList<String> cittaArray;
+    ListView myList;
+////////
     TabLayout tabLayout;
     ViewPager viewPager;
     PageAdapterUtente pageAdapterUtente;
@@ -54,6 +67,8 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citta);
 
+        mysearchView = findViewById(R.id.mySearchBar);
+        mysearchView.setVisibility(View.VISIBLE);
         cittaSearch = getIntent().getExtras().getString("cittaSearch");
         cittaLista = getIntent().getExtras().getString("cittaLista");
         cittaDB = getIntent().getExtras().getString("cittaDB");
@@ -145,6 +160,64 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
 
+        /////////
+        myList = findViewById(R.id.listView);
+        myList.setVisibility(View.GONE);
+        cittaHome = db.getAllDataCitta();
+        cittaArray = new ArrayList<String>();
+
+        for (cittaHome.moveToFirst(); !cittaHome.isAfterLast(); cittaHome.moveToNext()) {
+            cittaArray.add(cittaHome.getString(0));
+        }
+        db.close();
+
+        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cittaArray);
+        myList.setAdapter(adapter);
+
+        mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                boolean check = db.checkCitta(query);
+                if (!check) {
+                    Intent intent = new Intent(CittaActivity.this, CittaActivity.class);
+                    intent.putExtra("cittaSearch", query);
+                    intent.putExtra("email", email);
+                    Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(CittaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                viewPager.setVisibility(View.INVISIBLE);
+                String text = s;
+                if (TextUtils.isEmpty(text)) {
+                    viewPager.setVisibility(View.VISIBLE);
+                    myList.setVisibility(View.GONE);
+                } else {
+                    adapter.getFilter().filter(text);
+                    myList.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String città = adapterView.getItemAtPosition(i).toString();
+                Intent intent = new Intent(CittaActivity.this, CittaActivity.class);
+                intent.putExtra("cittaLista", città);
+                intent.putExtra("email", email);
+                Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
+                startActivity(intent);
+            }
+        });
+
+        ////////////
     }
 
     @Override
@@ -198,7 +271,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         String email;
 
         public DownloadImage(String email){
-            this.email = email;
+            this.email = email.replaceAll("@","");
         }
 
         @Override
@@ -227,10 +300,4 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             super.onPostExecute(bitmap);
         }
     }
-
-
-
-
-
-
 }

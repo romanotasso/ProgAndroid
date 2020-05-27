@@ -39,7 +39,6 @@ public class HotelBBFragmentUtente extends Fragment {
     ArrayList<Bitmap> foto;
     ArrayList<String> hotel;
 
-
     DatabaseHelper db;
     ImageButton button;
 

@@ -83,6 +83,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         db = new DatabaseHelper(this);
 
         toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
@@ -111,7 +112,8 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setCheckedItem(R.id.cerca);
 
-        mysearchView = findViewById(R.id.searchView);
+        mysearchView = findViewById(R.id.mySearchBar);
+        mysearchView.setVisibility(View.VISIBLE);
         myList = findViewById(R.id.listView);
         myList.setVisibility(View.GONE);
         cittaHome = db.getAllDataCitta();
@@ -300,7 +302,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         String email;
 
         public DownloadImage(String email){
-            this.email = email;
+            this.email = email.replaceAll("@","");
         }
 
         @Override
