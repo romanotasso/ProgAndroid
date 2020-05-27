@@ -25,12 +25,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViaggi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
-            android:text="Le città da te visitate:"
             android:textAlignment="center"
             android:textColor="#2B2A2A"
             android:textSize="30sp"

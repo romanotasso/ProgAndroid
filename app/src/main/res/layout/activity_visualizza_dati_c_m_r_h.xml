@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_chiaro"
     tools:context=".VisualizzaDatiCMRHActivity"
     android:orientation="vertical">
 
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabLayoutAmministratoreVisualizza"
-        android:background="@color/orange"
+        android:background="@color/orange_scuro_chiaro"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/design_default_color_on_secondary">
 

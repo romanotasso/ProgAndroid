@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ExperienceTrip</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
@@ -77,9 +77,8 @@
     <string name="inserisci_aggiornamento">Inserisci i dati per l\'aggiornamento</string>
 
     <plurals
-        name="le_citt_da_te_visitate">
-        <item quantity="zero">Nessuna città visitata</item>
-        <item quantity="one">La città da te visitata:</item>
-        <item quantity="other">Le città da te visitate:</item>
+        name="le_citt_da_te_visitate" >
+            <item quantity="one">La città da te visitata:</item>
+            <item quantity="other">Le città da te visitate:</item>
     </plurals>
 </resources>

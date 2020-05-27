@@ -6,6 +6,9 @@
     <color name="white">#ffffff</color>
     <color name="darkGray">#6c6c6c</color>
     <color name="red">#F30404</color>
-    <color name="orange">#F46537</color>
+    <color name="orange_scuro">#F3CA3100</color>
+    <color name="orange_scuro_chiaro">#DF6900</color>
+    <color name="orange">#BD5900</color>
+    <color name="gray_chiaro">#EFEFEF</color>
 
 </resources>

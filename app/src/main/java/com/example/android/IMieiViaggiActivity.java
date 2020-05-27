@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,6 +44,8 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
      Toolbar toolbar;
      NavigationView navigationView;
 
+     TextView textViaggio;
+
      String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
      ImageView immagineProfilo;
 
@@ -64,6 +67,8 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
         myList.setVisibility(View.VISIBLE);
         cittaLista = db.getAllDataViaggi(email);
         citta = new ArrayList<String>();
+
+        textViaggio = findViewById(R.id.textViaggi);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,6 +101,19 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
         for(cittaLista.moveToFirst(); !cittaLista.isAfterLast(); cittaLista.moveToNext()){
             citta.add(cittaLista.getString(0));
+        }
+
+        int n = citta.size();
+        String cittaViaggio;
+        if (n == 0) {
+            cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
+            textViaggio.setText(cittaViaggio);
+        } else if (n == 1) {
+            cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
+            textViaggio.setText(cittaViaggio);
+        } else {
+            cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
+            textViaggio.setText(cittaViaggio);
         }
 
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,citta);

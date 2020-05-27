@@ -29,13 +29,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
+        android:background="@color/gray_chiaro"
         android:layout_marginTop="55dp">
 
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabLayout"
-            android:background="@color/orange"
+            android:background="@color/orange_scuro_chiaro"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/design_default_color_on_secondary">
 

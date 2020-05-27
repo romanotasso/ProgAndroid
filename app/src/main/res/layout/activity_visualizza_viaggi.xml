@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/gray_chiaro"
         android:gravity="center_horizontal"
         android:layout_marginTop="55dp">
 
@@ -26,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabLayoutVisualizzaViaggi"
-            android:background="@color/orange"
+            android:background="@color/orange_scuro_chiaro"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/design_default_color_on_secondary">
 

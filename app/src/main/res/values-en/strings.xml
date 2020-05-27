@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">ExperienceTrip</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
@@ -15,7 +15,7 @@
     <string name="indietro">Back</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="cerca">Search</string>
+    <string name="cerca">Search city</string>
     <string name="vedi_dati_citt">Show towns</string>
     <string name="vedi_dati_monumenti">Show monuments</string>
     <string name="vedi_dati_gastronomia">Show gastronomia</string>
@@ -76,4 +76,10 @@
     <string name="email_gia_presente">E-mail already present</string>
     <string name="registrazione_successo">Registration was successfully</string>
     <string name="inserisci_aggiornamento">Enter the data for the update</string>
+
+    <plurals
+        name="le_citt_da_te_visitate" >
+        <item quantity="one">The city you visited:</item>
+        <item quantity="other">The cities you visited:</item>
+    </plurals>
 </resources>
