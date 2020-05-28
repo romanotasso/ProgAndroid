@@ -31,10 +31,6 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
     EditText inserisci;
     DatabaseHelper db;
     Button button;
-    final static String couponMilano = "MILANO";
-    final static String couponAltamura = "ALTAMURA";
-    final static String couponBari = "BARI";
-    final static String couponRoma = "ROMA";
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -102,13 +98,15 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
             public void onClick(View view) {
                 if (inserisci.getText().toString().trim().isEmpty()){
                     Toast.makeText(CouponActivity.this, R.string.inserire_coupon, Toast.LENGTH_SHORT).show();
-                } else if ((finalCoupon.equals(couponAltamura)) || (finalCoupon.equals(couponRoma)) || (finalCoupon.equals(couponMilano)) || (finalCoupon.equals(couponBari))) {
-                    Intent intent = new Intent(CouponActivity.this, VisualizzaCouponActivity.class);
-                    intent.putExtra("coupon", finalCoupon);
-                    intent.putExtra("email", email);
-                    startActivity(intent);
                 } else {
-                    Toast.makeText(CouponActivity.this, R.string.coupon_non_valido, Toast.LENGTH_SHORT).show();
+                    if ((inserisci.getText().toString().equals(finalCoupon))) {
+                        Intent intent = new Intent(CouponActivity.this, VisualizzaCouponActivity.class);
+                        intent.putExtra("coupon", inserisci.getText().toString());
+                        intent.putExtra("email", email);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(CouponActivity.this, R.string.coupon_non_valido, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

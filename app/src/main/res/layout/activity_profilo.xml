@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@color/gray_chiaro"
         android:layout_marginTop="55dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -39,15 +38,15 @@
             android:id="@+id/imageView4"
             android:layout_width="51dp"
             android:layout_height="47dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/ic_profilo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.39999998"
-            android:src="@drawable/ic_profilo"
-            tools:ignore="MissingConstraints"
-             />
+            tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nome"
@@ -128,16 +127,17 @@
             android:id="@+id/imageView6"
             android:layout_width="51dp"
             android:layout_height="47dp"
-            android:textAlignment="viewStart"
+            android:background="#974040"
             android:gravity="start"
+            android:src="@drawable/ic_event_black_24dp"
+            android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.69"
-            tools:ignore="MissingConstraints"
-            android:src="@drawable/ic_event_black_24dp"/>
+            tools:ignore="MissingConstraints" />
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -220,6 +220,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/torna_alla_home"
+            android:background="#1FAA00"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -162,7 +162,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
         /////////
         myList = findViewById(R.id.listView);
-        myList.setVisibility(View.GONE);
+        myList.setVisibility(View.VISIBLE);
         cittaHome = db.getAllDataCitta();
         cittaArray = new ArrayList<String>();
 
@@ -171,7 +171,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         }
         db.close();
 
-        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cittaArray);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, cittaArray);
         myList.setAdapter(adapter);
 
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -195,7 +195,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
                     viewPager.setVisibility(View.VISIBLE);
-                    myList.setVisibility(View.GONE);
+                    myList.setVisibility(View.VISIBLE);
                 } else {
                     adapter.getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);

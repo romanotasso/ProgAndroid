@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@color/gray_chiaro"
         android:layout_marginTop="55dp"
         android:padding="30dp">
 
@@ -92,6 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="250dp"
+            android:background="#1FAA00"
+            android:textColor="#FFFFFF"
             android:text="@string/aggiorna"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"

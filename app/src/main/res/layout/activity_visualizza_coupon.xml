@@ -20,7 +20,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@color/gray_chiaro"
         android:layout_marginTop="55dp">
 
         <com.google.android.material.tabs.TabLayout
