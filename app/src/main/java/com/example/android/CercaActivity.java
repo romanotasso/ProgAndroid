@@ -28,6 +28,7 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,7 +36,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,9 +84,9 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
 
         db = new DatabaseHelper(this);
 
-        toolbar = findViewById(R.id.toolbar);
-
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
+
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
         hView=navigationView.getHeaderView(0);
@@ -111,8 +112,8 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setCheckedItem(R.id.cerca);
 
-        mysearchView = findViewById(R.id.mySearchBar);
-        mysearchView.setVisibility(View.VISIBLE);
+        /*mysearchView = findViewById(R.id.mySearchBar);
+        mysearchView.setVisibility(View.VISIBLE);*/
         myList = findViewById(R.id.listView);
         myList.setVisibility(View.GONE);
         cittaHome = db.getAllDataCitta();
@@ -126,7 +127,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, citta);
         myList.setAdapter(adapter);
 
-        mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        /*mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 boolean check = db.checkCitta(query);
@@ -152,7 +153,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
                 }
                 return false;
             }
-        });
+        });*/
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -229,6 +230,46 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         }
         return true;
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cerca, menu);
+
+        MenuItem cerca = menu.findItem(R.id.cerca);
+        SearchView searchView = (SearchView) cerca.getActionView();
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                query = query.substring(0,1).toUpperCase() + query.substring(1).toLowerCase();
+                boolean check = db.checkCitta(query);
+                if (!check) {
+                    Intent intent = new Intent(CercaActivity.this, CittaActivity.class);
+                    intent.putExtra("cittaSearch", query);
+                    intent.putExtra("email", email1);
+                    Toast.makeText(CercaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(CercaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (TextUtils.isEmpty(s)) {
+                    myList.setVisibility(View.GONE);
+                } else {
+                    adapter.getFilter().filter(s);
+                    myList.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+        return true;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

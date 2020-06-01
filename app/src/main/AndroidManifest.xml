@@ -15,9 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".CittaAnteprimaActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".VisualizzaUtenteActivity"
-            android:parentActivityName=".VisualizzaDatiAmministratoreActivity"/>
+            android:parentActivityName=".VisualizzaDatiAmministratoreActivity" />
         <activity
             android:name=".VisualizzaCouponActivity"
             android:theme="@style/AppTheme.NoActionBar" />

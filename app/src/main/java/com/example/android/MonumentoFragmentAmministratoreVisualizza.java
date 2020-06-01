@@ -206,7 +206,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
 
 
     public void returnFoto(ArrayList<Bitmap> foto){
-
+        this.foto.clear();
         this.foto.addAll(foto);
         adapter = new MyAdapter(getContext(),monumento,citta,categorie);
         myList.setAdapter(adapter);
@@ -219,11 +219,32 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
             default:
                 cittaMonu = db.getAllDataMonumenti();
                 monumento = new ArrayList<String>();
+                citta = new ArrayList<String>();
+                categorie = new ArrayList<>();
+
                 for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
                     monumento.add(cittaMonu.getString(0));
                 }
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento, citta,categorie);
-                myList.setAdapter(adapter);
+
+                for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                    citta.add(cittaMonu.getString(1));
+                }
+
+                for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                    categorie.add(cittaMonu.getString(2));
+                }
+
+
+                Set<String> remuveDuplicate= new LinkedHashSet<String>(citta);
+                ArrayList<String> appoggio = new ArrayList<>();
+                appoggio.addAll(remuveDuplicate);
+
+
+                BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                backgroudWorkerPhoto.context = getContext();
+                backgroudWorkerPhoto.monumenti=monumento;
+                backgroudWorkerPhoto.citta = appoggio;
+                backgroudWorkerPhoto.execute();
                 break;
         }
     }

@@ -54,7 +54,7 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
         inserisci = findViewById(R.id.inserisci_coupon);
         button = findViewById(R.id.coupon);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
         email = getIntent().getExtras().getString("email");

@@ -58,7 +58,7 @@ public class VisualizzaCouponActivity extends AppCompatActivity implements Navig
 
         db = new DatabaseHelper(this);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
         email = getIntent().getExtras().getString("email");

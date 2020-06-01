@@ -76,6 +76,7 @@
     <string name="email_gia_presente">E-mail already present</string>
     <string name="registrazione_successo">Registration was successfully</string>
     <string name="inserisci_aggiornamento">Enter the data for the update</string>
+    <string name="Gastronomia">Gastronomy</string>
 
     <plurals
         name="le_citt_da_te_visitate" >

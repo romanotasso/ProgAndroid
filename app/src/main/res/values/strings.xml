@@ -78,8 +78,7 @@
     <string name="Gastronomia">Gastronomia</string>
 
 
-    <plurals
-        name="le_citt_da_te_visitate">
+    <plurals name="le_citt_da_te_visitate">
         <item quantity="zero">Nessuna città visitata</item>
         <item quantity="one">La città da te visitata:</item>
         <item quantity="other">Le città da te visitate:</item>

@@ -70,7 +70,7 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
         textViaggio = findViewById(R.id.textViaggi);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);

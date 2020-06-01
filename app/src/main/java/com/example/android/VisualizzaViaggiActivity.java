@@ -67,7 +67,7 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
 
         email = getIntent().getExtras().getString("email");
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);

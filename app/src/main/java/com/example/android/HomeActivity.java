@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         db = new DatabaseHelper(this);
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
 
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         buttonCerca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentCerca = new Intent(HomeActivity.this, CercaActivity.class);
+                Intent intentCerca = new Intent(HomeActivity.this, CittaAnteprimaActivity.class);
                 intentCerca.putExtra("email",email);
                 startActivity(intentCerca);
             }

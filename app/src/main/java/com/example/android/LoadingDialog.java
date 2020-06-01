@@ -33,7 +33,6 @@ public class LoadingDialog {
                 intent.putExtra("cittaSearch",citta);
                 intent.putExtra("email",email);
                 activity.startActivity(intent);
-
             }
         });
 

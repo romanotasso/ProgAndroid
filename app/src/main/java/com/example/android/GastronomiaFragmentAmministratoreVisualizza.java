@@ -202,7 +202,7 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
 
 
     public void returnFoto(ArrayList<Bitmap> foto){
-
+        this.foto.clear();
         this.foto.addAll(foto);
         adapter = new MyAdapter(getContext(), gastronomia, citta,categorie);
         myList.setAdapter(adapter);
@@ -214,13 +214,30 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
             default:
                 cittaGast = db.getAllDataGastronomia();
                 gastronomia = new ArrayList<String>();
+                citta = new ArrayList<String>();
+                categorie = new ArrayList<String>();
 
                 for (cittaGast.moveToFirst(); !cittaGast.isAfterLast(); cittaGast.moveToNext()) {
                     gastronomia.add(cittaGast.getString(0));
                 }
-                db.close();
-                final MyAdapter adapter = new MyAdapter(getContext(), gastronomia,citta,categorie);
-                myList.setAdapter(adapter);
+
+                for (cittaGast.moveToFirst(); !cittaGast.isAfterLast(); cittaGast.moveToNext()) {
+                    citta.add(cittaGast.getString(1));
+                }
+
+                for (cittaGast.moveToFirst(); !cittaGast.isAfterLast(); cittaGast.moveToNext()) {
+                    categorie.add(cittaGast.getString(2));
+                }
+
+                Set<String> remuveDuplicate1= new LinkedHashSet<String>(citta);
+                ArrayList<String> appoggio1 = new ArrayList<>();
+                appoggio1.addAll(remuveDuplicate1);
+
+                BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                backgroudWorkerPhoto.context = getContext();
+                backgroudWorkerPhoto.gastronomia=gastronomia;
+                backgroudWorkerPhoto.citta = appoggio1;
+                backgroudWorkerPhoto.execute();
                 break;
         }
     }

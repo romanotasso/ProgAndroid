@@ -16,7 +16,7 @@
             android:title="@string/coupon" />
         <item
             android:id="@+id/cerca"
-            android:icon="@drawable/ic_cerca"
+            android:icon="@drawable/ic_search"
             android:title="Cerca" />
         <item
             android:id="@+id/citta"

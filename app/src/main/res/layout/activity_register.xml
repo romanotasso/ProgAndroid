@@ -142,7 +142,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="380dp"
-        android:background="#1FAA00"
+        android:background="#FF9800"
         android:onClick="onReg"
         android:text="@string/Avanti"
         android:textColor="#FFFFFF"

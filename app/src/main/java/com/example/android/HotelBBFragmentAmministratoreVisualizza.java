@@ -199,7 +199,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
 
 
     public void returnFoto(ArrayList<Bitmap> foto){
-
+        this.foto.clear();
         this.foto.addAll(foto);
         adapter = new MyAdapter(getContext(),hotel,citta,categorie);
         myList.setAdapter(adapter);
@@ -212,13 +212,30 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
             default:
                 cittaHotel = db.getAllDataHotelBB();
                 hotel = new ArrayList<String>();
+                citta = new ArrayList<String>();
+                categorie = new ArrayList<String>();
 
                 for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
                     hotel.add(cittaHotel.getString(0));
                 }
-                db.close();
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel, citta,categorie);
-                myList.setAdapter(adapter);
+
+                for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                    citta.add(cittaHotel.getString(1));
+                }
+
+                for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                    categorie.add(cittaHotel.getString(2));
+                }
+
+                Set<String> remuveDuplicate1= new LinkedHashSet<String>(citta);
+                ArrayList<String> appoggio1 = new ArrayList<>();
+                appoggio1.addAll(remuveDuplicate1);
+
+                BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                backgroudWorkerPhoto.context = getContext();
+                backgroudWorkerPhoto.hotel=hotel;
+                backgroudWorkerPhoto.citta = appoggio1;
+                backgroudWorkerPhoto.execute();
                 break;
         }
     }

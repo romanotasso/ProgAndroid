@@ -48,14 +48,13 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class CittaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CittaAnteprimaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DatabaseHelper db;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-    SearchView mysearchView;
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
 
@@ -66,7 +65,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    PageAdapterUtente pageAdapterUtente;
+    //PageAdapterUtente pageAdapterUtente;
     TabItem tabMonumento, tabRistoranti, tabHotelBB;
 
     public String citta, cittaSearch, cittaLista, cittaDB;
@@ -85,11 +84,8 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citta);
 
-        /*mysearchView = findViewById(R.id.mySearchBar);
-        mysearchView.setVisibility(View.VISIBLE);*/
-        cittaSearch = getIntent().getExtras().getString("cittaSearch");
-        cittaLista = getIntent().getExtras().getString("cittaLista");
-        cittaDB = getIntent().getExtras().getString("cittaDB");
+        //mysearchView = findViewById(R.id.mySearchBar);
+        //mysearchView.setVisibility(View.VISIBLE);
         email = getIntent().getExtras().getString("email");
 
         if((cittaSearch == null) && (cittaLista == null)) {
@@ -120,9 +116,11 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         cognome = hView.findViewById(R.id.textCognome);
 
         nome.setText(db.getNome(email));
+        db.close();
         cognome.setText(db.getCognome(email));
+        db.close();
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
-        CittaActivity.DownloadImage downloadImage = new DownloadImage(email);
+        DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
 
         navigationView.bringToFront();
@@ -135,30 +133,30 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         tabHotelBB = findViewById(R.id.hotel_bb);
         viewPager = findViewById(R.id.viewPager);
 
-        pageAdapterUtente = new PageAdapterUtente(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(pageAdapterUtente);
+        /*pageAdapterUtente = new PageAdapterUtente(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapterUtente);*/
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange_scuro_chiaro));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 1) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange_scuro_chiaro));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange));
                     }
                 } else {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange_scuro_chiaro));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange));
                     }
                 }
             }
@@ -173,7 +171,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
             }
         });
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
 
         /////////
@@ -187,7 +185,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         }
         db.close();
 
-        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cittaArray);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, cittaArray);
         myList.setAdapter(adapter);
 
         /*mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -211,7 +209,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
                     viewPager.setVisibility(View.VISIBLE);
-                    myList.setVisibility(View.VISIBLE);
+                    myList.setVisibility(View.GONE);
                 } else {
                     adapter.getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);
@@ -225,13 +223,26 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String città = adapterView.getItemAtPosition(i).toString();
-                Intent intent = new Intent(CittaActivity.this, CittaActivity.class);
+                Intent intent = new Intent(CittaAnteprimaActivity.this, CittaActivity.class);
                 intent.putExtra("cittaLista", città);
                 intent.putExtra("email", email);
-                Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
+                //Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
         });
+
+
+        resultReceiver = new AddressResultReciver(new Handler());
+        textLatLong = findViewById(R.id.textLatLog);
+        textAddress = findViewById(R.id.textAddress);
+
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(CittaAnteprimaActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
+            getCurrentLocation();
+        } else {
+            getCurrentLocation();
+        }
     }
 
     @Override
@@ -242,37 +253,37 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             case R.id.citta:
                 break;
             case R.id.home:
-                Intent intentHome = new Intent(CittaActivity.this, HomeActivity.class);
+                Intent intentHome = new Intent(CittaAnteprimaActivity.this, HomeActivity.class);
                 intentHome.putExtra("email", email);
                 startActivity(intentHome);
                 break;
             case R.id.viaggi:
-                Intent intentViaggi = new Intent(CittaActivity.this, IMieiViaggiActivity.class);
+                Intent intentViaggi = new Intent(CittaAnteprimaActivity.this, IMieiViaggiActivity.class);
                 intentViaggi.putExtra("email", email);
                 startActivity(intentViaggi);
                 break;
             case R.id.cerca:
-                Intent intentCerca = new Intent(CittaActivity.this, CercaActivity.class);
+                Intent intentCerca = new Intent(CittaAnteprimaActivity.this, CercaActivity.class);
                 intentCerca.putExtra("email", email);
                 startActivity(intentCerca);
                 break;
             case R.id.profilo:
-                Intent intentProfilo = new Intent(CittaActivity.this, ProfiloActivity.class);
+                Intent intentProfilo = new Intent(CittaAnteprimaActivity.this, ProfiloActivity.class);
                 intentProfilo.putExtra("email", email);
                 startActivity(intentProfilo);
                 break;
             case R.id.couponMenu:
-                Intent intentCoupon = new Intent(CittaActivity.this, CouponActivity.class);
+                Intent intentCoupon = new Intent(CittaAnteprimaActivity.this, CouponActivity.class);
                 intentCoupon.putExtra("email", email);
                 startActivity(intentCoupon);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(CittaActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(CittaAnteprimaActivity.this, SettingActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
-                Intent h = new Intent(CittaActivity.this, LoginActivity.class);
+                Intent h = new Intent(CittaAnteprimaActivity.this, LoginActivity.class);
                 startActivity(h);
                 finish();
                 break;
@@ -293,13 +304,13 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 query = query.substring(0,1).toUpperCase() + query.substring(1).toLowerCase();
                 boolean check = db.checkCitta(query);
                 if (!check) {
-                    Intent intent = new Intent(CittaActivity.this, CittaActivity.class);
+                    Intent intent = new Intent(CittaAnteprimaActivity.this, CittaActivity.class);
                     intent.putExtra("cittaSearch", query);
                     intent.putExtra("email", email);
-                    Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CittaAnteprimaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
                     startActivity(intent);
                 } else {
-                    Toast.makeText(CittaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
+                    Toast.makeText(CittaAnteprimaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
                 }
                 return false;
             }
@@ -326,25 +337,18 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         String email;
 
         public DownloadImage(String email){
-            this.email = email;
+            this.email = email.replaceAll("@","");
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url="";
+            String url = urlDownlaodImageProfilo + email + "JPG";
             Bitmap bitmap=null;
 
             try{
-                if(db.getCodiceFoto(email).equals("1")){
-                    url = urlDownlaodImageProfilo+"standardJPG";
-                    InputStream inputStream = new java.net.URL(url).openStream();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                }else {
-                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
-                    InputStream inputStream = new java.net.URL(url).openStream();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-                }
+                InputStream inputStream = new java.net.URL(url).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -360,6 +364,74 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             }
 
             super.onPostExecute(bitmap);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+            } else {
+                Toast.makeText(this, R.string.permesso_non_abilitatto, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void getCurrentLocation() {
+
+        final LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationServices.getFusedLocationProviderClient(CittaAnteprimaActivity.this).requestLocationUpdates(locationRequest, new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                LocationServices.getFusedLocationProviderClient(CittaAnteprimaActivity.this).removeLocationUpdates(this);
+                if (locationResult != null && locationResult.getLocations().size() > 0) {
+                    int latestLocationIndex = locationResult.getLocations().size() - 1;
+                    double latitudine = locationResult.getLocations().get(latestLocationIndex).getLatitude();
+                    double longitudine = locationResult.getLocations().get(latestLocationIndex).getLongitude();
+                    textLatLong.setText(String.format("Latitudine: %s\nLongitune: %s", latitudine, longitudine));
+                    Location location = new Location("providerN.A.");
+                    location.setLatitude(latitudine);
+                    location.setLongitude(longitudine);
+                    fetchAddressFromLatLong(location);
+                }
+            }
+        }, Looper.getMainLooper());
+    }
+
+    private void fetchAddressFromLatLong(Location location) {
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+        intent.putExtra(Costanti.RECEIVER, resultReceiver);
+        intent.putExtra(Costanti.LOCATION_DATA_EXTRA, location);
+        startService(intent);
+    }
+
+    class AddressResultReciver extends ResultReceiver {
+        AddressResultReciver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            super.onReceiveResult(resultCode, resultData);
+            if (resultCode == Costanti.SUCCESS_RESULT) {
+                textAddress.setText(resultData.getString(Costanti.RESULT_DATA_KEY));
+                if(!db.checkCitta(resultData.getString(Costanti.RESULT_DATA_KEY))){
+                    db.close();
+                    LoadingDialog loadingDialog = new LoadingDialog(CittaAnteprimaActivity.this,resultData.getString(Costanti.RESULT_DATA_KEY),email);
+                    loadingDialog.startLoadingDialog();
+                }
+
+            } else {
+                Toast.makeText(CittaAnteprimaActivity.this, resultData.getString(Costanti.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

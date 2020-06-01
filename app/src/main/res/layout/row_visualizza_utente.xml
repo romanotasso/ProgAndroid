@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:elevation="20dp"
     android:layout_marginTop="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/image"
@@ -103,7 +104,9 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:src="@drawable/ic_delete_black_24dp" />
+            android:src="@drawable/ic_delete_black_24dp"
+            android:tint="#AF1010" />
+
     </LinearLayout>
 
 

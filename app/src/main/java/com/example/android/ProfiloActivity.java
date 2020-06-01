@@ -60,7 +60,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
         emailExtras = getIntent().getExtras().getString("email");
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);

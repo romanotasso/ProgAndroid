@@ -78,7 +78,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
             }
         });
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);
