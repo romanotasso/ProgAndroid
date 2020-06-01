@@ -36,6 +36,7 @@ public class GastronomiaFragmentUtente extends Fragment {
     Cursor cittaRist;
     public ArrayList<Bitmap> foto;
     ArrayList<String> rist;
+    ArrayList<String>categorie;
     DatabaseHelper db;
     ImageButton button;
 
@@ -46,12 +47,11 @@ public class GastronomiaFragmentUtente extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view =  inflater.inflate(R.layout.fragment_gastronomia_utente, container, false);
 
         db = new DatabaseHelper(getContext());
-
-
+        categorie=new ArrayList<>();
         foto = new ArrayList<Bitmap>();
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
@@ -76,6 +76,10 @@ public class GastronomiaFragmentUtente extends Fragment {
             rist.add(cittaRist.getString(0));
         }
 
+        for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+            categorie.add(cittaRist.getString(1));
+        }
+
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -95,18 +99,19 @@ public class GastronomiaFragmentUtente extends Fragment {
         backgroudWorkerPhoto.rist.addAll(rist);
         backgroudWorkerPhoto.nomeCitta = citta;
         backgroudWorkerPhoto.execute();
-
         return  view;
     }
 
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
         ArrayList<String> nomePunto;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> gastronomia) {
+        MyAdapter(Context c, ArrayList<String> gastronomia,ArrayList<String> categorie) {
             super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = gastronomia;
+            this.categorie=categorie;
         }
 
         @NonNull
@@ -116,9 +121,11 @@ public class GastronomiaFragmentUtente extends Fragment {
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             images.setImageBitmap(foto.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             button = row.findViewById(R.id.id);
+            categoria.setText(categorie.get(position));
             nome.setText(nomePunto.get(position));
             cittaNome.setText(citta);
             final String gastronomia = nomePunto.get(position);
@@ -128,10 +135,6 @@ public class GastronomiaFragmentUtente extends Fragment {
                 public void onClick(View view) {
                     AggiungiViaggioGastronomia viaggioGastronomia = new AggiungiViaggioGastronomia(getActivity(), context, citta, email, gastronomia);
                     viaggioGastronomia.startLoadingDialog();
-                    /*String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Gastronomia");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Gastronomia");*/
                 }
             });
             return row;
@@ -148,7 +151,7 @@ public class GastronomiaFragmentUtente extends Fragment {
                     rist.add(cittaRist.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), rist);
+                final MyAdapter adapter = new MyAdapter(getContext(), rist,categorie);
                 myList.setAdapter(adapter);
                 break;
         }
@@ -200,7 +203,7 @@ public class GastronomiaFragmentUtente extends Fragment {
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.foto.addAll(foto);
-        MyAdapter adapter = new MyAdapter(getContext(), rist);
+        MyAdapter adapter = new MyAdapter(getContext(), rist,categorie);
         myList.setAdapter(adapter);
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/radius"
@@ -15,7 +16,10 @@
         android:layout_margin="5dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".20" />
 
@@ -31,15 +35,16 @@
         app:layout_constraintVertical_bias=".20">
 
         <TextView
-            android:layout_marginTop="15dp"
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="30sp"
+            android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
             android:text="@string/punto_di_interesse"
-            android:textAlignment="center"
-            android:textSize="25sp"
-            android:textStyle="italic|bold" />
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:textStyle="italic|bold"
+            tools:ignore="RtlCompat" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -56,24 +61,26 @@
 
                 <TextView
                     android:id="@+id/textViewNome"
-                    android:layout_width="125dp"
+                    android:layout_width="114dp"
                     android:layout_height="30dp"
                     android:gravity="center_horizontal"
                     android:text="@string/nome"
-                    android:textAlignment="center"
-                    android:textSize="25sp"
-                    android:textStyle="italic|bold" />
+                    android:textAlignment="textStart"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    tools:ignore="RtlCompat" />
 
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:id="@+id/textViewCognome"
-                    android:layout_width="125dp"
+                    android:layout_width="119dp"
                     android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
                     android:gravity="center_horizontal"
                     android:text="@string/cognome"
-                    android:textAlignment="center"
-                    android:textSize="25sp"
-                    android:textStyle="italic|bold" />
+                    android:textAlignment="textStart"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    tools:ignore="RtlCompat" />
 
             </TableRow>
         </TableLayout>
@@ -82,6 +89,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -95,7 +103,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:src="@drawable/ic_cancella" />
+            android:src="@drawable/ic_delete_black_24dp" />
     </LinearLayout>
 
 

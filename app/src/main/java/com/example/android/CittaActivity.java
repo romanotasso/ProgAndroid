@@ -102,9 +102,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         cognome = hView.findViewById(R.id.textCognome);
 
         nome.setText(db.getNome(email));
-        db.close();
         cognome.setText(db.getCognome(email));
-        db.close();
         immagineProfilo = hView.findViewById(R.id.imageProfilo);
         CittaActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
@@ -159,10 +157,9 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-
         /////////
         myList = findViewById(R.id.listView);
-        myList.setVisibility(View.VISIBLE);
+        myList.setVisibility(View.GONE);
         cittaHome = db.getAllDataCitta();
         cittaArray = new ArrayList<String>();
 
@@ -171,7 +168,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         }
         db.close();
 
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, cittaArray);
+        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cittaArray);
         myList.setAdapter(adapter);
 
         mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -195,7 +192,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
                     viewPager.setVisibility(View.VISIBLE);
-                    myList.setVisibility(View.VISIBLE);
+                    myList.setVisibility(View.INVISIBLE);
                 } else {
                     adapter.getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);
@@ -216,8 +213,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent);
             }
         });
-
-        ////////////
     }
 
     @Override
@@ -271,18 +266,25 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         String email;
 
         public DownloadImage(String email){
-            this.email = email.replaceAll("@","");
+            this.email = email;
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url = urlDownlaodImageProfilo + email + "JPG";
+            String url="";
             Bitmap bitmap=null;
 
             try{
-                InputStream inputStream = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
+                if(db.getCodiceFoto(email).equals("1")){
+                    url = urlDownlaodImageProfilo+"standardJPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }else {
+                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();

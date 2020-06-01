@@ -56,14 +56,11 @@ public class CittaFragmentAmministratoreVisualizza extends Fragment {
         for (cittaLista.moveToFirst(); !cittaLista.isAfterLast(); cittaLista.moveToNext()) {
             citta.add(cittaLista.getString(0));
         }
-        db.close();
 
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getContext();
         backgroudWorkerPhoto.nomeCitta.addAll(citta);
         backgroudWorkerPhoto.execute();
-
-
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

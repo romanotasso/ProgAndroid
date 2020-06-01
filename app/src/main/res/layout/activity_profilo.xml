@@ -32,7 +32,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.06999999"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+
+            />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -48,15 +50,16 @@
             app:layout_constraintVertical_bias="0.39999998"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/nome"
             android:layout_width="244dp"
             android:layout_height="47dp"
-            android:text="@string/nome"
-            android:textSize="25sp"
-            android:textStyle="normal"
-            android:textAlignment="viewStart"
+            android:enabled="false"
             android:gravity="start"
+            android:text="@string/nome"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.66"
@@ -64,6 +67,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.39999998"
             tools:ignore="MissingConstraints" />
+
+
 
         <ImageView
             android:id="@+id/imageView"
@@ -78,12 +83,12 @@
             tools:ignore="MissingConstraints"
             android:src="@drawable/ic_mail_black_24dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/email"
             android:layout_width="244dp"
             android:layout_height="47dp"
             android:text="@string/email"
-            android:textSize="25sp"
+            android:textSize="18sp"
             android:textAlignment="viewStart"
             android:gravity="start"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -107,14 +112,14 @@
             tools:ignore="MissingConstraints"
             android:src="@drawable/ic_location_city_black_24dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/citta"
             android:layout_width="244dp"
             android:layout_height="47dp"
             android:textAlignment="viewStart"
             android:gravity="start"
             android:text="@string/citta"
-            android:textSize="25sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.66"
@@ -127,7 +132,6 @@
             android:id="@+id/imageView6"
             android:layout_width="51dp"
             android:layout_height="47dp"
-            android:background="#974040"
             android:gravity="start"
             android:src="@drawable/ic_event_black_24dp"
             android:textAlignment="viewStart"
@@ -140,14 +144,14 @@
             tools:ignore="MissingConstraints" />
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/sesso"
             android:layout_width="244dp"
             android:layout_height="47dp"
             android:text="@string/sesso"
             android:textAlignment="viewStart"
             android:gravity="start"
-            android:textSize="25sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.66"
@@ -169,14 +173,14 @@
             android:src="@drawable/ic_sesso_black_24dp"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/data"
             android:layout_width="244dp"
             android:layout_height="47dp"
             android:text="@string/data_nascita"
             android:textAlignment="viewStart"
             android:gravity="start"
-            android:textSize="25sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.66"
@@ -199,14 +203,14 @@
             android:src="@drawable/ic_card_coupon"/>
 
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/coupon"
             android:layout_width="244dp"
             android:layout_height="47dp"
             android:textAlignment="viewStart"
             android:gravity="start"
             android:text="@string/coupon"
-            android:textSize="25sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.66"

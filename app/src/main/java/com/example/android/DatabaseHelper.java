@@ -28,9 +28,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABELLA_UTENTE + "(email text PRIMARY KEY, nome text NOT NULL, cognome text NOT NULL, citta text NOT NULL, sesso text NOT NULL, dataNascita date NOT NULL, coupon text NOT NULL, codiceFoto text NOT NULL)");
         db.execSQL("CREATE TABLE " + TABELLA_CITTA + "(nome text PRIMARY KEY)");
-        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
-        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
-        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY, citta TEXT, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT,categoria text NOT NULL,FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT,categoria text NOT NULL,FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
+        db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY,citta TEXT,categoria text NOT NULL, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_VIAGGI + "(email text, citta TEXT, nome TEXT, tipologia TEXT, PRIMARY KEY(email, citta, nome), FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome), FOREIGN KEY (email) REFERENCES  " + TABELLA_UTENTE + " (email))");
     }
     @Override
@@ -159,11 +159,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE MONUMENTI*/
-    public boolean inserisciMonumento(String nome,String nome_citta){
+    public boolean inserisciMonumento(String nome,String nome_citta,String categoria){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentMonumento = new ContentValues();
         contentMonumento.put("nome", nome);
         contentMonumento.put("citta", nome_citta);
+        contentMonumento.put("categoria", categoria);
         long ins = db.insert(TABELLA_MONUMENTI, null, contentMonumento);
         if(ins==-1) return  false;
         else return true;
@@ -177,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllDataMonumentiCitta(String citta){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_MONUMENTI + " WHERE citta = ? ORDER BY nome", new String[]{citta});
+        Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_MONUMENTI + " WHERE citta = ? ORDER BY nome", new String[]{citta});
         return res;
     }
 
@@ -186,11 +187,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return  db.delete(TABELLA_MONUMENTI, "nome = ?", new String[]{nome});
     }
     /*SEZIONE GASTRONOMIA*/
-    public boolean inserisciGastronomia(String nome,String nome_citta){
+    public boolean inserisciGastronomia(String nome,String nome_citta,String categoria){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentGastronomia = new ContentValues();
         contentGastronomia.put("nome",nome);
         contentGastronomia.put("citta", nome_citta);
+        contentGastronomia.put("categoria",categoria);
         long ins = db.insert(TABELLA_GASTRONOMIA, null, contentGastronomia);
         if(ins==-1) return  false;
         else return true;
@@ -204,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllDataRistorantiCitta(String citta){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_GASTRONOMIA + " WHERE citta = ? ORDER BY nome", new String[]{citta});
+        Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_GASTRONOMIA + " WHERE citta = ? ORDER BY nome", new String[]{citta});
         return res;
     }
 
@@ -214,11 +216,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*SEZIONE HOTEL&BB*/
-    public boolean inserisciHotelBB(String nome,String nome_citta){
+    public boolean inserisciHotelBB(String nome,String nome_citta,String categoria){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentHotel = new ContentValues();
         contentHotel.put("nome",nome);
         contentHotel.put("citta", nome_citta);
+        contentHotel.put("categoria",categoria);
         // contentValues1.put("citta_ID", i);
         long ins = db.insert(TABELLA_HOTELEBB, null, contentHotel);
         if(ins==-1) return  false;
@@ -233,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllDataHotelBBCitta(String citta){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_HOTELEBB + " WHERE citta = ? ORDER BY nome", new String[]{citta});
+        Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_HOTELEBB + " WHERE citta = ? ORDER BY nome", new String[]{citta});
         return res;
     }
 

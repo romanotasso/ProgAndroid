@@ -14,10 +14,14 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -44,6 +48,9 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
     Button mButtonInserisci;
     EditText mEditCitta;
     EditText mEditGastronomia;
+    Spinner  mSpinnerCategorie;
+    TextView erroreCategoria;
+    TextView erroreFoto;
     ImageButton mInserisciPhoto;
     ImageView photoGastronomia;
     Uri filepath;
@@ -57,12 +64,43 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
 
         db = new DatabaseHelper(getContext());
 
+        mSpinnerCategorie = view.findViewById(R.id.spinnerGastronomia);
+
+        List<String> categorie = new ArrayList<>();
+        categorie.add(0,"Scegli Categoria");
+        categorie.add(1,"Gelateria");
+        categorie.add(2,"Pizzeria");
+        categorie.add(3,"Ristorante");
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_spinner_item,categorie);
+        adapterSpinner.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        mSpinnerCategorie.setAdapter(adapterSpinner);
+        mSpinnerCategorie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(parent.getItemAtPosition(position).equals("Scegli Categoria")){
+
+                }else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    erroreCategoria.setError(null);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
+
+        erroreFoto= view.findViewById(R.id.errorFoto);
+        erroreCategoria = view.findViewById(R.id.errorCategoria);
         mEditCitta = view.findViewById(R.id.edittext_citta);
         mEditGastronomia = view.findViewById(R.id.edittext_gastronomia);
         mButtonInserisci = view.findViewById(R.id.button_inserisci);
         mInserisciPhoto = view.findViewById(R.id.button_addPhotoGastonomia);
         photoGastronomia = view.findViewById(R.id.gastonomia_immagine);
-
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +110,7 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
                 String hotelbb = "";
                 String gastronomia = mEditGastronomia.getText().toString();
                 String monumento = "";
-
+                String categoria = mSpinnerCategorie.getSelectedItem().toString();
 
                 if ((citta.trim().isEmpty())) {
                     mEditCitta.setError("Campo Obbligatorio");
@@ -80,16 +118,24 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
                     if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         if (db.checkGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                             if(count==1){
-                                monumento = "";
-                                hotelbb = "";
-                                db.inserisciGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
-                                BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                                backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), hotelbb);
-                                Toast.makeText(getContext(), R.string.inserisci_gastronomia, Toast.LENGTH_SHORT).show();
-                                Bitmap image = ((BitmapDrawable)photoGastronomia.getDrawable()).getBitmap();
-                                new updateImage(image,citta,gastronomia).execute();
+                                if(!categoria.equals("Scegli Categoria")){
+                                    monumento = "";
+                                    hotelbb = "";
+                                    //db.inserisciGastronomia(gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(),categoria = categoria.substring(0, 1).toUpperCase() + categoria.substring(1).toLowerCase(),citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
+                                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                                    backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia = gastronomia.substring(0, 1).toUpperCase() + gastronomia.substring(1).toLowerCase(), hotelbb,categoria = categoria.substring(0, 1).toUpperCase() + categoria.substring(1).toLowerCase());
+                                    Toast.makeText(getContext(), R.string.inserisci_gastronomia, Toast.LENGTH_SHORT).show();
+                                    Bitmap image = ((BitmapDrawable)photoGastronomia.getDrawable()).getBitmap();
+                                    new updateImage(image,citta,gastronomia).execute();
+                                    count=0;
+                                }else {
+                                    erroreCategoria.setError("Campo obbligatorio");
+                                    erroreCategoria.setVisibility(View.VISIBLE);
+                                }
                             }else {
-                                mButtonInserisci.setError("");
+                                erroreFoto.setError("Inserire foto");
+                                erroreFoto.setVisibility(View.VISIBLE);
+                                count=0;
                             }
                         } else {
                             mEditGastronomia.setError("Punto gastronomia gia presente");
@@ -113,17 +159,13 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
                         requestPermissions(perimissions,PERMISSION_CODE);
                     }else{
                         pickImageFromGallery();
-                        count = count+1;
                     }
                 }else {
                     pickImageFromGallery();
-                    count = count+1;
                 }
 
             }
         });
-
-
 
         return view;
     }
@@ -134,7 +176,6 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,IMAGE_PICK_CODE);
-
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -158,7 +199,7 @@ public class GastronomiaFragmentAmministratoreInserisci extends Fragment {
         if (resultCode == getActivity().RESULT_OK && requestCode == IMAGE_PICK_CODE && data!= null) {
             filepath = data.getData();
             photoGastronomia.setImageURI(filepath);
-
+            count = count+1;
         }
     }
 

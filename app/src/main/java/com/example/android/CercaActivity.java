@@ -97,9 +97,7 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         downloadImage.execute();
 
         nome.setText(db.getNome(getIntent().getExtras().getString("email")));
-        db.close();
         cognome.setText(db.getCognome(getIntent().getExtras().getString("email")));
-        db.close();
         navigationView.setNavigationItemSelectedListener(this);
         email1 = getIntent().getExtras().getString("email");
 
@@ -303,27 +301,31 @@ public class CercaActivity extends AppCompatActivity implements NavigationView.O
         String email;
 
         public DownloadImage(String email){
-            this.email = email.replaceAll("@","");
+            this.email = email;
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url = urlDownlaodImageProfilo + email + "JPG";
+            String url="";
             Bitmap bitmap=null;
 
             try{
-
-                InputStream inputStream = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
-
+                if(db.getCodiceFoto(email).equals("1")){
+                    url = urlDownlaodImageProfilo+"standardJPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }else {
+                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Bitmap bitmap) {
 

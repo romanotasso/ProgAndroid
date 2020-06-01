@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,7 +35,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     Cursor cursor;
 
     ImageView immProfiloMiniatura;
-    TextView nome;
+    TextView nomeCognome;
     TextView cognome;
     TextView sesso;
     TextView data;
@@ -45,7 +46,6 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
-
     String emailExtras;
 
     View hView;
@@ -68,10 +68,10 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         navigationView.setNavigationItemSelectedListener(this);
 
         hView = navigationView.getHeaderView(0);
-        nome = hView.findViewById(R.id.textNome);
+        nomeCognome = hView.findViewById(R.id.textNome);
         cognome = hView.findViewById(R.id.textCognome);
 
-        nome.setText(db.getNome(emailExtras));
+        nomeCognome.setText(db.getNome(emailExtras));
         cognome.setText(db.getCognome(emailExtras));
 
         Menu menu = navigationView.getMenu();
@@ -94,12 +94,24 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         navigationView.setCheckedItem(R.id.profilo);
 
         cursor = db.getAllDataUtente(emailExtras);
-        nome = findViewById(R.id.nome);
+        nomeCognome = findViewById(R.id.nome);
+        nomeCognome.setEnabled(false);
+        nomeCognome.setTextColor(getResources().getColor(R.color.nero));
         email = findViewById(R.id.email);
+        email.setEnabled(false);
+        email.setTextColor(getResources().getColor(R.color.nero));
         citta = findViewById(R.id.citta);
+        citta.setEnabled(false);
+        citta.setTextColor(getResources().getColor(R.color.nero));
         sesso = findViewById(R.id.sesso);
+        sesso.setEnabled(false);
+        sesso.setTextColor(getResources().getColor(R.color.nero));
         data = findViewById(R.id.data);
+        data.setEnabled(false);
+        data.setTextColor(getResources().getColor(R.color.nero));
         coupon = findViewById(R.id.coupon);
+        coupon.setEnabled(false);
+        coupon.setTextColor(getResources().getColor(R.color.nero));
         indietro = findViewById(R.id.indietro);
 
         indietro.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +128,14 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             return;
         }
         while (cursor.moveToNext()){
-            nome.setText(cursor.getString(1));
-            cognome.setText(cursor.getString(2));
+
+            String nome;
+            String cognome;
+            nome = cursor.getString(1);
+            cognome  = cursor.getString(2);
+            String stringNomeCognome = nome + " "+cognome;
+            nomeCognome.setText(stringNomeCognome);
+            //cognome.setText(cursor.getString(2));
             email.setText(cursor.getString(0));
             citta.setText(cursor.getString(3));
             sesso.setText(cursor.getString(4));
@@ -177,20 +195,25 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         String email;
 
         public DownloadImage(String email){
-            this.email = email.replaceAll("@","");
+            this.email = email;
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url = urlDownlaodImageProfilo + email + "JPG";
-            Bitmap bitmap=null;
+            String url="";
+            Bitmap bitmap;
 
             try{
-
-                InputStream inputStream = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
-
+                if(db.getCodiceFoto(email).equals("1")){
+                    url = urlDownlaodImageProfilo+"standardJPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }else {
+                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -202,6 +225,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         protected void onPostExecute(Bitmap bitmap) {
 
             if(bitmap!=null){
+
                 immagineProfilo.setImageBitmap(bitmap);
                 immProfiloMiniatura.setImageBitmap(bitmap);
             }

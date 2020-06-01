@@ -28,15 +28,18 @@
             android:id="@+id/textViaggi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColor="#2B2A2A"
             android:textSize="30sp"
-            android:textStyle="italic"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/listaViaggi"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="RtlCompat" />
 
         <ListView
             android:id="@+id/listaViaggi"

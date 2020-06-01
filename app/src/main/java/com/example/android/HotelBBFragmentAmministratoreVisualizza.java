@@ -45,6 +45,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
     ArrayList<String> hotel;
     ArrayList<String> citta  = new ArrayList<>();;
     ArrayList<Bitmap> foto;
+    ArrayList<String> categorie;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 
@@ -62,6 +63,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
         foto = new ArrayList<>();
         refreshLayout = view.findViewById(R.id.swipe);
         citta = new ArrayList<String>();
+        categorie = new ArrayList<String>();
 
         for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
             hotel.add(cittaHotel.getString(0));
@@ -69,6 +71,10 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
 
         for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
             citta.add(cittaHotel.getString(1));
+        }
+
+        for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+            categorie.add(cittaHotel.getString(2));
         }
 
         Set<String> remuveDuplicate1= new LinkedHashSet<String>(citta);
@@ -102,12 +108,14 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
         ArrayList<String> cittaLista;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> hotel, ArrayList<String> citta) {
+        MyAdapter(Context c, ArrayList<String> hotel, ArrayList<String> citta,ArrayList<String> categorie) {
             super(c, R.layout.row, R.id.textViewDatiCitta, hotel);
             this.context = c;
             this.nomePunto = hotel;
             this.cittaLista = citta;
+            this.categorie = categorie;
         }
 
         @NonNull
@@ -118,10 +126,12 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             TextView citta = row.findViewById(R.id.textViewCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             ImageButton cancella = row.findViewById(R.id.id);
             citta.setText(cittaLista.get(position));
             images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
+            categoria.setText(categorie.get(position));
 
             final String nomeInteresse = nomePunto.get(position);
             final Context context = getContext();
@@ -189,9 +199,9 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
 
 
     public void returnFoto(ArrayList<Bitmap> foto){
-        this.foto.clear();
+
         this.foto.addAll(foto);
-        adapter = new MyAdapter(getContext(),hotel,citta);
+        adapter = new MyAdapter(getContext(),hotel,citta,categorie);
         myList.setAdapter(adapter);
     }
 
@@ -207,7 +217,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
                     hotel.add(cittaHotel.getString(0));
                 }
                 db.close();
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel, citta);
+                final MyAdapter adapter = new MyAdapter(getContext(), hotel, citta,categorie);
                 myList.setAdapter(adapter);
                 break;
         }

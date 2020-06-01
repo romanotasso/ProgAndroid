@@ -38,7 +38,7 @@ public class HotelBBFragmentUtente extends Fragment {
     Cursor cittaHotel;
     ArrayList<Bitmap> foto;
     ArrayList<String> hotel;
-
+    ArrayList<String> categorie;
     DatabaseHelper db;
     ImageButton button;
 
@@ -52,7 +52,7 @@ public class HotelBBFragmentUtente extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hotel_b_b_utente, container, false);
         db = new DatabaseHelper(getContext());
         foto = new ArrayList<Bitmap>();
-
+        categorie = new ArrayList<>();
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
         cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
@@ -76,6 +76,10 @@ public class HotelBBFragmentUtente extends Fragment {
 
         for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
             hotel.add(cittaHotel.getString(0));
+        }
+
+        for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+            categorie.add(cittaHotel.getString(1));
         }
 
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
@@ -105,12 +109,13 @@ public class HotelBBFragmentUtente extends Fragment {
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
         ArrayList<String> nomePunto;
+        ArrayList<String> categorie;
 
-
-        MyAdapter(Context c, ArrayList<String> hotel/*, int imgs[]*/) {
+        MyAdapter(Context c, ArrayList<String> hotel, ArrayList<String> categorie) {
             super(c, R.layout.row_utente, R.id.textViewDatiCitta, hotel);
             this.context = c;
             this.nomePunto = hotel;
+            this.categorie=categorie;
         }
 
         @NonNull
@@ -122,8 +127,8 @@ public class HotelBBFragmentUtente extends Fragment {
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             button = row.findViewById(R.id.id);
-
-            //images.setImageResource(rImg[position]);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
+            categoria.setText(categorie.get(position));
             nome.setText(nomePunto.get(position));
             images.setImageBitmap(foto.get(position));
             cittaNome.setText(citta);
@@ -134,16 +139,11 @@ public class HotelBBFragmentUtente extends Fragment {
                 public void onClick(View view) {
                     AggiungiViaggioHotel viaggioHotel = new AggiungiViaggioHotel(getActivity(), context, citta, email, hotel);
                     viaggioHotel.startLoadingDialog();
-                    /*String type = "inserisciViaggio";
-                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Hotel");
-                    db.inserisciViaggio(email, citta, nomePunto.get(position), "Hotel");*/
                 }
             });
             return row;
         }
     }
-
 
     public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
 
@@ -184,7 +184,7 @@ public class HotelBBFragmentUtente extends Fragment {
             if(bitmaps!=null){
                 returnFoto(bitmaps);
             }else {
-                MyAdapter adapter = new MyAdapter(getContext(), hotel);
+                MyAdapter adapter = new MyAdapter(getContext(), hotel,categorie);
                 myList.setAdapter(adapter);
             }
         }
@@ -193,13 +193,11 @@ public class HotelBBFragmentUtente extends Fragment {
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.foto.addAll(foto);
-        MyAdapter adapter = new MyAdapter(getContext(), hotel);
+        MyAdapter adapter = new MyAdapter(getContext(), hotel,categorie);
         myList.setAdapter(adapter);
 
 
     }
-
-
 
     public void refreshItems() {
         switch (refresh_count) {
@@ -211,7 +209,7 @@ public class HotelBBFragmentUtente extends Fragment {
                     hotel.add(cittaHotel.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), hotel,categorie);
                 myList.setAdapter(adapter);
                 break;
         }

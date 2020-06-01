@@ -43,6 +43,7 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
     Cursor cittaGast;
     ArrayList<String> gastronomia;
     ArrayList<String> citta;
+    ArrayList<String> categorie;
     ArrayList<Bitmap> foto;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
@@ -61,20 +62,23 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
         refreshLayout = view.findViewById(R.id.swipe);
         citta = new ArrayList<String>();
         foto = new ArrayList<Bitmap>();
+        categorie = new ArrayList<String>();
 
         for (cittaGast.moveToFirst(); !cittaGast.isAfterLast(); cittaGast.moveToNext()) {
             gastronomia.add(cittaGast.getString(0));
         }
 
-
         for (cittaGast.moveToFirst(); !cittaGast.isAfterLast(); cittaGast.moveToNext()) {
             citta.add(cittaGast.getString(1));
+        }
+
+        for (cittaGast.moveToFirst(); !cittaGast.isAfterLast(); cittaGast.moveToNext()) {
+            categorie.add(cittaGast.getString(2));
         }
 
         Set<String> remuveDuplicate1= new LinkedHashSet<String>(citta);
         ArrayList<String> appoggio1 = new ArrayList<>();
         appoggio1.addAll(remuveDuplicate1);
-
 
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getContext();
@@ -104,12 +108,14 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
         ArrayList<String> cittaLista;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> gastronomia, ArrayList<String> citta/*, int imgs[]*/) {
+        MyAdapter(Context c, ArrayList<String> gastronomia, ArrayList<String> citta,ArrayList<String> categorie) {
             super(c, R.layout.row, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = gastronomia;
             this.cittaLista = citta;
+            this.categorie = categorie;
         }
 
         @NonNull
@@ -120,10 +126,12 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             TextView citta = row.findViewById(R.id.textViewCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             ImageButton cancella = row.findViewById(R.id.id);
             citta.setText(cittaLista.get(position));
             images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
+            categoria.setText(categorie.get(position));
 
             final String nomeInteresse = nomePunto.get(position);
             final Context context = getContext();
@@ -157,12 +165,11 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
             ArrayList<Bitmap> fotoBack = new ArrayList<Bitmap>();
 
             try {
-
                 for(int i=0;i<citta.size();i++){
-                    String cittaString = citta.get(i).replaceAll(" ", "%20");
                     for(int j=0;j<gastronomia.size();j++){
-                        if(!(db.checkGastronomia(gastronomia.get(j),cittaString))){
+                        if(!(db.checkGastronomia(gastronomia.get(j),citta.get(i)))){
                             String gastrString = gastronomia.get(j).replaceAll(" ", "%20");
+                            String cittaString = citta.get(i).replaceAll(" ", "%20");
                             url = url_photoGastr +cittaString +gastrString+"JPG";
                             InputStream inputStream = new java.net.URL(url).openStream();
                             immagine = BitmapFactory.decodeStream(inputStream);
@@ -196,16 +203,11 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
 
     public void returnFoto(ArrayList<Bitmap> foto){
 
-        this.foto.clear();
         this.foto.addAll(foto);
-        adapter = new MyAdapter(getContext(), gastronomia, citta);
+        adapter = new MyAdapter(getContext(), gastronomia, citta,categorie);
         myList.setAdapter(adapter);
 
     }
-
-
-
-
 
     public void refreshItems() {
         switch (refresh_count) {
@@ -217,7 +219,7 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
                     gastronomia.add(cittaGast.getString(0));
                 }
                 db.close();
-                final MyAdapter adapter = new MyAdapter(getContext(), gastronomia, citta/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), gastronomia,citta,categorie);
                 myList.setAdapter(adapter);
                 break;
         }

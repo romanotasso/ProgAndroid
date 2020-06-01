@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         email = getIntent().getExtras().getString("email");
 
         drawerLayout = findViewById(R.id.drawer);
@@ -70,9 +71,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         HomeActivity.DownloadImage downloadImage = new DownloadImage(email);
         downloadImage.execute();
         nome.setText(db.getNome(email));
-        db.close();
         cognome.setText(db.getCognome(email));
-        db.close();
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();
@@ -171,20 +170,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String emailSenzaChiocciola = email.replaceAll("@","");
-            String url = urlDownlaodImageProfilo + emailSenzaChiocciola + "JPG";
+            String url="";
             Bitmap bitmap=null;
 
             try{
-                InputStream inputStream = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
+                if(db.getCodiceFoto(email).equals("1")){
+                    url = urlDownlaodImageProfilo+"standardJPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }else {
+                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Bitmap bitmap) {
 

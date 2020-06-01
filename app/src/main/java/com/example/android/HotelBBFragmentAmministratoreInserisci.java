@@ -14,10 +14,14 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -41,9 +45,12 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1000;
     DatabaseHelper db;
+    Spinner mSpinnerCategorie;
     Button mButtonInserisci;
     EditText mEditCitta;
     EditText mEditHotel;
+    TextView erroreCategoria;
+    TextView erroreFoto;
     ImageButton mInserisciPhoto;
     ImageView photoHotel;
     Uri filepath;
@@ -57,11 +64,43 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
 
         db = new DatabaseHelper(getContext());
 
+        mSpinnerCategorie = view.findViewById(R.id.spinnerHotel);
+
+        List<String> categorie = new ArrayList<>();
+        categorie.add(0,"Scegli Categoria");
+        categorie.add(1,"Hotel");
+        categorie.add(2,"Bed and Breakfast");
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_spinner_item,categorie);
+        adapterSpinner.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        mSpinnerCategorie.setAdapter(adapterSpinner);
+        mSpinnerCategorie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(parent.getItemAtPosition(position).equals("Scegli Categoria")){
+
+                }else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    erroreCategoria.setError(null);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
+
+
         mEditCitta = view.findViewById(R.id.edittext_citta);
         mEditHotel = view.findViewById(R.id.edittext_hotel);
         mButtonInserisci = view.findViewById(R.id.button_inserisci);
         mInserisciPhoto = view.findViewById(R.id.button_addPhotoHotel);
         photoHotel = view.findViewById(R.id.hotel_immagine);
+        erroreFoto= view.findViewById(R.id.errorFoto);
+        erroreCategoria = view.findViewById(R.id.errorCategoria);
 
         mButtonInserisci.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +111,7 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
                 String monumento = "";
                 String gastronomia = "";
                 String hotelbb = mEditHotel.getText().toString();
+                String categoria = mSpinnerCategorie.getSelectedItem().toString();
 
                 if ((citta.trim().isEmpty())) {
                     mEditCitta.setError("Campo Obbligatorio");
@@ -79,24 +119,30 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
                     if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         if (db.checkHotel(hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                             if(count==1){
-                                gastronomia = "";
-                                monumento = "";
-                                db.inserisciHotelBB(hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase());
-                                BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                                backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia, hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase());
-                                Toast.makeText(getContext(), R.string.inserisci_hotel, Toast.LENGTH_SHORT).show();
-                                Bitmap image = ((BitmapDrawable)photoHotel.getDrawable()).getBitmap();
-                                new updateImage(image,citta,hotelbb).execute();
+                                if(!categoria.equals("Scegli Categoria")) {
+                                    gastronomia = "";
+                                    monumento = "";
+                                    //db.inserisciHotelBB(hotelbb = hotelbb.substring(0,1).toUpperCase() + hotelbb.substring(1).toLowerCase(), citta = citta.substring(0,1).toUpperCase() + citta.substring(1).toLowerCase());
+                                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                                    backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento, gastronomia, hotelbb = hotelbb.substring(0, 1).toUpperCase() + hotelbb.substring(1).toLowerCase(), categoria = categoria.substring(0, 1).toUpperCase() + categoria.substring(1).toLowerCase());
+                                    Toast.makeText(getContext(), R.string.inserisci_hotel, Toast.LENGTH_SHORT).show();
+                                    Bitmap image = ((BitmapDrawable) photoHotel.getDrawable()).getBitmap();
+                                    new updateImage(image, citta, hotelbb).execute();
+                                    count=0;
+                                }else {
+                                    erroreCategoria.setError("Campo obbligatorio");
+                                    erroreCategoria.setVisibility(View.VISIBLE);
+                                }
                             }else {
-                                mButtonInserisci.setError("");
+                                erroreFoto.setError("Inserire foto");
+                                erroreFoto.setVisibility(View.VISIBLE);
+                                count=0;
                             }
-
                         } else {
                             mEditHotel.setError("Hotel/B&B gia presente");
                         }
                     } else {
                         mEditCitta.setError("Citta non presente");
-
                     }
                 } else {
                     mEditHotel.setError("Campo obbligatorio");
@@ -115,11 +161,9 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
                         requestPermissions(perimissions,PERMISSION_CODE);
                     }else{
                         pickImageFromGallery();
-                        count = count+1;
                     }
                 }else {
                     pickImageFromGallery();
-                    count = count+1;
                 }
 
             }
@@ -157,7 +201,7 @@ public class HotelBBFragmentAmministratoreInserisci extends Fragment {
         if (resultCode == getActivity().RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null) {
             filepath = data.getData();
             photoHotel.setImageURI(filepath);
-
+            count = count+1;
         }
     }
 

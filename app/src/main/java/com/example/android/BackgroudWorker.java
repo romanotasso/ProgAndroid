@@ -38,6 +38,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
     final static int VALORE_CITTA_VIAGGIO = 1;
     final static int VALORE_NOME_VIAGGIO = 2;
     final static int VALORE_TIPOLOGIA_VIAGGIO = 3;
+    final static int VALORE_CATEGORIA_MHG = 2;
 
     String emailDati;
     String cittaDati;
@@ -229,7 +230,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String result = "";
                 String line = "";
                 int i = 0;
-                String valori[] = new String[2];
+                String valori[] = new String[3];
                 d.updateDatiGastronomia();
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -238,7 +239,10 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         i = i + 1;
                     } else if (i == VALORE_CITTA_MHG) {
                         valori[i] = line;
-                        d.inserisciGastronomia(valori[0], valori[1]);
+                        i= i+ 1;
+                    }else if ((i==VALORE_CATEGORIA_MHG)){
+                        valori[i] = line;
+                        d.inserisciGastronomia(valori[0], valori[1],valori[2]);
                         i = 0;
                     }
                 }
@@ -266,7 +270,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String result = "";
                 String line = "";
                 int i = 0;
-                String valori[] = new String[2];
+                String valori[] = new String[3];
                 d.updateDatiMonumenti();
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -275,7 +279,10 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         i = i + 1;
                     } else if (i == VALORE_CITTA_MHG) {
                         valori[i] = line;
-                        d.inserisciMonumento(valori[0], valori[1]);
+                        i = i + 1;
+                    }else if(i== VALORE_CATEGORIA_MHG){
+                        valori[i] = line;
+                        d.inserisciMonumento(valori[0],valori[1],valori[2]);
                         i = 0;
                     }
                 }
@@ -391,7 +398,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String result = "";
                 String line = "";
                 int i = 0;
-                String valori[] = new String[2];
+                String valori[] = new String[3];
                 d.updateDatiHotel();
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -400,7 +407,10 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                         i = i + 1;
                     } else if (i == VALORE_CITTA_MHG) {
                         valori[i] = line;
-                        d.inserisciHotelBB(valori[0], valori[1]);
+                        i = i + 1;
+                    }else if(i == VALORE_CATEGORIA_MHG){
+                        valori[i] = line;
+                        d.inserisciHotelBB(valori[0], valori[1],valori[2]);
                         i = 0;
                     }
                 }
@@ -616,6 +626,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String monumento = params[2];
                 String gastronomia = params[3];
                 String hotelbb = params[4];
+                String categoria = params[5];
                 URL url = new URL(insert_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -626,18 +637,19 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String post_data = URLEncoder.encode("citta", "UTF-8") + "=" + URLEncoder.encode(citta, "UTF-8") + "&" +
                         URLEncoder.encode("monumento", "UTF-8") + "=" + URLEncoder.encode(monumento, "UTF-8") + "&" +
                         URLEncoder.encode("gastronomia", "UTF-8") + "=" + URLEncoder.encode(gastronomia, "UTF-8") + "&" +
-                        URLEncoder.encode("hotelbb", "UTF-8") + "=" + URLEncoder.encode(hotelbb, "UTF-8");
+                        URLEncoder.encode("hotelbb", "UTF-8") + "=" + URLEncoder.encode(hotelbb, "UTF-8") + "&" +
+                        URLEncoder.encode("categoria", "UTF-8") + "=" + URLEncoder.encode(categoria, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 if (d.checkCitta(citta)) {
                     d.inserisciCitta(citta);
                 }
                 if ((monumento == "") && (hotelbb == "")) {
-                    d.inserisciGastronomia(gastronomia, citta);
+                    d.inserisciGastronomia(gastronomia,citta,categoria);
                 } else if ((gastronomia == "") && (monumento == "")) {
-                    d.inserisciHotelBB(hotelbb, citta);
+                    d.inserisciHotelBB(hotelbb,citta,categoria);
                 } else if ((gastronomia == "") && (hotelbb == "")) {
-                    d.inserisciMonumento(monumento, citta);
+                    d.inserisciMonumento(monumento,citta,categoria);
                 }
                 bufferedWriter.close();
                 outputStream.close();

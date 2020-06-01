@@ -72,6 +72,7 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                 String hotelbb = "";
                 String gastronomia = "";
                 String monumento = "";
+                String categoria ="";
 
                 if ((citta.trim().isEmpty())) {
                     mEditCitta.setError("Campo Obbligatorio");
@@ -82,7 +83,7 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                             db.inserisciCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
                             Toast.makeText(getContext(), R.string.inserisci_citta, Toast.LENGTH_SHORT).show();
                             BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                            backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb);
+                            backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb,categoria);
                             Bitmap image = ((BitmapDrawable) photoCitta.getDrawable()).getBitmap();
                             new updateImage(image, citta).execute();
                         } else {

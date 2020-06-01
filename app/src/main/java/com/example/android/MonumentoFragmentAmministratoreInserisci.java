@@ -1,6 +1,7 @@
 package com.example.android;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,10 +15,14 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,7 +41,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonumentoFragmentAmministratoreInserisci extends Fragment {
+public class MonumentoFragmentAmministratoreInserisci extends Fragment  {
 
     private  static final int IMAGE_PICK_CODE = 1000;
     private  static final int PERMISSION_CODE = 1000;
@@ -44,6 +49,9 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
     Button mButtonInserisci;
     EditText mEditCitta;
     EditText mEditMonumento;
+    TextView erroreCategoria;
+    TextView erroreFoto;
+    Spinner mSpinnerCategorie;
     ImageButton mInserisciPhoto;
     ImageView photoMonumento;
     Uri filepath;
@@ -58,6 +66,40 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
 
         db = new DatabaseHelper(getContext());
 
+        mSpinnerCategorie = view.findViewById(R.id.spinnerMonumento);
+
+
+        List<String> categorie = new ArrayList<>();
+        categorie.add(0,"Scegli Categoria");
+        categorie.add(1,"Chiesa");
+        categorie.add(2,"Escursione");
+        categorie.add(3,"Lido Balneare");
+        categorie.add(4,"Monumento");
+        categorie.add(5,"Museo");
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_spinner_item,categorie);
+        adapterSpinner.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        mSpinnerCategorie.setAdapter(adapterSpinner);
+        mSpinnerCategorie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(parent.getItemAtPosition(position).equals("Scegli Categoria")){
+
+                }else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    erroreCategoria.setError(null);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
+        erroreFoto= view.findViewById(R.id.errorFoto);
+        erroreCategoria = view.findViewById(R.id.errorCategoria);
         mEditCitta = view.findViewById(R.id.edittext_citta);
         mEditMonumento = view.findViewById(R.id.edittext_monumenti);
         mButtonInserisci = view.findViewById(R.id.button_inserisci);
@@ -72,6 +114,8 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
                 String hotelbb = "";
                 String gastronomia = "";
                 String monumento = mEditMonumento.getText().toString();
+                String categoria = mSpinnerCategorie.getSelectedItem().toString();
+
 
                 if ((citta.trim().isEmpty())) {
                     mEditCitta.setError("Campo Obbligatorio");
@@ -79,16 +123,24 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
                     if (!db.checkCitta(citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                         if (db.checkMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase())) {
                             if(count==1){
-                                gastronomia = "";
-                                hotelbb = "";
-                                db.inserisciMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
-                                BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                                backgroudWorker.execute(type, citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), gastronomia , hotelbb);
-                                Toast.makeText(getContext(), R.string.inserisci_monumento, Toast.LENGTH_SHORT).show();
-                                Bitmap image = ((BitmapDrawable)photoMonumento.getDrawable()).getBitmap();
-                                new updateImage(image,citta,monumento).execute();
+                                if(!categoria.equals("Scegli Categoria")){
+                                    gastronomia = "";
+                                    hotelbb = "";
+                                    //db.inserisciMonumento(monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(),categoria = categoria.substring(0, 1).toUpperCase() + categoria.substring(1).toLowerCase(),citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase());
+                                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                                    backgroudWorker.execute(type,citta = citta.substring(0, 1).toUpperCase() + citta.substring(1).toLowerCase(), monumento = monumento.substring(0, 1).toUpperCase() + monumento.substring(1).toLowerCase(), gastronomia , hotelbb,categoria = categoria.substring(0, 1).toUpperCase() + categoria.substring(1).toLowerCase());
+                                    Toast.makeText(getContext(), R.string.inserisci_monumento, Toast.LENGTH_SHORT).show();
+                                    Bitmap image = ((BitmapDrawable)photoMonumento.getDrawable()).getBitmap();
+                                    new updateImage(image,citta,monumento).execute();
+                                    count=0;
+                                }else {
+                                    erroreCategoria.setError("Campo obbligatorio");
+                                    erroreCategoria.setVisibility(View.VISIBLE);
+                                }
                             }else{
-                                mButtonInserisci.setError("");
+                                erroreFoto.setError("Inserire foto");
+                                erroreFoto.setVisibility(View.VISIBLE);
+                                count=0;
                             }
                         } else {
                             mEditMonumento.setError("Monumento gia presente");
@@ -112,11 +164,10 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
                         requestPermissions(perimissions,PERMISSION_CODE);
                     }else{
                         pickImageFromGallery();
-                        count = count+1;
                     }
                 }else {
                     pickImageFromGallery();
-                    count = count+1;
+
                 }
 
             }
@@ -126,11 +177,10 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
     }
 
     private void pickImageFromGallery(){
-
+        erroreFoto.setError(null);
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,IMAGE_PICK_CODE);
-
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -154,9 +204,10 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment {
         if (resultCode == getActivity().RESULT_OK && requestCode == IMAGE_PICK_CODE && data!= null) {
             filepath = data.getData();
             photoMonumento.setImageURI(filepath);
-
+            count = count+1;
         }
     }
+
 
     private class updateImage extends AsyncTask<Void, Void, Void> {
 

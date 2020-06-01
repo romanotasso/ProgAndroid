@@ -8,14 +8,15 @@
     android:orientation="vertical">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe">
+        android:background="#FFFFFF">
 
         <ListView
-            android:layout_height="match_parent"
+            android:id="@+id/listaGastronomiaViaggi"
             android:layout_width="match_parent"
-            android:id="@+id/listaGastronomiaViaggi"/>
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

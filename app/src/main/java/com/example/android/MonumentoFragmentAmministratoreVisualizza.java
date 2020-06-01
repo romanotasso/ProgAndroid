@@ -43,6 +43,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
     Cursor cittaMonu;
     ArrayList<String> monumento;
     ArrayList<String> citta;
+    ArrayList<String> categorie;
     public ArrayList<Bitmap> foto;
     MyAdapter adapter;
     SwipeRefreshLayout refreshLayout;
@@ -62,6 +63,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
         monumento = new ArrayList<String>();
         citta = new ArrayList<String>();
         foto = new ArrayList<Bitmap>();
+        categorie = new ArrayList<>();
 
         for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
             monumento.add(cittaMonu.getString(0));
@@ -70,6 +72,11 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
         for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
             citta.add(cittaMonu.getString(1));
         }
+
+        for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+            categorie.add(cittaMonu.getString(2));
+        }
+
 
         Set<String> remuveDuplicate= new LinkedHashSet<String>(citta);
         ArrayList<String> appoggio = new ArrayList<>();
@@ -106,13 +113,15 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
         ArrayList<String> cittaLista;
+        ArrayList<String> categorie;
 
 
-        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> citta) {
+        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> citta,ArrayList<String> categorie) {
             super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
             this.cittaLista = citta;
+            this.categorie = categorie;
 
         }
 
@@ -123,12 +132,13 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
             View row = layoutInflater.inflate(R.layout.row, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
-            final TextView citta = row.findViewById(R.id.textViewCitta);
+            TextView citta = row.findViewById(R.id.textViewCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             ImageButton cancella = row.findViewById(R.id.id);
             nome.setText(nomePunto.get(position));
             citta.setText(cittaLista.get(position));
+            categoria.setText(categorie.get(position));
             images.setImageBitmap(foto.get(position));
-
             final String nomeInteresse = nomePunto.get(position);
             final Context context = getContext();
 
@@ -161,9 +171,9 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
             try {
 
                 for(int i=0;i<citta.size();i++){
-                    String cittaString = citta.get(i).replaceAll(" ", "%20");
                     for(int j=0;j<monumenti.size();j++){
-                        if(!(db.checkMonumento(monumenti.get(j),cittaString))){
+                        if(!(db.checkMonumento(monumenti.get(j),citta.get(i)))){
+                            String cittaString = citta.get(i).replaceAll(" ", "%20");
                             String monuString = monumenti.get(j).replaceAll(" ", "%20");
                             url = url_photoMonumento + cittaString + monuString + "JPG";
                             InputStream inputStream = new java.net.URL(url).openStream();
@@ -196,9 +206,9 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
 
 
     public void returnFoto(ArrayList<Bitmap> foto){
-        this.foto.clear();
+
         this.foto.addAll(foto);
-        adapter = new MyAdapter(getContext(),monumento,citta);
+        adapter = new MyAdapter(getContext(),monumento,citta,categorie);
         myList.setAdapter(adapter);
 
     }
@@ -212,7 +222,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
                 for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
                     monumento.add(cittaMonu.getString(0));
                 }
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento, citta/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), monumento, citta,categorie);
                 myList.setAdapter(adapter);
                 break;
         }

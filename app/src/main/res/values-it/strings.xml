@@ -76,6 +76,8 @@
     <string name="registrazione_successo">Registrazione avvenuta con successo</string>
     <string name="inserisci_aggiornamento">Inserisci i dati per l\'aggiornamento</string>
 
+
+
     <plurals
         name="le_citt_da_te_visitate" >
             <item quantity="one">La città da te visitata:</item>

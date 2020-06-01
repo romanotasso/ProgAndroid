@@ -23,10 +23,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_width="265dp"
+        android:layout_height="94dp"
         android:layout_marginLeft="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,38 +36,116 @@
         app:layout_constraintVertical_bias=".20">
 
         <TextView
-            android:id="@+id/textViewDatiCitta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/luogo"
+            android:layout_width="64dp"
+            android:layout_height="30dp"
             android:background="#FFFFFF"
             android:gravity="center_horizontal"
-            android:text="@string/punto_di_interesse"
+            android:text="Luogo:"
             android:textAlignment="center"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            android:textStyle="italic|bold" />
+            android:textSize="15sp"
+            android:textStyle="italic|bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.00999999" />
+
+
+        <TextView
+            android:id="@+id/textViewDatiCitta"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="9dp"
+            android:background="#FFFFFF"
+            android:gravity="center_horizontal"
+            android:text="Nome Luogo:"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="italic|bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.00999999" />
+
+        <TextView
+            android:id="@+id/citta"
+            android:layout_width="64dp"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:text="Città"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51" />
 
         <TextView
             android:id="@+id/textViewCitta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
             android:gravity="center_horizontal"
-            android:text="@string/punto_di_interesse"
+            android:text="Città"
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-    </LinearLayout>
+            android:textSize="15dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        <TextView
+            android:id="@+id/textViewCategoria"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:text="Categoria"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/Categoria"
+            android:layout_width="64dp"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:text="Categoria"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/id"
@@ -75,8 +153,9 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:src="@drawable/ic_delete_black_24dp" />
-    </LinearLayout>
+            android:src="@drawable/ic_delete_black_24dp"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

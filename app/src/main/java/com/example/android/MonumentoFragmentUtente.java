@@ -29,6 +29,7 @@ public class MonumentoFragmentUtente extends Fragment{
     ListView myList;
     Cursor cittaMonu;
     ArrayList<String> monumento;
+    ArrayList<String> categorie;
     DatabaseHelper db;
     MyAdapter adapter;
     ImageButton button;
@@ -46,6 +47,8 @@ public class MonumentoFragmentUtente extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
         db = new DatabaseHelper(getContext());
+        categorie = new ArrayList<>();
+
 
         foto = new ArrayList<Bitmap>();
 
@@ -71,7 +74,9 @@ public class MonumentoFragmentUtente extends Fragment{
         for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
             monumento.add(cittaMonu.getString(0));
         }
-        db.close();
+        for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+            categorie.add(cittaMonu.getString(1));
+        }
 
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getContext();
@@ -101,11 +106,13 @@ public class MonumentoFragmentUtente extends Fragment{
 
         Context context;
         ArrayList<String> nomePunto;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> gastronomia) {
+        MyAdapter(Context c, ArrayList<String> gastronomia,ArrayList<String> categorie) {
             super(c, R.layout.row_utente, R.id.textViewDatiCitta, gastronomia);
             this.context = c;
             this.nomePunto = monumento;
+            this.categorie=categorie;
         }
 
         @NonNull
@@ -115,9 +122,11 @@ public class MonumentoFragmentUtente extends Fragment{
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             button = row.findViewById(R.id.id);
             images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
+            categoria.setText(categorie.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
 
@@ -176,7 +185,7 @@ public class MonumentoFragmentUtente extends Fragment{
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.foto.addAll(foto);
-         adapter = new MyAdapter(getContext(),monumento);
+         adapter = new MyAdapter(getContext(),monumento,categorie);
         myList.setAdapter(adapter);
 
     }
@@ -191,7 +200,7 @@ public class MonumentoFragmentUtente extends Fragment{
                     monumento.add(cittaMonu.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento);
+                final MyAdapter adapter = new MyAdapter(getContext(), monumento,categorie);
                 myList.setAdapter(adapter);
                 break;
         }
