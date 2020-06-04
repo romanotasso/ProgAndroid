@@ -144,7 +144,7 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(CouponActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(CouponActivity.this, SettingPreferenceActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;

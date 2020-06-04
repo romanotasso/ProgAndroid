@@ -206,6 +206,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
 
 
     public void returnFoto(ArrayList<Bitmap> foto){
+
         this.foto.clear();
         this.foto.addAll(foto);
         adapter = new MyAdapter(getContext(),monumento,citta,categorie);

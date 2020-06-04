@@ -41,8 +41,8 @@ public class AggiungiViaggioMonumento {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String type = "inserisciViaggio";
                 BackgroudWorker backgroudWorker = new BackgroudWorker(context);
-                backgroudWorker.execute(type, email, citta, nome, "Monumento");
-                db.inserisciViaggio(email, citta, nome, "Monumento");
+                backgroudWorker.execute(type, email, citta, nome, "Monumento","0");
+                //db.inserisciViaggio(email, citta, nome, "Monumento","0");
             }
         });
 

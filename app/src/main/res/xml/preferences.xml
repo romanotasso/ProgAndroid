@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:id="@+id/attivaDisattivaGps"
+        android:title="Attiva Gps"
+        android:defaultValue="true"
+        android:summary="Attiva per usufruire delle funzioni dell'applicazione che sfruttano il GPS "
+        >
+    </SwitchPreference>
+
+</PreferenceScreen>

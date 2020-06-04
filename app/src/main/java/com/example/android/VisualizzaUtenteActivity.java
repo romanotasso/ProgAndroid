@@ -193,11 +193,11 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
     public void refreshItems() {
         switch (refresh_count) {
             default:
+
                 utenteDB = db.getAllData();
                 email = new ArrayList<String>();
                 nome = new ArrayList<String>();
                 cognome = new ArrayList<String>();
-
 
                 for(utenteDB.moveToFirst(); !utenteDB.isAfterLast(); utenteDB.moveToNext()) {
                     email.add(utenteDB.getString(0));

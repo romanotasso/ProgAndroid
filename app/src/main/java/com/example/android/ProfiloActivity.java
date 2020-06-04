@@ -15,6 +15,7 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,6 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     Toolbar toolbar;
     NavigationView navigationView;
     Cursor cursor;
-
     ImageView immProfiloMiniatura;
     TextView nomeCognome;
     TextView cognome;
@@ -43,11 +43,9 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     TextView citta;
     TextView coupon;
     Button indietro;
-
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
     String emailExtras;
-
     View hView;
     Button b;
 
@@ -80,7 +78,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
         navigationView.bringToFront();
 
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.open,R.string.close);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
@@ -127,13 +125,13 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             Toast.makeText(ProfiloActivity.this, R.string.nessun_utente, Toast.LENGTH_SHORT).show();
             return;
         }
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
 
             String nome;
             String cognome;
             nome = cursor.getString(1);
-            cognome  = cursor.getString(2);
-            String stringNomeCognome = nome + " "+cognome;
+            cognome = cursor.getString(2);
+            String stringNomeCognome = nome + " " + cognome;
             nomeCognome.setText(stringNomeCognome);
             //cognome.setText(cursor.getString(2));
             email.setText(cursor.getString(0));
@@ -158,7 +156,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.home:
                 Intent intentHome = new Intent(ProfiloActivity.this, HomeActivity.class);
                 intentHome.putExtra("email", emailExtras);
@@ -178,7 +176,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.impostazioni:
                 Intent intentImpo = new Intent(ProfiloActivity.this, SettingActivity.class);
-                intentImpo.putExtra("email",emailExtras);
+                intentImpo.putExtra("email", emailExtras);
                 startActivity(intentImpo);
                 break;
             case R.id.logout:
@@ -190,27 +188,27 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
-    private class DownloadImage extends AsyncTask<Void,Void, Bitmap> {
+    private class DownloadImage extends AsyncTask<Void, Void, Bitmap> {
 
         String email;
 
-        public DownloadImage(String email){
+        public DownloadImage(String email) {
             this.email = email;
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url="";
+            String url = "";
             Bitmap bitmap;
 
-            try{
-                if(db.getCodiceFoto(email).equals("1")){
-                    url = urlDownlaodImageProfilo+"standardJPG";
+            try {
+                if (db.getCodiceFoto(email).equals("1")) {
+                    url = urlDownlaodImageProfilo + "standardJPG";
                     InputStream inputStream = new java.net.URL(url).openStream();
                     bitmap = BitmapFactory.decodeStream(inputStream);
-                }else {
-                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
+                } else {
+                    url = urlDownlaodImageProfilo + this.email.replaceAll("@", "") + "JPG";
                     InputStream inputStream = new java.net.URL(url).openStream();
                     bitmap = BitmapFactory.decodeStream(inputStream);
                 }
@@ -224,7 +222,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
         @Override
         protected void onPostExecute(Bitmap bitmap) {
 
-            if(bitmap!=null){
+            if (bitmap != null) {
 
                 immagineProfilo.setImageBitmap(bitmap);
                 immProfiloMiniatura.setImageBitmap(bitmap);
@@ -233,4 +231,27 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             super.onPostExecute(bitmap);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_overflow, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.overflowMenu:
+                Intent intentCambiaPassword = new Intent(ProfiloActivity.this, SettingActivity.class);
+                intentCambiaPassword.putExtra("email", emailExtras);
+                startActivity(intentCambiaPassword);
+                break;
+        }
+            return super.onOptionsItemSelected(item);
+    }
+
 }

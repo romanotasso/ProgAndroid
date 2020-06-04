@@ -8,7 +8,7 @@
     android:elevation="20dp"
     android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    >
 
     <ImageView
         android:id="@+id/image"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".20" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -39,14 +39,21 @@
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="30sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:text="@string/punto_di_interesse"
             android:textAlignment="textStart"
             android:textSize="20sp"
             android:textStyle="italic|bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.65999997"
             tools:ignore="RtlCompat" />
 
+        <!--
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -60,42 +67,22 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent">
 
-                <TextView
-                    android:id="@+id/textViewNome"
-                    android:layout_width="114dp"
-                    android:layout_height="30dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/nome"
-                    android:textAlignment="textStart"
-                    android:textSize="20dp"
-                    android:textStyle="italic"
-                    tools:ignore="RtlCompat" />
-
-                <TextView
-                    android:id="@+id/textViewCognome"
-                    android:layout_width="119dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/cognome"
-                    android:textAlignment="textStart"
-                    android:textSize="20dp"
-                    android:textStyle="italic"
-                    tools:ignore="RtlCompat" />
-
             </TableRow>
         </TableLayout>
+-->
 
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
@@ -108,6 +95,39 @@
             android:tint="#AF1010" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewNome"
+        android:layout_width="135dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center_horizontal"
+        android:text="@string/nome"
+        android:textAlignment="textStart"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/textViewCognome"
+        android:layout_width="135dp"
+        android:layout_height="31dp"
+        android:gravity="center_horizontal"
+        android:text="@string/cognome"
+        android:textAlignment="textStart"
+        android:textSize="20dp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.83"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65"
+        tools:ignore="RtlCompat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,8 +41,7 @@ public class AggiungiViaggioHotel {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String type = "inserisciViaggio";
                 BackgroudWorker backgroudWorker = new BackgroudWorker(context);
-                backgroudWorker.execute(type, email, citta, nome, "Hotel");
-                db.inserisciViaggio(email, citta, nome, "Hotel");
+                backgroudWorker.execute(type, email, citta, nome, "Hotel","0");
             }
         });
 

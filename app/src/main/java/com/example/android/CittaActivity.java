@@ -85,8 +85,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citta);
 
-        /*mysearchView = findViewById(R.id.mySearchBar);
-        mysearchView.setVisibility(View.VISIBLE);*/
         cittaSearch = getIntent().getExtras().getString("cittaSearch");
         cittaLista = getIntent().getExtras().getString("cittaLista");
         cittaDB = getIntent().getExtras().getString("cittaDB");
@@ -185,40 +183,10 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         for (cittaHome.moveToFirst(); !cittaHome.isAfterLast(); cittaHome.moveToNext()) {
             cittaArray.add(cittaHome.getString(0));
         }
-        db.close();
 
         adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cittaArray);
         myList.setAdapter(adapter);
 
-        /*mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                boolean check = db.checkCitta(query);
-                if (!check) {
-                    Intent intent = new Intent(CittaActivity.this, CittaActivity.class);
-                    intent.putExtra("cittaSearch", query);
-                    intent.putExtra("email", email);
-                    Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(CittaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-                viewPager.setVisibility(View.INVISIBLE);
-                String text = s;
-                if (TextUtils.isEmpty(text)) {
-                    viewPager.setVisibility(View.VISIBLE);
-                    myList.setVisibility(View.VISIBLE);
-                } else {
-                    adapter.getFilter().filter(text);
-                    myList.setVisibility(View.VISIBLE);
-                }
-                return false;
-            }
-        });*/
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -252,7 +220,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intentViaggi);
                 break;
             case R.id.cerca:
-                Intent intentCerca = new Intent(CittaActivity.this, CercaActivity.class);
+                Intent intentCerca = new Intent(CittaActivity.this, CittaAnteprimaActivity.class);
                 intentCerca.putExtra("email", email);
                 startActivity(intentCerca);
                 break;
@@ -267,7 +235,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intentCoupon);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(CittaActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(CittaActivity.this, SettingPreferenceActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
@@ -351,7 +319,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Bitmap bitmap) {
 

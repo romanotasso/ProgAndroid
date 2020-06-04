@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABELLA_MONUMENTI + "( nome text PRIMARY KEY, citta TEXT,categoria text NOT NULL,FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_GASTRONOMIA + "( nome text PRIMARY KEY, citta TEXT,categoria text NOT NULL,FOREIGN KEY (citta) REFERENCES " + TABELLA_CITTA + " (nome))");
         db.execSQL("CREATE TABLE " + TABELLA_HOTELEBB + "(nome text PRIMARY KEY,citta TEXT,categoria text NOT NULL, FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome))");
-        db.execSQL("CREATE TABLE " + TABELLA_VIAGGI + "(email text, citta TEXT, nome TEXT, tipologia TEXT, PRIMARY KEY(email, citta, nome), FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome), FOREIGN KEY (email) REFERENCES  " + TABELLA_UTENTE + " (email))");
+        db.execSQL("CREATE TABLE " + TABELLA_VIAGGI + "(email text, citta TEXT, nome TEXT, tipologia TEXT,rating TEXT, PRIMARY KEY(email, citta, nome), FOREIGN KEY (citta) REFERENCES  " + TABELLA_CITTA + " (nome), FOREIGN KEY (email) REFERENCES  " + TABELLA_UTENTE + " (email))");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -259,7 +259,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateDatiHotel(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(" DELETE  FROM " +  TABELLA_HOTELEBB);
-
     }
 
     public void updateDatiMonumenti(){
@@ -272,13 +271,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(" DELETE  FROM " +  TABELLA_GASTRONOMIA);
-
     }
 
     public void updateDatiViaggio(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(" DELETE  FROM " +  TABELLA_VIAGGI);
-
     }
 
     public String getNome(String email){
@@ -312,13 +309,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*Sezione Viaggi*/
-    public boolean inserisciViaggio(String email,String nome_citta, String nome, String tipologia){
+    public boolean inserisciViaggio(String email,String nome_citta, String nome, String tipologia,String rating){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentViaggio = new ContentValues();
         contentViaggio.put("email", email);
         contentViaggio.put("citta", nome_citta);
         contentViaggio.put("nome", nome);
         contentViaggio.put("tipologia", tipologia);
+        contentViaggio.put("rating", rating);
         long ins = db.insert(TABELLA_VIAGGI, null, contentViaggio);
         if(ins==-1) return  false;
         else return true;
@@ -332,19 +330,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllViaggiMonumento(String citta, String email, String tipologia){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ? ORDER BY nome" , new String[]{citta, email, tipologia});
+        Cursor res = db.rawQuery("SELECT nome,rating FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ? ORDER BY nome" , new String[]{citta, email, tipologia});
         return res;
     }
 
     public Cursor getAllViaggiGastronomia(String citta, String email, String tipologia){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ? ORDER BY nome" , new String[]{citta, email, tipologia});
+        Cursor res = db.rawQuery("SELECT nome,rating FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ? ORDER BY nome" , new String[]{citta, email, tipologia});
         return res;
     }
 
     public Cursor getAllViaggiHotel(String citta, String email, String tipologia){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT nome FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ? ORDER BY nome" , new String[]{citta, email, tipologia});
+        Cursor res = db.rawQuery("SELECT nome,rating FROM " + TABELLA_VIAGGI + " WHERE citta = ? AND email = ? AND tipologia = ? ORDER BY nome" , new String[]{citta, email, tipologia});
         return res;
     }
 

@@ -41,11 +41,10 @@ public class AggiungiViaggioGastronomia {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String type = "inserisciViaggio";
                 BackgroudWorker backgroudWorker = new BackgroudWorker(context);
-                backgroudWorker.execute(type, email, citta, nome, "Gastronomia");
-                db.inserisciViaggio(email, citta, nome, "Gastronomia");
+                backgroudWorker.execute(type, email, citta, nome, "Gastronomia","0");
+                //db.inserisciViaggio(email, citta, nome, "Gastronomia","0");
             }
         });
-
         dialog = builder.create();
         dialog.show();
     }

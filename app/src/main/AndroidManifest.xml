@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".SettingPreferenceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CittaAnteprimaActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
@@ -60,9 +64,6 @@
         <activity
             android:name=".RegisterPhotoActivity"
             android:parentActivityName=".RegisterEmailPassActivity" />
-        <activity
-            android:name=".CercaActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
             android:parentActivityName=".LoginActivity" />

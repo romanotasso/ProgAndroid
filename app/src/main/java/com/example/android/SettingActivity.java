@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.InputStream;
 
 public class SettingActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
     DatabaseHelper db;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -35,10 +35,8 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
     EditText mEditPassword;
     EditText mEditNewPassword;
     Button mAggiorna;
-
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
-
     TextView nome;
     TextView cognome;
     View hView;
@@ -47,6 +45,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_setting);
 
         db = new DatabaseHelper(this);
@@ -107,7 +106,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
         SettingActivity.DownloadImage downloadImage = new DownloadImage((getIntent().getExtras().getString("email")));
         downloadImage.execute();
 
-        navigationView.setCheckedItem(R.id.impostazioni);
+        navigationView.setCheckedItem(R.id.profilo);
 
     }
 
@@ -126,7 +125,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
 
         switch (menuItem.getItemId()){
             case R.id.home:
-                Intent intentHome = new Intent(SettingActivity.this, CercaActivity.class);
+                Intent intentHome = new Intent(SettingActivity.this, CittaAnteprimaActivity.class);
                 intentHome.putExtra("email",email);
                 startActivity(intentHome);
                 break;

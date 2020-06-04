@@ -49,8 +49,6 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -59,9 +57,9 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
         myList = view.findViewById(R.id.listaHotelBBVisualizza);
         myList.setVisibility(View.VISIBLE);
         cittaHotel = db.getAllDataHotelBB();
-        hotel = new ArrayList<String>();
         foto = new ArrayList<>();
         refreshLayout = view.findViewById(R.id.swipe);
+        hotel = new ArrayList<String>();
         citta = new ArrayList<String>();
         categorie = new ArrayList<String>();
 

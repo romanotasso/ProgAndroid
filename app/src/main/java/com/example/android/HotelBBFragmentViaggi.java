@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class HotelBBFragmentViaggi extends Fragment {
     MyAdapter adapter;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
+    ArrayList<String> ratingArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,9 +61,14 @@ public class HotelBBFragmentViaggi extends Fragment {
         cittaHotel = db.getAllViaggiHotel(citta, email,"Hotel");
         hotel = new ArrayList<String>();
         fotoHotel = new ArrayList<Bitmap>();
+        ratingArray = new ArrayList<>();
 
         for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
             hotel.add(cittaHotel.getString(0));
+        }
+
+        for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
+            ratingArray.add(cittaHotel.getString(1));
         }
 
       BackgroundWorker backgroundWorker = new BackgroundWorker();
@@ -90,11 +97,13 @@ public class HotelBBFragmentViaggi extends Fragment {
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
         ArrayList<String> nomePunto;
+        ArrayList<String> ratingAdapterArray;
 
-        MyAdapter(Context c, ArrayList<String> monumento) {
-            super(c, R.layout.row, R.id.textViewDatiCitta, monumento);
+        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> ratingAdapterArray) {
+            super(c, R.layout.row_i_miei_viaggi, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
+            this.ratingAdapterArray =ratingAdapterArray;;
 
         }
 
@@ -102,13 +111,15 @@ public class HotelBBFragmentViaggi extends Fragment {
         @Override
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row, parent, false);
+            View row = layoutInflater.inflate(R.layout.row_i_miei_viaggi, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            RatingBar ratingBar = row.findViewById(R.id.ratingbar);
             button = row.findViewById(R.id.id);
             images.setImageBitmap(fotoHotel.get(position));
             nome.setText(nomePunto.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
+            ratingBar.setRating(Float.valueOf(ratingAdapterArray.get(position)));
             cittaNome.setText(citta);
             final String hotel = nomePunto.get(position);
 
@@ -117,6 +128,21 @@ public class HotelBBFragmentViaggi extends Fragment {
                 public void onClick(View view) {
                     final CancellaDialogHotelViaggio cancellaDialogMonumento = new CancellaDialogHotelViaggio(getActivity(), context, citta, email, hotel);
                     cancellaDialogMonumento.startLoadingDialog();
+                }
+            });
+
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                public void onRatingChanged(RatingBar ratingBar, float rating,
+                                            boolean fromUser) {
+
+                    String type = "updateRating";
+                    String type1 = "aggiornamentoDatiViaggio";
+                    String ratingChanged = "";
+                    ratingChanged=(String.valueOf(rating));
+                    BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
+                    backgroudWorker.execute(type, email, citta, hotel, "Hotel",ratingChanged);
+                    BackgroudWorker backgroundWorkerOne = new BackgroudWorker(getContext());
+                    backgroundWorkerOne.execute(type1);
                 }
             });
 
@@ -169,7 +195,7 @@ public class HotelBBFragmentViaggi extends Fragment {
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.fotoHotel.addAll(foto);
-        adapter = new MyAdapter(getContext(),hotel);
+        adapter = new MyAdapter(getContext(),hotel,ratingArray);
         myList.setAdapter(adapter);
 
     }
@@ -184,7 +210,7 @@ public class HotelBBFragmentViaggi extends Fragment {
                     hotel.add(cittaHotel.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel/*, images*/);
+                final MyAdapter adapter = new MyAdapter(getContext(), hotel,ratingArray);
                 myList.setAdapter(adapter);
                 break;
         }

@@ -58,7 +58,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
 
-
         email = getIntent().getExtras().getString("email");
 
         drawerLayout = findViewById(R.id.drawer);
@@ -146,7 +145,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intentProfilo);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(HomeActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(HomeActivity.this, SettingPreferenceActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;

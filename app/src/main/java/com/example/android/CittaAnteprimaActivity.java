@@ -99,7 +99,7 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
         db = new DatabaseHelper(this);
 
         toolbar = findViewById(R.id.toolbarNome);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
+        toolbar.setTitle("Cerca citta");
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);
@@ -188,35 +188,6 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, cittaArray);
         myList.setAdapter(adapter);
 
-        /*mysearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                boolean check = db.checkCitta(query);
-                if (!check) {
-                    Intent intent = new Intent(CittaActivity.this, CittaActivity.class);
-                    intent.putExtra("cittaSearch", query);
-                    intent.putExtra("email", email);
-                    Toast.makeText(CittaActivity.this, R.string.citta_presente, Toast.LENGTH_LONG).show();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(CittaActivity.this, R.string.citta_non_presente, Toast.LENGTH_LONG).show();
-                }
-                return false;
-            }
-            @Override
-            public boolean onQueryTextChange(String s) {
-                viewPager.setVisibility(View.INVISIBLE);
-                String text = s;
-                if (TextUtils.isEmpty(text)) {
-                    viewPager.setVisibility(View.VISIBLE);
-                    myList.setVisibility(View.GONE);
-                } else {
-                    adapter.getFilter().filter(text);
-                    myList.setVisibility(View.VISIBLE);
-                }
-                return false;
-            }
-        });*/
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -263,7 +234,7 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
                 startActivity(intentViaggi);
                 break;
             case R.id.cerca:
-                Intent intentCerca = new Intent(CittaAnteprimaActivity.this, CercaActivity.class);
+                Intent intentCerca = new Intent(CittaAnteprimaActivity.this, CittaAnteprimaActivity.class);
                 intentCerca.putExtra("email", email);
                 startActivity(intentCerca);
                 break;
@@ -278,7 +249,7 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
                 startActivity(intentCoupon);
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(CittaAnteprimaActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(CittaAnteprimaActivity.this, SettingPreferenceActivity.class);
                 intentImpo.putExtra("email", email);
                 startActivity(intentImpo);
                 break;
@@ -337,25 +308,31 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
         String email;
 
         public DownloadImage(String email){
-            this.email = email.replaceAll("@","");
+            this.email = email;
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
 
-            String url = urlDownlaodImageProfilo + email + "JPG";
+            String url="";
             Bitmap bitmap=null;
 
             try{
-                InputStream inputStream = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(inputStream);
+                if(db.getCodiceFoto(email).equals("1")){
+                    url = urlDownlaodImageProfilo+"standardJPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }else {
+                    url = urlDownlaodImageProfilo + this.email.replaceAll("@","") + "JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                }
                 return bitmap;
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
         }
-
         @Override
         protected void onPostExecute(Bitmap bitmap) {
 
@@ -366,7 +343,6 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
             super.onPostExecute(bitmap);
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
