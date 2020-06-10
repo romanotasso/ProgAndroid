@@ -60,6 +60,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
         toolbar = findViewById(R.id.toolbarNome);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Profilo");
 
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
@@ -71,6 +72,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
 
         nomeCognome.setText(db.getNome(emailExtras));
         cognome.setText(db.getCognome(emailExtras));
+
 
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
@@ -133,7 +135,6 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             cognome = cursor.getString(2);
             String stringNomeCognome = nome + " " + cognome;
             nomeCognome.setText(stringNomeCognome);
-            //cognome.setText(cursor.getString(2));
             email.setText(cursor.getString(0));
             citta.setText(cursor.getString(3));
             sesso.setText(cursor.getString(4));
@@ -175,7 +176,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             case R.id.profilo:
                 break;
             case R.id.impostazioni:
-                Intent intentImpo = new Intent(ProfiloActivity.this, SettingActivity.class);
+                Intent intentImpo = new Intent(ProfiloActivity.this, SettingPreferenceActivity.class);
                 intentImpo.putExtra("email", emailExtras);
                 startActivity(intentImpo);
                 break;

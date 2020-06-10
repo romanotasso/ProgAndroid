@@ -1,6 +1,7 @@
 package com.example.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,22 +15,29 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MonumentoFragmentUtente extends Fragment{
+
+
 
     ListView myList;
     Cursor cittaMonu;
     ArrayList<String> monumento;
     ArrayList<String> categorie;
+    Spinner spinner;
+    ArrayList<String> categorieFilter;
     DatabaseHelper db;
     MyAdapter adapter;
     ImageButton button;
@@ -46,12 +54,10 @@ public class MonumentoFragmentUtente extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
+
         db = new DatabaseHelper(getContext());
         categorie = new ArrayList<>();
-
-
         foto = new ArrayList<Bitmap>();
-
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
         cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
@@ -68,9 +74,9 @@ public class MonumentoFragmentUtente extends Fragment{
 
         myList = view.findViewById(R.id.listaMonumento);
         myList.setVisibility(View.VISIBLE);
-        cittaMonu = db.getAllDataMonumentiCitta(citta);
-        monumento = new ArrayList<String>();
 
+        monumento = new ArrayList<String>();
+        cittaMonu = db.getAllDataMonumentiCitta(citta);
         for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
             monumento.add(cittaMonu.getString(0));
         }
@@ -98,6 +104,133 @@ public class MonumentoFragmentUtente extends Fragment{
             }
         });
 
+        categorieFilter = new ArrayList<>();
+        spinner = view.findViewById(R.id.spinner);
+        List<String> categorieList = new ArrayList<>();
+        categorieFilter.add(0,"Filtra per : ");
+        categorieFilter.add(1,"Filtra per : Chiesa");
+        categorieFilter.add(2,"Filtra per : Escursione");
+        categorieFilter.add(3,"Filtra per : Lido Balneare");
+        categorieFilter.add(4,"Filtra per : Monumento");
+        categorieFilter.add(5,"Filtra per : Museo");
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,categorieFilter);
+        adapterSpinner.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSpinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                String categoria="";
+                if(parent.getItemAtPosition(position).equals("Filtra per : ")){
+                    cittaMonu = db.getAllDataMonumentiCitta(citta);
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Chiesa")){
+                    categoria="Chiesa";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Chiesa");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Escursione")){
+                    categoria="Escursione";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Escursione");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Lido Balneare")){
+                    categoria="Lido Balneare";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Lido Balneare");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Monumento")){
+                    categoria="Monumento";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Monumento");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Museo")){
+                    categoria="Museo";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Museo");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                    }
+                }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return  view;
     }
 
@@ -118,6 +251,7 @@ public class MonumentoFragmentUtente extends Fragment{
         @NonNull
         @Override
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
             ImageView images = row.findViewById(R.id.image);
@@ -184,25 +318,122 @@ public class MonumentoFragmentUtente extends Fragment{
 
     public void returnFoto(ArrayList<Bitmap> foto){
 
+        this.foto.clear();
         this.foto.addAll(foto);
-         adapter = new MyAdapter(getContext(),monumento,categorie);
+        adapter = new MyAdapter(getContext(),monumento,categorie);
         myList.setAdapter(adapter);
 
     }
 
     public void refreshItems() {
+
         switch (refresh_count) {
             default:
-                cittaMonu = db.getAllDataMonumentiCitta(citta);
+
+                //cittaMonu = db.getAllDataMonumentiCitta(citta);
                 monumento = new ArrayList<String>();
+                categorie = new ArrayList<>();
+                String categoria="";
 
-                for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
-                    monumento.add(cittaMonu.getString(0));
+                if(spinner.getSelectedItem().equals("Filtra per : ")){
+                    cittaMonu = db.getAllDataMonumentiCitta(citta);
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(spinner.getSelectedItem().equals("Filtra per : Chiesa")){
+                    categoria="Chiesa";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,categoria);
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(spinner.getSelectedItem().equals("Filtra per : Escursione")){
+                    categoria="Escursione";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,categoria);
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(spinner.getSelectedItem().equals("Filtra per : Lido Balneare")){
+                    categoria="Lido Balneare";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Lido Balneare");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(spinner.getSelectedItem().equals("Filtra per : Monumento")){
+                    categoria="Monumento";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Monumento");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(spinner.getSelectedItem().equals("Filtra per : Museo")){
+                    categoria="Museo";
+                    cittaMonu = db.getAllDataMonumentiCittaCategoria(citta,"Museo");
+                    monumento = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
+                        monumento.add(cittaMonu.getString(0));
+                    }
+                    for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                        categorie.add(cittaMonu.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
                 }
-
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento,categorie);
-                myList.setAdapter(adapter);
-                break;
         }
     }
 }

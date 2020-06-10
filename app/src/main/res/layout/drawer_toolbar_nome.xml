@@ -9,12 +9,10 @@
         android:id="@+id/toolbarNome"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/orange_scuro_chiaro"
+        android:background="@color/coloreLogo"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         tools:ignore="MissingConstraints">
-
     </androidx.appcompat.widget.Toolbar>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

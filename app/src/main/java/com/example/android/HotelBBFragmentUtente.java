@@ -16,10 +16,12 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 
 /**
@@ -34,6 +37,8 @@ import java.util.BitSet;
  */
 public class HotelBBFragmentUtente extends Fragment {
 
+    Spinner spinner;
+    ArrayList<String> categorieFilter;
     ListView myList;
     Cursor cittaHotel;
     ArrayList<Bitmap> foto;
@@ -57,6 +62,7 @@ public class HotelBBFragmentUtente extends Fragment {
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
         cittaLista = getActivity().getIntent().getExtras().getString("cittaLista");
         cittaDB = getActivity().getIntent().getExtras().getString("cittaDB");
+
         if ((cittaSearch == null) && (cittaLista == null)) {
             citta = cittaDB;
         } else if (cittaSearch == null) {
@@ -102,9 +108,87 @@ public class HotelBBFragmentUtente extends Fragment {
             }
         });
 
+        categorieFilter = new ArrayList<>();
+        spinner = view.findViewById(R.id.spinner);
+        List<String> categorieList = new ArrayList<>();
+        categorieFilter.add(0,"Filtra per:");
+        categorieFilter.add(1,"Filtra per: Hotel");
+        categorieFilter.add(2,"Filtra per: Bed and Breakfast");
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,categorieFilter);
+        adapterSpinner.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSpinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                String categoria="";
+                if(parent.getItemAtPosition(position).equals("Filtra per:")){
+                    cittaHotel = db.getAllDataHotelBBCitta(citta);
+                    hotel = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        hotel.add(cittaHotel.getString(0));
+                    }
+
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        categorie.add(cittaHotel.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.hotel.addAll(hotel);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(parent.getItemAtPosition(position).equals("Filtra per: Hotel")){
+
+                    categoria="Hotel";
+                    cittaHotel = db.getAllDataHotelBBCittaCategoria(citta,"Hotel");
+                    hotel = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        hotel.add(cittaHotel.getString(0));
+                    }
+
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        categorie.add(cittaHotel.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.hotel.addAll(hotel);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(parent.getItemAtPosition(position).equals("Filtra per: Bed and Breakfast")){
+
+                    categoria="Hotel";
+                    cittaHotel = db.getAllDataHotelBBCittaCategoria(citta,"Bed and Breakfast");
+                    hotel = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        hotel.add(cittaHotel.getString(0));
+                    }
+
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        categorie.add(cittaHotel.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.hotel.addAll(hotel);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return view;
     }
-
 
     class MyAdapter extends ArrayAdapter<String> {
         Context context;
@@ -192,6 +276,7 @@ public class HotelBBFragmentUtente extends Fragment {
 
     public void returnFoto(ArrayList<Bitmap> foto){
 
+        this.foto.clear();
         this.foto.addAll(foto);
         MyAdapter adapter = new MyAdapter(getContext(), hotel,categorie);
         myList.setAdapter(adapter);
@@ -202,15 +287,68 @@ public class HotelBBFragmentUtente extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaHotel = db.getAllDataHotelBBCitta(citta);
-                hotel = new ArrayList<String>();
 
-                for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
-                    hotel.add(cittaHotel.getString(0));
+                //cittaHotel = db.getAllDataHotelBBCitta(citta);
+                hotel = new ArrayList<String>();
+                categorie = new ArrayList<>();
+                String categoria="";
+
+                if(spinner.getSelectedItem().equals("Filtra per:")){
+                    cittaHotel = db.getAllDataHotelBBCitta(citta);
+                    hotel = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        hotel.add(cittaHotel.getString(0));
+                    }
+
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        categorie.add(cittaHotel.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.hotel.addAll(hotel);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(spinner.getSelectedItem().equals("Filtra per: Hotel")){
+
+                    categoria="Hotel";
+                    cittaHotel = db.getAllDataHotelBBCittaCategoria(citta,"Hotel");
+                    hotel = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        hotel.add(cittaHotel.getString(0));
+                    }
+
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        categorie.add(cittaHotel.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.hotel.addAll(hotel);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(spinner.getSelectedItem().equals("Filtra per: Bed and Breakfast")){
+
+                    categoria="Hotel";
+                    cittaHotel = db.getAllDataHotelBBCittaCategoria(citta,"Bed and Breakfast");
+                    hotel = new ArrayList<String>();
+                    categorie = new ArrayList<String>();
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        hotel.add(cittaHotel.getString(0));
+                    }
+
+                    for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
+                        categorie.add(cittaHotel.getString(1));
+                    }
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.hotel.addAll(hotel);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel,categorie);
-                myList.setAdapter(adapter);
                 break;
         }
     }

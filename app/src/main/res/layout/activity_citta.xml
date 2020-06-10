@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:elevation="10dp"
-
+        android:divider="@color/gray_chiaro"
+        android:background="@color/gray_chiaro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabLayout"
-            android:background="@color/orange_scuro_chiaro"
+            android:background="@color/coloreLogo"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/design_default_color_on_secondary">
 
@@ -63,10 +64,13 @@
 
         </com.google.android.material.tabs.TabLayout>
 
+
         <androidx.viewpager.widget.ViewPager
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/viewPager">
+            android:id="@+id/viewPager"
+            android:background="@color/gray_chiaro"
+            >
         </androidx.viewpager.widget.ViewPager>
 
         <TextView

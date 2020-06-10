@@ -110,22 +110,22 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     }
                 } else if (tab.getPosition() == 1) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     }
                 } else {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     }
                 }
             }

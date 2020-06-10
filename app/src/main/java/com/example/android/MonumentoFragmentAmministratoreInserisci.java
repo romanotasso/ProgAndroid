@@ -208,7 +208,6 @@ public class MonumentoFragmentAmministratoreInserisci extends Fragment  {
         }
     }
 
-
     private class updateImage extends AsyncTask<Void, Void, Void> {
 
         Bitmap image;

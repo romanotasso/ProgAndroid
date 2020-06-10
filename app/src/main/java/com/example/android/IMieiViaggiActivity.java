@@ -1,6 +1,7 @@
 package com.example.android;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -15,12 +17,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +34,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -35,10 +42,10 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
      DatabaseHelper db;
      ListView myList;
-     ArrayAdapter adapter;
+     MyAdapter adapterList;
      Cursor cittaLista;
      ArrayList<String> citta;
-
+     ArrayList<Bitmap> foto;
      DrawerLayout drawerLayout;
      ActionBarDrawerToggle actionBarDrawerToggle;
      Toolbar toolbar;
@@ -68,11 +75,11 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
         cittaLista = db.getAllDataViaggi(email);
         citta = new ArrayList<String>();
 
-        textViaggio = findViewById(R.id.textViaggi);
+
 
         toolbar = findViewById(R.id.toolbarNome);
+        toolbar.setTitle("I tuoi Viaggi");
         setSupportActionBar(toolbar);
-
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
 
@@ -98,6 +105,7 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
         actionBarDrawerToggle.syncState();
 
         navigationView.setCheckedItem(R.id.viaggi);
+        foto = new ArrayList<>();
 
         for(cittaLista.moveToFirst(); !cittaLista.isAfterLast(); cittaLista.moveToNext()){
             citta.add(cittaLista.getString(0));
@@ -105,7 +113,7 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
 
         int n = citta.size();
         String cittaViaggio;
-        if (n == 0) {
+       /* if (n == 0) {
             cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
             textViaggio.setText(cittaViaggio);
         } else if (n == 1) {
@@ -114,10 +122,8 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
         } else {
             cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
             textViaggio.setText(cittaViaggio);
-        }
+        }*/
 
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,citta);
-        myList.setAdapter(adapter);
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -129,6 +135,10 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
                 startActivity(intent);
             }
         });
+
+        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+        backgroudWorkerPhoto.nomeCitta.addAll(citta);
+        backgroudWorkerPhoto.execute();
 
     }
 
@@ -217,4 +227,142 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
             super.onPostExecute(bitmap);
         }
     }
+
+    public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
+
+        ArrayList<String> nomeCitta = new ArrayList<>();
+        final static String url_photoCitta = "http://progandroid.altervista.org/progandorid/FotoCitta/";
+
+        @Override
+        public ArrayList<Bitmap> doInBackground(Void... voids) {
+
+            Bitmap immagine;
+            String url;
+            ArrayList<Bitmap> fotoBack = new ArrayList<Bitmap>();
+
+            try {
+                for (int i = 0; i < nomeCitta.size(); i = i + 1) {
+                    String citta =  nomeCitta.get(i).replaceAll(" ","%20");
+                    url = url_photoCitta + citta +"JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    immagine = BitmapFactory.decodeStream(inputStream);
+                    if (!(immagine == null)) {
+                        fotoBack.add(i, immagine);
+                    }
+                }
+                return fotoBack;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
+            super.onPostExecute(bitmaps);
+            if(bitmaps!=null){
+                returnFoto(bitmaps);
+            }
+        }
+    }
+
+    public void returnFoto(ArrayList<Bitmap> foto){
+
+        this.foto.clear();
+        this.foto.addAll(foto);
+        MyAdapter adapterList;
+        adapterList = new MyAdapter(getApplicationContext(),citta,this.foto);
+        myList.setAdapter(adapterList);
+
+    }
+
+    public class MyAdapter extends ArrayAdapter<String> implements Filterable {
+
+        Context context;
+        ArrayList<String> citta;
+        ArrayList<String> cittaTemp;
+        ArrayList<Bitmap> foto;
+        CustomFiler cs;
+
+        MyAdapter(Context c, ArrayList<String> citta,ArrayList<Bitmap> foto) {
+            super(c, R.layout.row_listview);
+            this.context = c;
+            this.citta = citta;
+            this.foto = foto;
+            this.cittaTemp = citta;
+        }
+
+        @Nullable
+        @Override
+        public String getItem(int position) {
+            return citta.get(position);
+        }
+        @Override
+        public int getCount() {
+            return citta.size();
+        }
+        @Override
+        public long getItemId(int position) {
+
+            return position;
+        }
+        @NonNull
+        @Override
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+            LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View row = layoutInflater.inflate(R.layout.row_listview, parent, false);
+            ImageView images = row.findViewById(R.id.image);
+            TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            nome.setText(citta.get(position));
+            images.setImageBitmap(foto.get(position));
+            return row;
+        }
+        @NonNull
+        @Override
+        public Filter getFilter() {
+
+            if(cs ==null){
+
+                cs = new CustomFiler();
+            }
+
+            return cs;
+        }
+
+        class CustomFiler extends Filter {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults result = new FilterResults();
+
+                if(constraint!=null && constraint.length()>0){
+                    constraint = constraint.toString().toUpperCase();
+                    ArrayList<String> filters = new ArrayList<>();
+
+                    for(int i=0;i<cittaTemp.size();i++){
+                        if(cittaTemp.get(i).toUpperCase().contains(constraint)){
+                            filters.add(cittaTemp.get(i));
+                        }
+                    }
+                    result.count = filters.size();
+                    result.values = filters;
+                }else {
+                    result.count = cittaTemp.size();
+                    result.values = cittaTemp;
+                }
+
+                return result;
+            }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                citta = (ArrayList<String>) results.values;
+                notifyDataSetChanged();
+            }
+        }
+
+    }
+
+
 }

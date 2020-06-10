@@ -44,7 +44,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfiloActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".HomeActivity"
+            />
         <activity
             android:name=".SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />

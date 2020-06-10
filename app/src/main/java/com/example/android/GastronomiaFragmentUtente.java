@@ -16,16 +16,19 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +42,8 @@ public class GastronomiaFragmentUtente extends Fragment {
     ArrayList<String>categorie;
     DatabaseHelper db;
     ImageButton button;
+    Spinner spinner;
+    ArrayList<String> categorieFilter;
 
     public String citta, cittaSearch, cittaLista, cittaDB,email;
 
@@ -51,7 +56,7 @@ public class GastronomiaFragmentUtente extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_gastronomia_utente, container, false);
 
         db = new DatabaseHelper(getContext());
-        categorie=new ArrayList<>();
+
         foto = new ArrayList<Bitmap>();
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
@@ -71,6 +76,7 @@ public class GastronomiaFragmentUtente extends Fragment {
         myList.setVisibility(View.VISIBLE);
         cittaRist = db.getAllDataRistorantiCitta(citta);
         rist = new ArrayList<String>();
+        categorie=new ArrayList<>();
 
         for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
             rist.add(cittaRist.getString(0));
@@ -94,11 +100,115 @@ public class GastronomiaFragmentUtente extends Fragment {
                 }, 2000);
             }
         });
+
         BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
         backgroudWorkerPhoto.context = getContext();
         backgroudWorkerPhoto.rist.addAll(rist);
         backgroudWorkerPhoto.nomeCitta = citta;
         backgroudWorkerPhoto.execute();
+
+        categorieFilter = new ArrayList<>();
+        spinner = view.findViewById(R.id.spinner);
+        List<String> categorieList = new ArrayList<>();
+        categorieFilter.add(0,"Filtra per : ");
+        categorieFilter.add(1,"Filtra per : Gelateria");
+        categorieFilter.add(2,"Filtra per : Pizzeria");
+        categorieFilter.add(3,"Filtra per : Ristorante");
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,categorieFilter);
+        adapterSpinner.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterSpinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                String categoria="";
+
+                if(parent.getItemAtPosition(position).equals("Filtra per : ")) {
+                    cittaRist = db.getAllDataRistorantiCitta(citta);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Gelateria")){
+                    categoria="Gelateria";
+                    cittaRist = db.getAllDataRistorantiCittaCategoria(citta,categoria);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Pizzeria")){
+
+                    categoria="Pizzeria";
+                    cittaRist = db.getAllDataRistorantiCittaCategoria(citta,categoria);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(parent.getItemAtPosition(position).equals("Filtra per : Ristorante")){
+
+                    categoria="Ristorante";
+                    cittaRist = db.getAllDataRistorantiCittaCategoria(citta,categoria);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return  view;
     }
 
@@ -144,15 +254,88 @@ public class GastronomiaFragmentUtente extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaRist = db.getAllDataRistorantiCitta(citta);
-                rist = new ArrayList<String>();
 
-                for (cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()) {
-                    rist.add(cittaRist.getString(0));
+                //cittaRist = db.getAllDataRistorantiCitta(citta);
+                rist = new ArrayList<String>();
+                categorie = new ArrayList<>();
+                String categoria="";
+
+                if(spinner.getSelectedItem().equals("Filtra per : ")) {
+                    cittaRist = db.getAllDataRistorantiCitta(citta);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+
+                }else if(spinner.getSelectedItem().equals("Filtra per : Gelateria")){
+                    categoria="Gelateria";
+                    cittaRist = db.getAllDataRistorantiCittaCategoria(citta,categoria);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(spinner.getSelectedItem().equals("Filtra per : Pizzeria")){
+
+                    categoria="Pizzeria";
+                    cittaRist = db.getAllDataRistorantiCittaCategoria(citta,categoria);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
+                }else if(spinner.getSelectedItem().equals("Filtra per : Ristorante")){
+
+                    categoria="Ristorante";
+                    cittaRist = db.getAllDataRistorantiCittaCategoria(citta,categoria);
+                    rist = new ArrayList<String>();
+                    categorie=new ArrayList<>();
+
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        rist.add(cittaRist.getString(0));
+                    }
+                    for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                        categorie.add(cittaRist.getString(1));
+                    }
+
+                    BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+                    backgroudWorkerPhoto.context = getContext();
+                    backgroudWorkerPhoto.rist.addAll(rist);
+                    backgroudWorkerPhoto.nomeCitta = citta;
+                    backgroudWorkerPhoto.execute();
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), rist,categorie);
-                myList.setAdapter(adapter);
                 break;
         }
     }
@@ -202,6 +385,7 @@ public class GastronomiaFragmentUtente extends Fragment {
 
     public void returnFoto(ArrayList<Bitmap> foto){
 
+        this.foto.clear();
         this.foto.addAll(foto);
         MyAdapter adapter = new MyAdapter(getContext(), rist,categorie);
         myList.setAdapter(adapter);

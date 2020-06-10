@@ -1,6 +1,7 @@
 package com.example.android;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -24,16 +26,22 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import androidx.appcompat.widget.SearchView;
+
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +53,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CittaActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -55,19 +66,17 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-    SearchView mysearchView;
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     ImageView immagineProfilo;
-
     Cursor cittaHome;
-    ArrayAdapter adapter;
+    ArrayList<Bitmap> foto;
     ArrayList<String> cittaArray;
     ListView myList;
-
     TabLayout tabLayout;
     ViewPager viewPager;
     PageAdapterUtente pageAdapterUtente;
     TabItem tabMonumento, tabRistoranti, tabHotelBB;
+    MyAdapter adapterList;
 
     public String citta, cittaSearch, cittaLista, cittaDB;
 
@@ -101,7 +110,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         db = new DatabaseHelper(this);
 
         toolbar = findViewById(R.id.toolbarNome);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
+        toolbar.setTitle("Cerca citta");
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);
@@ -141,22 +150,22 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     }
                 } else if (tab.getPosition() == 1) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     }
                 } else {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     }
                 }
             }
@@ -171,8 +180,8 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
             }
         });
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         /////////
         myList = findViewById(R.id.listView);
@@ -184,9 +193,10 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             cittaArray.add(cittaHome.getString(0));
         }
 
-        adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, cittaArray);
-        myList.setAdapter(adapter);
+        foto = new ArrayList();
 
+        adapterList = new MyAdapter(getApplicationContext(),cittaArray,this.foto);
+        myList.setAdapter(adapterList);
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -200,8 +210,11 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent);
             }
         });
-    }
 
+        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+        backgroudWorkerPhoto.nomeCitta.addAll(cittaArray);
+        backgroudWorkerPhoto.execute();
+    }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -247,9 +260,9 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         }
         return true;
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_cerca, menu);
 
@@ -274,13 +287,14 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
             @Override
             public boolean onQueryTextChange(String s) {
+                ArrayList<String> result = new ArrayList<>();
                 viewPager.setVisibility(View.INVISIBLE);
                 String text = s;
                 if (TextUtils.isEmpty(text)) {
                     viewPager.setVisibility(View.VISIBLE);
                     myList.setVisibility(View.GONE);
                 } else {
-                    adapter.getFilter().filter(text);
+                    ((Filterable)myList.getAdapter()).getFilter().filter(text);
                     myList.setVisibility(View.VISIBLE);
                 }
                 return false;
@@ -329,4 +343,141 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
             super.onPostExecute(bitmap);
         }
     }
+
+    public class BackgroudWorkerPhoto extends AsyncTask<Void,Void, ArrayList<Bitmap>> {
+
+        ArrayList<String> nomeCitta = new ArrayList<>();
+        final static String url_photoCitta = "http://progandroid.altervista.org/progandorid/FotoCitta/";
+
+        @Override
+        public ArrayList<Bitmap> doInBackground(Void... voids) {
+
+            Bitmap immagine;
+            String url;
+            ArrayList<Bitmap> fotoBack = new ArrayList<Bitmap>();
+
+            try {
+                for (int i = 0; i < nomeCitta.size(); i = i + 1) {
+                    String citta =  nomeCitta.get(i).replaceAll(" ","%20");
+                    url = url_photoCitta + citta +"JPG";
+                    InputStream inputStream = new java.net.URL(url).openStream();
+                    immagine = BitmapFactory.decodeStream(inputStream);
+                    if (!(immagine == null)) {
+                        fotoBack.add(i, immagine);
+                    }
+                }
+                return fotoBack;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
+            super.onPostExecute(bitmaps);
+            if(bitmaps!=null){
+                returnFoto(bitmaps);
+            }
+        }
+    }
+
+    public void returnFoto(ArrayList<Bitmap> foto){
+
+        this.foto.clear();
+        this.foto.addAll(foto);
+        MyAdapter adapterList;
+        adapterList = new MyAdapter(getApplicationContext(),cittaArray,this.foto);
+        myList.setAdapter(adapterList);
+
+    }
+
+    public class MyAdapter extends ArrayAdapter<String> implements Filterable {
+
+        Context context;
+        ArrayList<String> citta;
+        ArrayList<String> cittaTemp;
+        ArrayList<Bitmap> foto;
+        CustomFiler cs;
+
+        MyAdapter(Context c, ArrayList<String> citta,ArrayList<Bitmap> foto) {
+            super(c, R.layout.row_listview);
+            this.context = c;
+            this.citta = citta;
+            this.foto = foto;
+            this.cittaTemp = citta;
+        }
+
+        @Nullable
+        @Override
+        public String getItem(int position) {
+            return citta.get(position);
+        }
+        @Override
+        public int getCount() {
+            return citta.size();
+        }
+        @Override
+        public long getItemId(int position) {
+
+            return position;
+        }
+        @NonNull
+        @Override
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View row = layoutInflater.inflate(R.layout.row_listview, parent, false);
+        ImageView images = row.findViewById(R.id.image);
+        TextView nome = row.findViewById(R.id.textViewDatiCitta);
+        nome.setText(citta.get(position));
+        images.setImageBitmap(foto.get(position));
+        return row;
+        }
+        @NonNull
+        @Override
+        public Filter getFilter() {
+
+            if(cs ==null){
+
+                cs = new CustomFiler();
+            }
+
+            return cs;
+        }
+
+        class CustomFiler extends Filter {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults result = new FilterResults();
+
+                if(constraint!=null && constraint.length()>0){
+                    constraint = constraint.toString().toUpperCase();
+                    ArrayList<String> filters = new ArrayList<>();
+
+                    for(int i=0;i<cittaTemp.size();i++){
+                        if(cittaTemp.get(i).toUpperCase().contains(constraint)){
+                            filters.add(cittaTemp.get(i));
+                        }
+                    }
+                    result.count = filters.size();
+                    result.values = filters;
+                }else {
+                    result.count = cittaTemp.size();
+                    result.values = cittaTemp;
+                }
+
+            return result;
+            }
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            citta = (ArrayList<String>) results.values;
+            notifyDataSetChanged();
+            }
+        }
+
+    }
+
 }

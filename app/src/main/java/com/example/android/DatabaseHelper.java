@@ -181,6 +181,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_MONUMENTI + " WHERE citta = ? ORDER BY nome", new String[]{citta});
         return res;
     }
+//
+    public Cursor getAllDataMonumentiCittaCategoria(String citta,String categoria){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_MONUMENTI + " WHERE citta = ? AND categoria = ? ORDER BY nome", new String[]{citta,categoria});
+        return res;
+    }
+
 
     public Integer deleteMonumento(String nome){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -207,6 +214,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllDataRistorantiCitta(String citta){
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_GASTRONOMIA + " WHERE citta = ? ORDER BY nome", new String[]{citta});
+        return res;
+    }
+
+    public Cursor getAllDataRistorantiCittaCategoria(String citta,String categoria){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_GASTRONOMIA + " WHERE citta = ? AND categoria = ? ORDER BY nome", new String[]{citta,categoria});
         return res;
     }
 
@@ -237,6 +250,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllDataHotelBBCitta(String citta){
         SQLiteDatabase db = getWritableDatabase();
         Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_HOTELEBB + " WHERE citta = ? ORDER BY nome", new String[]{citta});
+        return res;
+    }
+
+    public Cursor getAllDataHotelBBCittaCategoria(String citta,String categoria){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor res = db.rawQuery("SELECT nome,categoria FROM " + TABELLA_HOTELEBB + " WHERE citta = ? AND categoria = ? ORDER BY nome", new String[]{citta,categoria});
         return res;
     }
 
@@ -390,5 +409,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return codice;
         }
     }
+
+
+
 
 }

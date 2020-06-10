@@ -15,7 +15,8 @@
         <ListView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:id="@+id/listaHotelBBViaggi"/>
+            android:id="@+id/listaHotelBBViaggi"
+            android:background="@color/gray_chiaro"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

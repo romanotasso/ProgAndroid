@@ -214,7 +214,6 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
 
     }
 
-
     public void refreshItems() {
         switch (refresh_count) {
             default:
@@ -239,7 +238,6 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
                 Set<String> remuveDuplicate= new LinkedHashSet<String>(citta);
                 ArrayList<String> appoggio = new ArrayList<>();
                 appoggio.addAll(remuveDuplicate);
-
 
                 BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
                 backgroudWorkerPhoto.context = getContext();
