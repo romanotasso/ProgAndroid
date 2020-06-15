@@ -66,7 +66,6 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
     ImageView immagineProfilo;
     ArrayList<Bitmap>foto;
     Cursor cittaHome;
-    ArrayAdapter adapter;
     ArrayList<String> cittaArray;
     ListView myList;
     MyAdapter adapterList;

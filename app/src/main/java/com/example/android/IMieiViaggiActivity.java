@@ -75,11 +75,10 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
         cittaLista = db.getAllDataViaggi(email);
         citta = new ArrayList<String>();
 
-
-
         toolbar = findViewById(R.id.toolbarNome);
         toolbar.setTitle("I tuoi Viaggi");
         setSupportActionBar(toolbar);
+
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
 

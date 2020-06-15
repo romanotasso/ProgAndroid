@@ -21,7 +21,6 @@
             android:iconifiedByDefault="false"
             android:inputType="textCapWords"
             android:queryHint="Cerca città"/>
-
     </androidx.appcompat.widget.Toolbar>
 
 

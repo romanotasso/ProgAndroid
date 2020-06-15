@@ -1,5 +1,6 @@
 package com.example.android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentTransitionImpl;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -255,6 +260,7 @@ public class MonumentoFragmentUtente extends Fragment{
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row_utente, parent, false);
             ImageView images = row.findViewById(R.id.image);
+            Button mVediMappa = row.findViewById(R.id.vedi_su_mappa);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             TextView categoria = row.findViewById(R.id.textViewCategoria);
             button = row.findViewById(R.id.id);
@@ -271,6 +277,27 @@ public class MonumentoFragmentUtente extends Fragment{
                     viaggioMonumento.startLoadingDialog();
                 }
             });
+
+            mVediMappa.setOnClickListener((new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View v) {
+
+                    MappaFragment mappaFragment = new MappaFragment();
+                    Intent intent = new Intent(getContext(),ActivityMap.class);
+                    intent.putExtra("citta",citta);
+                    intent.putExtra("luogo",nomePunto.get(position));
+                    startActivity(intent);
+
+                   /* MappaFragment mappaFragment = new MappaFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("luogo", nomePunto.get(position));
+                    mappaFragment.setArguments(bundle);
+                    ((CittaActivity)getActivity()).callFragmentMap(mappaFragment);
+                    */
+                }
+            }));
 
             return row;
         }

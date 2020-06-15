@@ -9,9 +9,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -77,9 +81,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     PageAdapterUtente pageAdapterUtente;
     TabItem tabMonumento, tabRistoranti, tabHotelBB;
     MyAdapter adapterList;
-
     public String citta, cittaSearch, cittaLista, cittaDB;
-
     TextView nome;
     TextView cognome;
     View hView;
@@ -93,7 +95,6 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citta);
-
         cittaSearch = getIntent().getExtras().getString("cittaSearch");
         cittaLista = getIntent().getExtras().getString("cittaLista");
         cittaDB = getIntent().getExtras().getString("cittaDB");
@@ -121,6 +122,7 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
+
 
         hView=navigationView.getHeaderView(0);
         nome = hView.findViewById(R.id.textNome);
@@ -480,4 +482,13 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
 
     }
 
+    public void callFragmentMap(Fragment fragment){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.viewPager,fragment);
+        fragmentTransaction.commit();
+        tabLayout.setVisibility(View.GONE);
+
+    }
 }

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -16,11 +17,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key"/>
+
+
         <activity
             android:name=".SettingPreferenceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CittaAnteprimaActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ActivityMap"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisualizzaUtenteActivity"
             android:parentActivityName=".VisualizzaDatiAmministratoreActivity" />
@@ -35,7 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VisualizzaDatiCMRHActivity"
-            android:parentActivityName=".AmministratoreActivity" />
+            android:parentActivityName=".AmministratoreActivity"/>
         <activity
             android:name=".IMieiViaggiActivity"
             android:theme="@style/AppTheme.NoActionBar" />

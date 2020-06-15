@@ -68,7 +68,9 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
         email = getIntent().getExtras().getString("email");
 
         toolbar = findViewById(R.id.toolbarNome);
+        toolbar.setTitle("I miei viaggi");
         setSupportActionBar(toolbar);
+
 
         drawerLayout = findViewById(R.id.drawer);
         navigationView = findViewById(R.id.navigation_view);
@@ -83,6 +85,10 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
         cognome.setText(db.getCognome(email));
         navigationView.setNavigationItemSelectedListener(this);
 
+        BackgroudWorker backgroudWorkerViaggio = new BackgroudWorker(this);
+        String typeViaggio = "aggiornamentoDatiViaggio";
+        backgroudWorkerViaggio.execute(typeViaggio);
+
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.citta).setVisible(false);
         menu.findItem(R.id.cerca).setVisible(false);
@@ -93,7 +99,6 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
-
         navigationView.setCheckedItem(R.id.viaggi);
 
         tabLayout = findViewById(R.id.tabLayoutVisualizzaViaggi);
