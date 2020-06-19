@@ -69,7 +69,8 @@
         <activity
             android:name=".InserisciAmministratoreActivity"
             android:parentActivityName=".AmministratoreActivity" />
-        <activity android:name=".AmministratoreActivity" />
+        <activity android:name=".AmministratoreActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".RegisterPhotoActivity"
             android:parentActivityName=".RegisterEmailPassActivity" />

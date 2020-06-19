@@ -11,6 +11,7 @@
     tools:context=".HomeActivity"
     android:background="@color/white">
 
+
     <include
         layout="@layout/drawer_toolbar_nome"
         android:layout_width="match_parent"
@@ -25,78 +26,183 @@
         android:orientation="vertical"
         android:padding="15dp">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/experience"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+        <TextView
+            android:id="@+id/textViewCercaCitta"
+            android:layout_width="232dp"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:text="Cerca una citta"
+            android:textAlignment="center"
+            android:textColor="#e46a37"
+            android:textSize="25dp"
+            android:textStyle="normal|bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".20" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">
+
+        </TextView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/shadow"
+            android:layout_width="177dp"
+            android:layout_height="165dp"
+            android:elevation="100dp"
+            app:cardBackgroundColor="#DF6BA854"
+            app:cardCornerRadius="150dp"
+            app:cardElevation="1000dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1">
+
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="139dp"
+                android:layout_gravity="center"
+                android:elevation="100dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/search"></ImageView>
+        </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/luoghi"
+            android:id="@+id/textViewImieiViaggi"
+            android:layout_width="232dp"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:text="I miei Viaggi"
+            android:textAlignment="center"
+            android:textColor="#e46a37"
+            android:textSize="25dp"
+            android:textStyle="normal|bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".20" />
+            app:layout_constraintVertical_bias="0.35000002"
+            tools:ignore="MissingConstraints" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/iMieiViaggiPuls"
+            android:layout_width="177dp"
+            android:layout_height="165dp"
+            app:cardBackgroundColor="#DF6BA854"
+            app:cardCornerRadius="150dp"
+            app:cardElevation="1000dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.53">
+
+            <ImageView
+                android:layout_width="148dp"
+                android:layout_height="134dp"
+                android:layout_gravity="center"
+                android:elevation="100dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/geography"></ImageView>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/textViewUsaCoupon"
+            android:layout_width="232dp"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:text="Coupon"
+            android:textAlignment="center"
+            android:textColor="#e46a37"
+            android:textSize="25dp"
+            android:textStyle="normal|bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.7"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CouponPuls"
+            android:layout_width="177dp"
+            android:layout_height="165dp"
+            app:cardBackgroundColor="#DF6BA854"
+            app:cardCornerRadius="150dp"
+            app:cardElevation="1000dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.97">
+
+            <ImageView
+                android:layout_width="142dp"
+                android:layout_height="127dp"
+                android:layout_gravity="center"
+                android:elevation="100dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_cash_register"></ImageView>
+        </androidx.cardview.widget.CardView>
+        <!--
         <Button
             android:id="@+id/esplora"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="350dp"
+            android:layout_marginBottom="164dp"
             android:background="@color/orange_chiaro"
             android:text="@string/cerca"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".20" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <Button
             android:id="@+id/i_miei_viaggi"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="480dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:background="#E8651F"
             android:text="@string/i_miei_viaggi"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".20" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/coupon"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="610dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginBottom="80dp"
             android:background="#F46A33"
             android:text="@string/usa_coupon"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".20" />
+            app:layout_constraintStart_toStartOf="parent" />
 
-
+-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

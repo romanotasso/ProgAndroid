@@ -46,6 +46,7 @@ public class VisualizzaUtenteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizza_utente);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Visualizza Dati");
 
         db = new DatabaseHelper(this);
         myList = findViewById(R.id.listaUtente);

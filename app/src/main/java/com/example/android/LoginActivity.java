@@ -1,33 +1,44 @@
 package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+
     private static final String PASSWORD = "admin";
     private static final String USERNAME = "admin";
     EditText mTextEmail;
     EditText mTextPassword;
+    ImageView logo;
     Button mButtonLogin;
     TextView mTextViewRegister;
     DatabaseHelper db;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(LoginActivity.this, R.color.orange));
+
         db = new DatabaseHelper(this);
         mTextEmail = findViewById(R.id.edittext_email_login);
         mTextPassword = findViewById(R.id.edittext_password);
         mButtonLogin = findViewById(R.id.button_login);
         mTextViewRegister = findViewById(R.id.textview_register);
+        logo = findViewById(R.id.textView3);
+
 
         BackgroudWorker backgroudWorkerUtente = new BackgroudWorker(this);
         String typeUtente = "aggiornamentoDatiUtente";

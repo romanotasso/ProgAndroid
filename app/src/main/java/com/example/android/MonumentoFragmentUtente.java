@@ -263,7 +263,7 @@ public class MonumentoFragmentUtente extends Fragment{
             Button mVediMappa = row.findViewById(R.id.vedi_su_mappa);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             TextView categoria = row.findViewById(R.id.textViewCategoria);
-            button = row.findViewById(R.id.id);
+            Button button = row.findViewById(R.id.id);
             images.setImageBitmap(foto.get(position));
             nome.setText(nomePunto.get(position));
             categoria.setText(categorie.get(position));

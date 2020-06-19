@@ -103,20 +103,20 @@ public class VisualizzaCouponActivity extends AppCompatActivity implements Navig
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 1) {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange));
                     }
                 } else {
-                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange_scuro_chiaro));
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange_scuro_chiaro));
+                    toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.coloreLogo));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaCouponActivity.this, R.color.orange));
                     }

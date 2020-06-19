@@ -1,7 +1,9 @@
 package com.example.android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,12 +17,16 @@ public class VisualizzaDatiAmministratoreActivity extends AppCompatActivity {
     Button mButtonUtente;
     DatabaseHelper db;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizza_dati_amministratore);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaDatiAmministratoreActivity.this, R.color.orange));
+        getSupportActionBar().setTitle("Visualizza Dati");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         db = new DatabaseHelper(this);
         mButton = findViewById(R.id.button_dati);

@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     android:background="@color/gray_chiaro">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_width="411dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/radius"
         android:elevation="30dp"
-        android:layout_marginTop="15dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,32 +22,32 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="87dp"
-            android:layout_height="145dp"
-            android:layout_margin="5dp"
+            android:layout_width="103dp"
+            android:layout_height="111dp"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.019"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.15" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
-            android:layout_width="265dp"
-            android:layout_height="94dp"
+            android:layout_width="239dp"
+            android:layout_height="110dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.66"
+            app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.06">
+            app:layout_constraintVertical_bias="0.17000002">
 
-
+            <!--
             <TextView
                 android:id="@+id/luogo"
                 android:layout_width="64dp"
@@ -66,101 +65,95 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.015"
                 tools:ignore="RtlCompat" />
+-->
+            <!--
+                        <TextView
+                            android:id="@+id/citta"
+                            android:layout_width="64dp"
+                            android:layout_height="30dp"
+                            android:gravity="center_horizontal"
+                            android:text="Città"
+                            android:textAlignment="textStart"
+                            android:textSize="15dp"
+                            android:textStyle="italic"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.51" />
+      -->
 
             <TextView
                 android:id="@+id/textViewDatiCitta"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
+                android:layout_width="239dp"
+                android:layout_height="36dp"
                 android:layout_marginBottom="9dp"
                 android:background="#FFFFFF"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:text="Nome Luogo:"
-                android:textAlignment="center"
                 android:textSize="15sp"
-                android:textStyle="italic|bold"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.00999999" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/citta"
-                android:layout_width="64dp"
-                android:layout_height="30dp"
-                android:gravity="center_horizontal"
+                android:id="@+id/textViewCitta"
+                android:layout_width="239dp"
+                android:layout_height="36dp"
+                android:gravity="center"
                 android:text="Città"
-                android:textAlignment="textStart"
+                android:textAlignment="center"
                 android:textSize="15dp"
-                android:textStyle="italic"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.51" />
-
-            <TextView
-                android:id="@+id/textViewCitta"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:gravity="center_horizontal"
-                android:text="Città"
-                android:textAlignment="center"
-                android:textSize="15dp"
-                android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintVertical_bias="0.48000002" />
 
             <TextView
                 android:id="@+id/textViewCategoria"
-                android:layout_width="200dp"
-                android:layout_height="30dp"
-                android:gravity="center_horizontal"
+                android:layout_width="239dp"
+                android:layout_height="36dp"
+                android:gravity="center"
                 android:text="@string/punto_di_interesse"
                 android:textAlignment="center"
                 android:textSize="15dp"
-                android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.98" />
-
-            <TextView
-                android:id="@+id/Categoria"
-                android:layout_width="64dp"
-                android:layout_height="30dp"
-                android:gravity="center_horizontal"
-                android:text="Categoria"
-                android:textAlignment="center"
-                android:textSize="15dp"
-                android:textStyle="italic"
+                android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
+            <!--
+                             <TextView
+                                 android:id="@+id/Categoria"
+                                 android:layout_width="64dp"
+                                 android:layout_height="30dp"
+                                 android:gravity="center_horizontal"
+                                 android:text="Categoria"
+                                 android:textAlignment="center"
+                                 android:textSize="15dp"
+                                 android:textStyle="italic"
+                                 app:layout_constraintBottom_toBottomOf="parent"
+                                 app:layout_constraintEnd_toEndOf="parent"
+                                 app:layout_constraintHorizontal_bias="0.0"
+                                 app:layout_constraintStart_toStartOf="parent"
+                                 app:layout_constraintTop_toTopOf="parent"
+                                 app:layout_constraintVertical_bias="1.0" />
+
+                         </androidx.constraintlayout.widget.ConstraintLayout>
+        -->
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RatingBar
-            android:id="@+id/ratingbar"
-            android:layout_width="239dp"
-            android:layout_height="53dp"
-            android:numStars="5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.57"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"></RatingBar>
 
         <ImageButton
             android:id="@+id/id"
@@ -174,11 +167,20 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
             tools:ignore="MissingConstraints" />
 
+        <RatingBar
+            android:id="@+id/ratingbar"
+            android:layout_width="243dp"
+            android:layout_height="45dp"
+            android:numStars="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.71"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.96"></RatingBar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

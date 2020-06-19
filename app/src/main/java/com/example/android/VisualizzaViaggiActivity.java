@@ -118,19 +118,19 @@ public class VisualizzaViaggiActivity extends AppCompatActivity implements Navig
                     toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 1) {
                     toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
                     }
                 } else {
                     toolbar.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaViaggiActivity.this, R.color.orange));
                     }
                 }
             }

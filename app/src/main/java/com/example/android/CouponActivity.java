@@ -112,7 +112,6 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
         });
 
     }
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -121,7 +120,6 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);

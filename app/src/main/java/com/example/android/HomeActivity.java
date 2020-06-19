@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
@@ -21,6 +22,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
+import com.yinglan.shadowimageview.ShadowImageView;
+
 import java.io.InputStream;
 
 
@@ -33,6 +36,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     TextView nome;
     TextView cognome;
+    TextView cercaCitta;
+    CardView pulsCerca,pulsImieiViaggi,pulsCoupon;
+    TextView iMieiViaggi;
     ImageView immagineProfilo;
     View hView;
 
@@ -87,26 +93,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setCheckedItem(R.id.home);
 
-        buttonCerca = findViewById(R.id.esplora);
-        buttonCerca.setOnClickListener(new View.OnClickListener() {
+        cercaCitta = findViewById(R.id.textViewCercaCitta);
+        pulsCerca = findViewById(R.id.shadow);
+
+
+        pulsCerca.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intentCerca = new Intent(HomeActivity.this, CittaAnteprimaActivity.class);
                 intentCerca.putExtra("email",email);
                 startActivity(intentCerca);
             }
         });
-        buttonViaggi = findViewById(R.id.i_miei_viaggi);
-        buttonViaggi.setOnClickListener(new View.OnClickListener() {
+
+        iMieiViaggi= findViewById(R.id.textViewImieiViaggi);
+        pulsImieiViaggi= findViewById(R.id.iMieiViaggiPuls);
+        pulsImieiViaggi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intentViaggi = new Intent(HomeActivity.this, IMieiViaggiActivity.class);
                 intentViaggi.putExtra("email", email);
                 startActivity(intentViaggi);
             }
         });
-        buttonCoupon = findViewById(R.id.coupon);
-        buttonCoupon.setOnClickListener(new View.OnClickListener() {
+
+
+        pulsCoupon = findViewById(R.id.CouponPuls);
+        pulsCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentCoupon = new Intent(HomeActivity.this, CouponActivity.class);

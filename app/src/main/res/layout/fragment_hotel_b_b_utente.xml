@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:background="@color/gray_chiaro"
-        android:textAlignment="center"
         android:gravity="center_horizontal"
-        tools:ignore="MissingConstraints">
-    </Spinner>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".HotelBBFragmentUtente"
-    android:layout_gravity="center_horizontal"
-    android:orientation="vertical"
-    android:layout_marginTop="50dp">
+        android:textAlignment="center"
+        android:elevation="20dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        ></Spinner>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe">
+        tools:context=".HotelBBFragmentUtente"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:background="@color/gray_chiaro">
 
-        <ListView
-            android:layout_height="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
             android:layout_width="match_parent"
-            android:id="@+id/listaHotelBB"
-            android:background="@color/gray_chiaro"/>
+            android:layout_height="match_parent">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <ListView
+                android:id="@+id/listaHotelBB"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_chiaro" />
 
-</FrameLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

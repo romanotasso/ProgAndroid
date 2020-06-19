@@ -1,6 +1,7 @@
 package com.example.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -210,7 +212,8 @@ public class HotelBBFragmentUtente extends Fragment {
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
-            button = row.findViewById(R.id.id);
+            Button mVediMappa = row.findViewById(R.id.vedi_su_mappa);
+            Button button = row.findViewById(R.id.id);
             TextView categoria = row.findViewById(R.id.textViewCategoria);
             categoria.setText(categorie.get(position));
             nome.setText(nomePunto.get(position));
@@ -225,6 +228,29 @@ public class HotelBBFragmentUtente extends Fragment {
                     viaggioHotel.startLoadingDialog();
                 }
             });
+
+            mVediMappa.setOnClickListener((new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View v) {
+
+                    MappaFragment mappaFragment = new MappaFragment();
+                    Intent intent = new Intent(getContext(),ActivityMap.class);
+                    intent.putExtra("citta",citta);
+                    intent.putExtra("luogo",nomePunto.get(position));
+                    startActivity(intent);
+
+                   /* MappaFragment mappaFragment = new MappaFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("luogo", nomePunto.get(position));
+                    mappaFragment.setArguments(bundle);
+                    ((CittaActivity)getActivity()).callFragmentMap(mappaFragment);
+                    */
+                }
+            }));
+
+
             return row;
         }
     }

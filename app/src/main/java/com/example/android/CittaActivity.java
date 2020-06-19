@@ -155,19 +155,19 @@ public class CittaActivity extends AppCompatActivity implements NavigationView.O
                     toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 1) {
                     toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     }
                 } else {
                     toolbar.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaActivity.this, R.color.orange));
                     }
                 }
             }

@@ -24,20 +24,25 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="233dp"
-            tools:ignore="MissingConstraints"
+            android:layout_height="200dp"
             android:background="@color/coloreLogo"
-            android:elevation="30dp">
+            android:elevation="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/immagineProfiloActivityProfilo"
-                android:layout_width="135dp"
-                android:layout_height="86dp"
+                android:layout_width="149dp"
+                android:layout_height="109dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.6"
+                app:layout_constraintVertical_bias="0.49"
                 tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -46,14 +51,14 @@
             android:layout_width="51dp"
             android:layout_height="47dp"
             android:background="#FFFFFF"
-            android:tint="@color/coloreLogo"
             android:src="@drawable/ic_profilo"
+            android:tint="@color/coloreLogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.39999998"
+            app:layout_constraintVertical_bias="0.36"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -70,22 +75,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.39999998"
+            app:layout_constraintVertical_bias="0.36"
             tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="51dp"
             android:layout_height="47dp"
+            android:src="@drawable/ic_mail_black_24dp"
             android:tint="@color/coloreLogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.49"
-            tools:ignore="MissingConstraints"
-            android:src="@drawable/ic_mail_black_24dp"/>
+            app:layout_constraintVertical_bias="0.45999998"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/email"
@@ -99,22 +104,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.49"
+            app:layout_constraintVertical_bias="0.45999998"
             tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="51dp"
             android:layout_height="47dp"
+            android:src="@drawable/ic_location_city_black_24dp"
             android:tint="@color/coloreLogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.59000003"
-            tools:ignore="MissingConstraints"
-            android:src="@drawable/ic_location_city_black_24dp"/>
+            app:layout_constraintVertical_bias="0.56"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/citta"
@@ -128,7 +133,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.59000003"
+            app:layout_constraintVertical_bias="0.56"
             tools:ignore="MissingConstraints" />
 
         <ImageView
@@ -145,7 +150,7 @@
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.69"
+            app:layout_constraintVertical_bias="0.65999997"
             tools:ignore="MissingConstraints" />
 
 
@@ -161,21 +166,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.79"
+            app:layout_constraintVertical_bias="0.76"
             tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="51dp"
             android:layout_height="47dp"
+            android:src="@drawable/ic_sesso_black_24dp"
             android:tint="@color/coloreLogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.79"
-            android:src="@drawable/ic_sesso_black_24dp"
+            app:layout_constraintVertical_bias="0.76"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -190,7 +195,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.69"
+            app:layout_constraintVertical_bias="0.65999997"
             tools:ignore="MissingConstraints" />
 
         <ImageView
@@ -204,8 +209,8 @@
             app:layout_constraintHorizontal_bias="0.07"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.89"
-            tools:ignore="MissingConstraints"/>
+            app:layout_constraintVertical_bias="0.86"
+            tools:ignore="MissingConstraints" />
 
 
         <EditText
@@ -220,7 +225,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.89"
+            app:layout_constraintVertical_bias="0.86"
             tools:ignore="MissingConstraints" />
 
         <Button

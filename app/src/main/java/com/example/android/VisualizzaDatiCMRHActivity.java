@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,12 +19,14 @@ public class VisualizzaDatiCMRHActivity extends AppCompatActivity {
     PageAdapterAmministratoreVisualizzaCMRH pageAdapter;
     TabItem tabMonumento, tabRistoranti, tabHotelBB,tabCitta;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizza_dati_c_m_r_h);
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Visualizza Dati");
 
         db = new DatabaseHelper(this);
 
@@ -43,22 +46,22 @@ public class VisualizzaDatiCMRHActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 2) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition()==3){
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange));
                     }
                 } else  {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange_scuro_chiaro));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(VisualizzaDatiCMRHActivity.this, R.color.orange));
                     }

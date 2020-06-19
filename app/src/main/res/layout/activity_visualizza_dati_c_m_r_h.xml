@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabLayoutAmministratoreVisualizza"
-        android:background="@color/orange_scuro_chiaro"
+        android:background="@color/coloreLogo"
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="@color/design_default_color_on_secondary">
 

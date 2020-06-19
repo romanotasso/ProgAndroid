@@ -142,19 +142,19 @@ public class CittaAnteprimaActivity extends AppCompatActivity implements Navigat
                     toolbar.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 1) {
                     toolbar.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange));
                     }
                 } else {
                     toolbar.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
                     tabLayout.setBackgroundColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.coloreLogo));
+                        getWindow().setStatusBarColor(ContextCompat.getColor(CittaAnteprimaActivity.this, R.color.orange));
                     }
                 }
             }

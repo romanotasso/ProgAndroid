@@ -10,63 +10,134 @@
     android:orientation="vertical"
     tools:context=".AmministratoreActivity">
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <include
+        layout="@layout/toolbar_logout"
         android:layout_width="match_parent"
-        android:layout_height="139dp"
-        android:src="@drawable/experience"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/logo"
+        android:id="@+id/textViewAddCitta"
+        android:layout_width="291dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="Aggiungi"
+        android:textAlignment="center"
+        android:textColor="#e46a37"
+        android:textSize="40dp"
+        android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        app:layout_constraintVertical_bias="0.110000014"
+        tools:ignore="MissingConstraints">
 
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pulsAddAmm"
+        android:layout_width="254dp"
+        android:layout_height="240dp"
+        android:elevation="100dp"
+        app:cardBackgroundColor="#DF6BA854"
+        app:cardCornerRadius="200dp"
+        app:cardElevation="1000dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29000002">
+
+        <ImageView
+            android:layout_width="212dp"
+            android:layout_height="192dp"
+            android:layout_gravity="center"
+            android:elevation="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_location"></ImageView>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textViewImieiViaggi"
+        android:layout_width="291dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="Visualizza Dati"
+        android:textAlignment="center"
+        android:textColor="#e46a37"
+        android:textSize="40dp"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/visualizzaPuls"
+        android:layout_width="254dp"
+        android:layout_height="240dp"
+        android:elevation="100dp"
+        app:cardBackgroundColor="#DF6BA854"
+        app:cardCornerRadius="200dp"
+        app:cardElevation="1000dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96">
+
+        <ImageView
+            android:layout_width="215dp"
+            android:layout_height="238dp"
+            android:layout_gravity="center"
+            android:elevation="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_eye"></ImageView>
+    </androidx.cardview.widget.CardView>
+
+
+    <!--
     <Button
         android:id="@+id/button_dati"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="350dp"
+        android:layout_width="193dp"
+        android:layout_height="75dp"
         android:background="@color/orange_chiaro"
+        android:elevation="30dp"
         android:text="@string/vedi_tutti_i_dati"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_inserisci"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="480dp"
+        android:layout_width="196dp"
+        android:layout_height="73dp"
         android:background="#E8651F"
+        android:elevation="30dp"
         android:text="@string/inserisci"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        app:layout_constraintVertical_bias="0.716" />
 
     <Button
         android:id="@+id/buttomLogout"
         android:layout_width="206dp"
         android:layout_height="72dp"
-        android:layout_marginTop="630dp"
         android:background="#EC3B2D"
         android:text="@string/logout"
         android:textColor="#FFFFFF"
@@ -75,6 +146,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
-
+        app:layout_constraintVertical_bias="0.94" />
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>

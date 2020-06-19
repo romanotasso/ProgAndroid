@@ -14,6 +14,8 @@
         android:background="@color/gray_chiaro"
         android:gravity="center_horizontal"
         android:textAlignment="center"
+        android:elevation="20dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +29,7 @@
     tools:context=".GastronomiaFragmentUtente"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    android:layout_marginTop="50dp">
+    android:layout_marginTop="40dp">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"

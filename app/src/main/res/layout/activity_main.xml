@@ -9,11 +9,11 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <TextView
+    <ImageView
         android:id="@+id/textView3"
         android:layout_width="176dp"
         android:layout_height="185dp"
-        android:background="@drawable/download"
+        android:src="@drawable/ic_globe"
         app:drawableTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,15 +72,18 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="225dp"
-        android:background="#FA6121"
-        android:onClick="onLogin"
+        android:background="#DF6BA854"
         android:elevation="10dp"
+        android:onClick="onLogin"
         android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6" />
 
@@ -97,7 +100,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.73" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

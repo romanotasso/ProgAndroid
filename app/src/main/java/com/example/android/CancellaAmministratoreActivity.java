@@ -64,22 +64,22 @@ public class CancellaAmministratoreActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 1) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition() == 2) {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 } else if (tab.getPosition()==3){
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
                 } else  {
-                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
+                    tabLayout.setBackgroundColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.coloreLogo));
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         getWindow().setStatusBarColor(ContextCompat.getColor(CancellaAmministratoreActivity.this, R.color.orange));
                     }
