@@ -4,14 +4,14 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/coloreLogo</item>
         <item name="colorPrimaryDark">@color/coloreLogo</item>
-        <item name="colorAccent">@color/orange</item>
+        <item name="colorAccent">#DF6BA854</item>
     </style>
     <!-- Base application theme. -->
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/coloreLogo</item>
         <item name="colorPrimaryDark">@color/orange</item>
-        <item name="colorAccent">@color/orange</item>
+        <item name="colorAccent">#DF6BA854</item>
     </style>
 
 </resources>

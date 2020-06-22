@@ -139,7 +139,7 @@ public class ProfiloActivity extends AppCompatActivity implements NavigationView
             citta.setText(cursor.getString(3));
             sesso.setText(cursor.getString(4));
             data.setText(cursor.getString(5));
-            coupon.setText(cursor.getString(6));
+            coupon.setText("Coupon : "+cursor.getString(6));
         }
 
     }

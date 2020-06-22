@@ -36,8 +36,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/immagineProfiloActivityProfilo"
-                android:layout_width="149dp"
-                android:layout_height="109dp"
+                android:layout_width="93dp"
+                android:layout_height="153dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +232,7 @@
             android:id="@+id/indietro"
             android:layout_width="244dp"
             android:layout_height="wrap_content"
-            android:background="@color/orange_chiaro"
+            android:background="@color/verde"
             android:text="@string/torna_alla_home"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"

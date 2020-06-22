@@ -46,6 +46,7 @@ public class MonumentoFragmentViaggi extends Fragment {
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
     MyAdapter adapter;
+    TextView nessunPunto;
     ArrayList<String> ratingArray;
 
     @Override
@@ -56,7 +57,7 @@ public class MonumentoFragmentViaggi extends Fragment {
         db = new DatabaseHelper(getContext());
         email = getActivity().getIntent().getExtras().getString("email");
         citta = getActivity().getIntent().getExtras().getString("citta");
-
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
         refreshLayout = view.findViewById(R.id.swipe);
 
         myList = view.findViewById(R.id.listaMonumentoViaggi);
@@ -74,11 +75,18 @@ public class MonumentoFragmentViaggi extends Fragment {
             ratingArray.add(cittaMonu.getString(1));
         }
 
-        BackgroundWorker backgroudWorker = new BackgroundWorker();
-        backgroudWorker.context = getContext();
-        backgroudWorker.citta = citta;
-        backgroudWorker.nomeMonumenti = monumento;
-        backgroudWorker.execute();
+        if(monumento.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            BackgroundWorker backgroudWorker = new BackgroundWorker();
+            backgroudWorker.context = getContext();
+            backgroudWorker.citta = citta;
+            backgroudWorker.nomeMonumenti = monumento;
+            backgroudWorker.execute();
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

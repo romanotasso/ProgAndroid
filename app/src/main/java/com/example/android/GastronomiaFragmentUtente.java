@@ -46,6 +46,7 @@ public class GastronomiaFragmentUtente extends Fragment {
     ImageButton button;
     Spinner spinner;
     ArrayList<String> categorieFilter;
+    TextView nessunPunto;
 
     public String citta, cittaSearch, cittaLista, cittaDB,email;
 
@@ -58,7 +59,7 @@ public class GastronomiaFragmentUtente extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_gastronomia_utente, container, false);
 
         db = new DatabaseHelper(getContext());
-
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
         foto = new ArrayList<Bitmap>();
         email = getActivity().getIntent().getExtras().getString("email");
         cittaSearch = getActivity().getIntent().getExtras().getString("cittaSearch");
@@ -103,11 +104,19 @@ public class GastronomiaFragmentUtente extends Fragment {
             }
         });
 
-        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
-        backgroudWorkerPhoto.context = getContext();
-        backgroudWorkerPhoto.rist.addAll(rist);
-        backgroudWorkerPhoto.nomeCitta = citta;
-        backgroudWorkerPhoto.execute();
+
+        if(rist.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+            backgroudWorkerPhoto.context = getContext();
+            backgroudWorkerPhoto.rist.addAll(rist);
+            backgroudWorkerPhoto.nomeCitta = citta;
+            backgroudWorkerPhoto.execute();
+        }
 
         categorieFilter = new ArrayList<>();
         spinner = view.findViewById(R.id.spinner);
@@ -262,13 +271,6 @@ public class GastronomiaFragmentUtente extends Fragment {
                     intent.putExtra("citta",citta);
                     intent.putExtra("luogo",nomePunto.get(position));
                     startActivity(intent);
-
-                   /* MappaFragment mappaFragment = new MappaFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("luogo", nomePunto.get(position));
-                    mappaFragment.setArguments(bundle);
-                    ((CittaActivity)getActivity()).callFragmentMap(mappaFragment);
-                    */
                 }
             }));
 

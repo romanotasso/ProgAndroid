@@ -47,7 +47,7 @@ public class MonumentoFragmentUtente extends Fragment{
     MyAdapter adapter;
     ImageButton button;
     public  ArrayList<Bitmap> foto;
-
+    TextView nessunPunto;
 
 
     public String citta, cittaSearch, cittaLista, cittaDB, email;
@@ -59,7 +59,7 @@ public class MonumentoFragmentUtente extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_monumento_utente, container, false);
-
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
         db = new DatabaseHelper(getContext());
         categorie = new ArrayList<>();
         foto = new ArrayList<Bitmap>();
@@ -89,11 +89,21 @@ public class MonumentoFragmentUtente extends Fragment{
             categorie.add(cittaMonu.getString(1));
         }
 
-        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
-        backgroudWorkerPhoto.context = getContext();
-        backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
-        backgroudWorkerPhoto.nomeCitta = citta;
-        backgroudWorkerPhoto.execute();
+        if(monumento.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+            backgroudWorkerPhoto.context = getContext();
+            backgroudWorkerPhoto.nomeMonumenti.addAll(monumento);
+            backgroudWorkerPhoto.nomeCitta = citta;
+            backgroudWorkerPhoto.execute();
+        }
+
+
+
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

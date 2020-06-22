@@ -44,6 +44,7 @@ public class GastronomiaFragmentViaggi extends Fragment {
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
     ArrayList<String> ratingArray;
+    TextView nessunPunto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class GastronomiaFragmentViaggi extends Fragment {
 
         refreshLayout = view.findViewById(R.id.swipe);
 
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
         myList = view.findViewById(R.id.listaGastronomiaViaggi);
         myList.setVisibility(View.VISIBLE);
         cittaRist = db.getAllViaggiGastronomia(citta, email,"Gastronomia");
@@ -71,11 +73,22 @@ public class GastronomiaFragmentViaggi extends Fragment {
             ratingArray.add(cittaRist.getString(1));
         }
 
-        BackgroundWorker backgroundWorker = new BackgroundWorker();
-        backgroundWorker.context = getContext();
-        backgroundWorker.citta = citta;
-        backgroundWorker.nomiGastronomia = gastronomia;
-        backgroundWorker.execute();
+        if(gastronomia.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.context = getContext();
+            backgroundWorker.citta = citta;
+            backgroundWorker.nomiGastronomia = gastronomia;
+            backgroundWorker.execute();
+        }
+
+
+
+
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -197,9 +210,6 @@ public class GastronomiaFragmentViaggi extends Fragment {
         myList.setAdapter(adapter);
 
     }
-
-
-
 
     public void refreshItems() {
         switch (refresh_count) {

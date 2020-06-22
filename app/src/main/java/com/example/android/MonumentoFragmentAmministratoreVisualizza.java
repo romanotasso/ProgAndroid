@@ -48,6 +48,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
     MyAdapter adapter;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
+    TextView nessunPunto;
 
 
     @Override
@@ -64,7 +65,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
         citta = new ArrayList<String>();
         foto = new ArrayList<Bitmap>();
         categorie = new ArrayList<>();
-
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
         for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
             monumento.add(cittaMonu.getString(0));
         }
@@ -77,18 +78,22 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
             categorie.add(cittaMonu.getString(2));
         }
 
+        if(monumento.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            Set<String> remuveDuplicate= new LinkedHashSet<String>(citta);
+            ArrayList<String> appoggio = new ArrayList<>();
+            appoggio.addAll(remuveDuplicate);
 
-        Set<String> remuveDuplicate= new LinkedHashSet<String>(citta);
-        ArrayList<String> appoggio = new ArrayList<>();
-        appoggio.addAll(remuveDuplicate);
-
-
-        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
-        backgroudWorkerPhoto.context = getContext();
-        backgroudWorkerPhoto.monumenti=monumento;
-        backgroudWorkerPhoto.citta = appoggio;
-        backgroudWorkerPhoto.execute();
-
+            BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+            backgroudWorkerPhoto.context = getContext();
+            backgroudWorkerPhoto.monumenti=monumento;
+            backgroudWorkerPhoto.citta = appoggio;
+            backgroudWorkerPhoto.execute();
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

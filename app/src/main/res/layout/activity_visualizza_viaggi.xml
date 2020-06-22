@@ -48,6 +48,9 @@
                 android:id="@+id/hotel_bbVisualizzaViaggi"
                 android:text="@string/hotel_bb"/>
 
+
+
+
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager

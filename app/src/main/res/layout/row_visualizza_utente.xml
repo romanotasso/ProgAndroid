@@ -66,35 +66,36 @@
 
             <TextView
                 android:id="@+id/textViewNome"
-                android:layout_width="135dp"
-                android:layout_height="31dp"
-                android:layout_marginBottom="16dp"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="center"
                 android:text="@string/nome"
+                android:textAlignment="center"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.22"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7"
                 tools:ignore="RtlCompat" />
 
             <TextView
                 android:id="@+id/textViewCognome"
-                android:layout_width="135dp"
-                android:layout_height="31dp"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:gravity="center"
                 android:text="@string/cognome"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textSize="15dp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.985"
+                app:layout_constraintHorizontal_bias="0.81"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.73"
+                app:layout_constraintVertical_bias="0.72"
                 tools:ignore="RtlCompat" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

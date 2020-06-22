@@ -10,57 +10,118 @@
     android:orientation="vertical"
     tools:context=".AmministratoreActivity">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="139dp"
-        android:src="@drawable/experience"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/logo"
+        android:id="@+id/textViewVisDati"
+        android:layout_width="306dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="Visualizza luoghi"
+        android:textAlignment="center"
+        android:textColor="#e46a37"
+        android:textSize="40dp"
+        android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        app:layout_constraintVertical_bias="0.110000014"
+        tools:ignore="MissingConstraints">
 
-    <Button
-        android:id="@+id/button_dati"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="350dp"
-        android:background="@color/orange_chiaro"
-        android:text="Vedi dati punti interesse"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pulsVisDati"
+        android:layout_width="254dp"
+        android:layout_height="240dp"
+        android:elevation="100dp"
+        app:cardBackgroundColor="#DF6BA854"
+        app:cardCornerRadius="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        app:layout_constraintVertical_bias="0.29000002">
 
+        <ImageView
+            android:layout_width="212dp"
+            android:layout_height="192dp"
+            android:layout_gravity="center"
+            android:elevation="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_eye"></ImageView>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textViewVisUtente"
+        android:layout_width="309dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="Visualizza Utenti"
+        android:textAlignment="center"
+        android:textColor="#e46a37"
+        android:textSize="40dp"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/visualizzaUtente"
+        android:layout_width="254dp"
+        android:layout_height="240dp"
+        android:elevation="100dp"
+        app:cardBackgroundColor="#DF6BA854"
+        app:cardCornerRadius="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.96">
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="214dp"
+            android:layout_gravity="center"
+            android:elevation="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_binoculars"></ImageView>
+    </androidx.cardview.widget.CardView>
+
+<!--
     <Button
         android:id="@+id/button_utente"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="480dp"
-        android:background="#E8651F"
+        android:layout_width="168dp"
+        android:layout_height="93dp"
+        android:background="@color/orange_chiaro"
         android:text="@string/vedi_dati_utente"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".20" />
+        app:layout_constraintVertical_bias="0.239" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+            android:id="@+id/button_dati"
+            android:layout_width="168dp"
+            android:layout_height="93dp"
+            android:background="@color/orange_chiaro"
+            android:text="Vedi dati punti interesse"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

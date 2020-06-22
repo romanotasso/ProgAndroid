@@ -44,10 +44,11 @@ public class HotelBBFragmentViaggi extends Fragment {
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
     ArrayList<String> ratingArray;
+    TextView nessunPunto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_hotel_b_b_viaggi, container, false);
 
         db = new DatabaseHelper(getContext());
@@ -62,6 +63,7 @@ public class HotelBBFragmentViaggi extends Fragment {
         hotel = new ArrayList<String>();
         fotoHotel = new ArrayList<Bitmap>();
         ratingArray = new ArrayList<>();
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
 
         for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
             hotel.add(cittaHotel.getString(0));
@@ -71,12 +73,18 @@ public class HotelBBFragmentViaggi extends Fragment {
             ratingArray.add(cittaHotel.getString(1));
         }
 
-      BackgroundWorker backgroundWorker = new BackgroundWorker();
-        backgroundWorker.context= getContext();
-        backgroundWorker.citta = citta;
-        backgroundWorker.nomiHotel = hotel;
-        backgroundWorker.execute();
-
+        if(hotel.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.context= getContext();
+            backgroundWorker.citta = citta;
+            backgroundWorker.nomiHotel = hotel;
+            backgroundWorker.execute();
+        }
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

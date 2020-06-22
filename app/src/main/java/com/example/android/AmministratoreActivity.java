@@ -18,9 +18,6 @@ import android.widget.Button;
 public class AmministratoreActivity extends AppCompatActivity {
 
     DatabaseHelper db;
-    Button mButtonDati;
-    Button mButtonInserisci;
-    Button mButtomLogout;
     Toolbar toolbar;
 
     CardView puslAdd,pulsVisualizza;

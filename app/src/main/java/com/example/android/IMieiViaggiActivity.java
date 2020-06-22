@@ -110,18 +110,23 @@ public class IMieiViaggiActivity extends AppCompatActivity implements Navigation
             citta.add(cittaLista.getString(0));
         }
 
+        textViaggio = findViewById(R.id.textNessunViaggio);
+
+
         int n = citta.size();
         String cittaViaggio;
-       /* if (n == 0) {
+        if ( n == 0) {
             cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
-            textViaggio.setText(cittaViaggio);
+            myList.setVisibility(View.GONE);
+            textViaggio.setVisibility(View.VISIBLE);
+            textViaggio.setText("Nessuna citta visitata");
         } else if (n == 1) {
             cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
             textViaggio.setText(cittaViaggio);
         } else {
             cittaViaggio = getResources().getQuantityString(R.plurals.le_citt_da_te_visitate, n);
             textViaggio.setText(cittaViaggio);
-        }*/
+        }
 
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

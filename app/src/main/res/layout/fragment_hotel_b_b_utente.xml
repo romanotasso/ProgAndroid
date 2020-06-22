@@ -22,8 +22,6 @@
         ></Spinner>
 
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".HotelBBFragmentUtente"
@@ -31,6 +29,26 @@
         android:orientation="vertical"
         android:layout_marginTop="40dp"
         android:background="@color/gray_chiaro">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_chiaro">
+
+            <TextView
+                android:id="@+id/textNessunViaggio"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/swipe"
+                app:layout_constraintVertical_bias="0.02">
+
+            </TextView>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe"
@@ -44,7 +62,7 @@
                 android:background="@color/gray_chiaro" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

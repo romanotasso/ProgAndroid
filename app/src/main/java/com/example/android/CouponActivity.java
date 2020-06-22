@@ -7,15 +7,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,25 +30,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.zxing.WriterException;
 
 import java.io.InputStream;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 public class CouponActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     EditText inserisci;
     DatabaseHelper db;
     Button button;
-
+    private AlertDialog dialog;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
-
+    Activity activity;
     String urlDownlaodImageProfilo = "http://progandroid.altervista.org/progandorid/FotoProfilo/";
     TextView nome;
     TextView cognome;
-    ImageView immagineProfilo;
+    ImageView immagineProfilo,couponQr;
     View hView;
+    Bitmap bitmap;
+    QRGEncoder qrgEncoder;
 
     String email;
 
@@ -70,6 +83,7 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
         downloadImage.execute();
         nome.setText(db.getNome(email));
         cognome.setText(db.getCognome(email));
+        couponQr = findViewById(R.id.couponQr);
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();
@@ -97,15 +111,42 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onClick(View view) {
                 if (inserisci.getText().toString().trim().isEmpty()){
-                    Toast.makeText(CouponActivity.this, R.string.inserire_coupon, Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(CouponActivity.this)
+                            .setTitle("Errore Codice")
+                            .setMessage("Assicurati di inserire il giusto codice, lo trovi nella sezione profilo!")
+                            .setNegativeButton("ok", null)
+                            .show();
+                            couponQr.setImageDrawable(null);
                 } else {
                     if ((inserisci.getText().toString().equals(finalCoupon))) {
-                        Intent intent = new Intent(CouponActivity.this, VisualizzaCouponActivity.class);
-                        intent.putExtra("coupon", inserisci.getText().toString());
-                        intent.putExtra("email", email);
-                        startActivity(intent);
+
+                        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+                        Display display = windowManager.getDefaultDisplay();
+                        Point point = new Point();
+                        display.getSize(point);
+                        int width = point.x;
+                        int height = point.y;
+                        int smallerdimension = width<height ? width:height;
+                        smallerdimension = smallerdimension*3/4;
+                        new AlertDialog.Builder(CouponActivity.this)
+                                .setTitle("Uso")
+                                .setMessage("Presenta il codice in casso per avere lo sconto del 20%")
+                                .setNegativeButton("ok", null)
+                                .show();
+                        qrgEncoder = new QRGEncoder(inserisci.getText().toString(),null, QRGContents.Type.TEXT,smallerdimension);
+                        try {
+                            bitmap=qrgEncoder.encodeAsBitmap();
+                            couponQr.setImageBitmap(bitmap);
+                        } catch (WriterException e) {
+                            e.printStackTrace();
+                        }
                     } else {
-                        Toast.makeText(CouponActivity.this, R.string.coupon_non_valido, Toast.LENGTH_SHORT).show();
+                        new AlertDialog.Builder(CouponActivity.this)
+                                .setTitle("Errore Codice")
+                                .setMessage("Assicurati di inserire il giusto codice, lo trovi nella sezione profilo!")
+                                .setNegativeButton("ok", null)
+                                .show();
+                        couponQr.setImageDrawable(null);
                     }
                 }
             }

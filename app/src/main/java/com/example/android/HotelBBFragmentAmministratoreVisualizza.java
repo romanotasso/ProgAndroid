@@ -48,6 +48,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
     ArrayList<String> categorie;
     SwipeRefreshLayout refreshLayout;
     int refresh_count = 0;
+    TextView nessunPunto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
         hotel = new ArrayList<String>();
         citta = new ArrayList<String>();
         categorie = new ArrayList<String>();
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
 
         for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
             hotel.add(cittaHotel.getString(0));
@@ -75,15 +77,23 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
             categorie.add(cittaHotel.getString(2));
         }
 
-        Set<String> remuveDuplicate1= new LinkedHashSet<String>(citta);
-        ArrayList<String> appoggio1 = new ArrayList<>();
-        appoggio1.addAll(remuveDuplicate1);
 
-        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
-        backgroudWorkerPhoto.context = getContext();
-        backgroudWorkerPhoto.hotel=hotel;
-        backgroudWorkerPhoto.citta = appoggio1;
-        backgroudWorkerPhoto.execute();
+        if(hotel.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            Set<String> remuveDuplicate1= new LinkedHashSet<String>(citta);
+            ArrayList<String> appoggio1 = new ArrayList<>();
+            appoggio1.addAll(remuveDuplicate1);
+
+            BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+            backgroudWorkerPhoto.context = getContext();
+            backgroudWorkerPhoto.hotel=hotel;
+            backgroudWorkerPhoto.citta = appoggio1;
+            backgroudWorkerPhoto.execute();
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

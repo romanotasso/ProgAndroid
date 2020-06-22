@@ -48,6 +48,7 @@ public class HotelBBFragmentUtente extends Fragment {
     ArrayList<String> categorie;
     DatabaseHelper db;
     ImageButton button;
+    TextView nessunPunto;
 
     public String citta, cittaSearch, cittaLista, cittaDB, email;
 
@@ -90,11 +91,20 @@ public class HotelBBFragmentUtente extends Fragment {
             categorie.add(cittaHotel.getString(1));
         }
 
-        BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
-        backgroudWorkerPhoto.context = getContext();
-        backgroudWorkerPhoto.hotel.addAll(hotel);
-        backgroudWorkerPhoto.nomeCitta = citta;
-        backgroudWorkerPhoto.execute();
+        nessunPunto = view.findViewById(R.id.textNessunViaggio);
+
+        if(hotel.size()==0){
+            myList.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.GONE);
+            nessunPunto.setVisibility(View.VISIBLE);
+            nessunPunto.setText("Niente da visualizzare");
+        }else {
+            BackgroudWorkerPhoto backgroudWorkerPhoto = new BackgroudWorkerPhoto();
+            backgroudWorkerPhoto.context = getContext();
+            backgroudWorkerPhoto.hotel.addAll(hotel);
+            backgroudWorkerPhoto.nomeCitta = citta;
+            backgroudWorkerPhoto.execute();
+        }
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

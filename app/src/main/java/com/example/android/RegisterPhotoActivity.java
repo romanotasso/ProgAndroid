@@ -1,6 +1,8 @@
 package com.example.android;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -50,9 +52,7 @@ public class RegisterPhotoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_photo);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         immagineProfilo = findViewById(R.id.profilo_immagine);
         addPhoto = findViewById(R.id.button_addPhoto);
         skipPhoto = findViewById(R.id.button_skipPhoto);
@@ -61,71 +61,80 @@ public class RegisterPhotoActivity extends AppCompatActivity {
     }
 
     public void skipPhoto(View view) {
-        ArrayList<String> coupon = new ArrayList<String>();
-        coupon.add("MILANO");
-        coupon.add("ALTAMURA");
-        coupon.add("BARI");
-        coupon.add("ROMA");
-        final Random random = new Random();
-        String str_nome = getIntent().getExtras().getString("nome");
-        String str_cognome = getIntent().getExtras().getString("cognome");
-        String str_email = getIntent().getExtras().getString("email");
-        String str_pass = getIntent().getExtras().getString("password");
-        String str_citta = getIntent().getExtras().getString("citta");
-        String str_sesso = getIntent().getExtras().getString("sesso");
-        String str_data = getIntent().getExtras().getString("data_nascita");
-        String couponUtente = coupon.get(random.nextInt(4));
-        String type = "register";
 
-        if (filepath == null) {
-            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
-            backgroudWorker.execute(type
-                    , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
-                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
-                    , str_email
-                    , str_pass
-                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
-                    , str_sesso,
-                    str_data,
-                    couponUtente,"1");
-            db.inserisciUtente(str_email,
-                    str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
-                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
-                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
-                    , str_sesso,
-                    str_data,
-                    couponUtente,
-                    "1");
+        new AlertDialog.Builder(RegisterPhotoActivity.this)
+                .setTitle("Regalo Coupon ")
+                .setMessage("Grazie per esserti iscritto , in regalo per te un codice sconto del 20%. Lo trovi nella sezione profilo!!")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ArrayList<String> coupon = new ArrayList<String>();
+                        coupon.add("MILANO");
+                        coupon.add("ALTAMURA");
+                        coupon.add("BARI");
+                        coupon.add("ROMA");
+                        final Random random = new Random();
+                        String str_nome = getIntent().getExtras().getString("nome");
+                        String str_cognome = getIntent().getExtras().getString("cognome");
+                        String str_email = getIntent().getExtras().getString("email");
+                        String str_pass = getIntent().getExtras().getString("password");
+                        String str_citta = getIntent().getExtras().getString("citta");
+                        String str_sesso = getIntent().getExtras().getString("sesso");
+                        String str_data = getIntent().getExtras().getString("data_nascita");
+                        String couponUtente = coupon.get(random.nextInt(4));
+                        String type = "register";
 
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            Toast.makeText(getApplicationContext(), R.string.registrazione_successo, Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-        } else {
+                        if (filepath == null) {
+                            BackgroudWorker backgroudWorker = new BackgroudWorker(getApplicationContext());
+                            backgroudWorker.execute(type
+                                    , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                                    , str_email
+                                    , str_pass
+                                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                                    , str_sesso,
+                                    str_data,
+                                    couponUtente,"1");
+                            db.inserisciUtente(str_email,
+                                    str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                                    , str_sesso,
+                                    str_data,
+                                    couponUtente,
+                                    "1");
 
-            Bitmap image = ((BitmapDrawable) immagineProfilo.getDrawable()).getBitmap();
-            new updateImage(image, str_email).execute();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            Toast.makeText(getApplicationContext(), R.string.registrazione_successo, Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                        } else {
+                            Bitmap image = ((BitmapDrawable) immagineProfilo.getDrawable()).getBitmap();
+                            new updateImage(image, str_email).execute();
 
-            BackgroudWorker backgroudWorker = new BackgroudWorker(this);
-            backgroudWorker.execute(type
-                    , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
-                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
-                    , str_email
-                    , str_pass
-                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
-                    , str_sesso,
-                    str_data,
-                    couponUtente,"0");
-            db.inserisciUtente(str_email,
-                    str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
-                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
-                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
-                    , str_sesso,
-                    str_data, couponUtente,"0");
+                            BackgroudWorker backgroudWorker = new BackgroudWorker(getApplicationContext());
+                            backgroudWorker.execute(type
+                                    , str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                                    , str_email
+                                    , str_pass
+                                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                                    , str_sesso,
+                                    str_data,
+                                    couponUtente,"0");
+                            db.inserisciUtente(str_email,
+                                    str_nome = str_nome.substring(0, 1).toUpperCase() + str_nome.substring(1).toLowerCase()
+                                    , str_cognome = str_cognome.substring(0, 1).toUpperCase() + str_cognome.substring(1).toLowerCase()
+                                    , str_citta = str_citta.substring(0, 1).toUpperCase() + str_citta.substring(1).toLowerCase()
+                                    , str_sesso,
+                                    str_data, couponUtente,"0");
 
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            Toast.makeText(getApplicationContext(), R.string.registrazione_successo, Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-        }
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            Toast.makeText(getApplicationContext(), R.string.registrazione_successo, Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                        }
+                    }
+                }).setCancelable(false)
+        .show();
     }
 
     public void addPhoto(View view) {
@@ -149,7 +158,6 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_CODE);
 
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -166,7 +174,6 @@ public class RegisterPhotoActivity extends AppCompatActivity {
         }
 
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
