@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,7 +16,6 @@ import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,8 +24,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.WriterException;
 
@@ -170,6 +165,7 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
                 Intent intentHome = new Intent(CouponActivity.this, HomeActivity.class);
                 intentHome.putExtra("email", email);
                 startActivity(intentHome);
+                break;
             case R.id.viaggi:
                 Intent intentViaggi = new Intent(CouponActivity.this, IMieiViaggiActivity.class);
                 intentViaggi.putExtra("email", email);

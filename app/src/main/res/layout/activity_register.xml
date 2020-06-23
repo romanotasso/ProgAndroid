@@ -146,7 +146,7 @@
         android:id="@+id/button_register"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:background="#FF9800"
+        android:background="@color/verde"
         android:onClick="onReg"
         android:text="@string/Avanti"
         android:textColor="#FFFFFF"

@@ -60,7 +60,7 @@ public class MonumentoFragmentAmministratoreVisualizza extends Fragment {
         refreshLayout = view.findViewById(R.id.swipe);
         myList = view.findViewById(R.id.listaMonumentoVisualizza);
         myList.setVisibility(View.VISIBLE);
-        cittaMonu = db.getAllDataMonumenti();
+        cittaMonu = db.ordinaPerCittaMonumento();
         monumento = new ArrayList<String>();
         citta = new ArrayList<String>();
         foto = new ArrayList<Bitmap>();

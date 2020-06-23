@@ -58,7 +58,7 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
         nessunPunto = view.findViewById(R.id.textNessunViaggio);
         myList = view.findViewById(R.id.listaRistorantiVisualizza);
         myList.setVisibility(View.VISIBLE);
-        cittaGast = db.getAllDataGastronomia();
+        cittaGast = db.ordinaPerCittaCibo();
         gastronomia = new ArrayList<String>();
         refreshLayout = view.findViewById(R.id.swipe);
         citta = new ArrayList<String>();
@@ -128,6 +128,9 @@ public class GastronomiaFragmentAmministratoreVisualizza extends Fragment {
         @NonNull
         @Override
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+
+
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row, parent, false);
             ImageView images = row.findViewById(R.id.image);

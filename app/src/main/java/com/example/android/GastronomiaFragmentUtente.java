@@ -417,9 +417,6 @@ public class GastronomiaFragmentUtente extends Fragment {
         MyAdapter adapter = new MyAdapter(getContext(), rist,categorie);
         myList.setAdapter(adapter);
 
-
     }
-
-
 
 }

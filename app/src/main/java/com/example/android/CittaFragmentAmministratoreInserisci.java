@@ -86,10 +86,11 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                             backgroudWorker.execute(type, citta, monumento, gastronomia, hotelbb,categoria);
                             Bitmap image = ((BitmapDrawable) photoCitta.getDrawable()).getBitmap();
                             new updateImage(image, citta).execute();
+                            count=0;
                         } else {
                             mButtonInserisci.setError("");
+                            count =0;
                         }
-
                     } else {
                         mEditCitta.setError("Citta già presente");
                         mEditCitta.findFocus();
@@ -111,11 +112,9 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
                         requestPermissions(perimissions, PERMISSION_CODE);
                     } else {
                         pickImageFromGallery();
-                        count = count + 1;
                     }
                 } else {
                     pickImageFromGallery();
-                    count = count + 1;
                 }
             }
         });
@@ -152,7 +151,7 @@ public class CittaFragmentAmministratoreInserisci extends Fragment {
         if (resultCode == getActivity().RESULT_OK && requestCode == IMAGE_PICK_CODE && data != null) {
             filepath = data.getData();
             photoCitta.setImageURI(filepath);
-
+            count = count + 1;
         }
     }
 
