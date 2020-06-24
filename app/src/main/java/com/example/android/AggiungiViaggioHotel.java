@@ -11,14 +11,15 @@ public class AggiungiViaggioHotel {
     private Activity activity;
     private AlertDialog dialog;
     private Context context;
-    String email, citta, nome;
+    String email, citta, nome, categoria;
 
-    AggiungiViaggioHotel(Activity activity, Context context, String citta, String email, String nome) {
+    AggiungiViaggioHotel(Activity activity, Context context, String citta, String email, String nome, String categoria) {
         this.activity = activity;
         this.context = context;
         this.citta = citta;
         this.email = email;
         this.nome = nome;
+        this.categoria = categoria;
     }
 
     void startLoadingDialog () {
@@ -41,7 +42,7 @@ public class AggiungiViaggioHotel {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String type = "inserisciViaggio";
                 BackgroudWorker backgroudWorker = new BackgroudWorker(context);
-                backgroudWorker.execute(type, email, citta, nome, "Hotel","0");
+                backgroudWorker.execute(type, email, citta, nome, "0", categoria, "Hotel");
             }
         });
 

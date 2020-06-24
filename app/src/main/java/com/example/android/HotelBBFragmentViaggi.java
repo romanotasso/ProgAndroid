@@ -45,6 +45,7 @@ public class HotelBBFragmentViaggi extends Fragment {
     int refresh_count = 0;
     ArrayList<String> ratingArray;
     TextView nessunPunto;
+    ArrayList<String> categorie;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,10 +60,11 @@ public class HotelBBFragmentViaggi extends Fragment {
 
         myList = view.findViewById(R.id.listaHotelBBViaggi);
         myList.setVisibility(View.VISIBLE);
-        cittaHotel = db.getAllViaggiHotel(citta, email,"Hotel");
+        cittaHotel = db.getAllViaggiHotel(citta, email, "Hotel");
         hotel = new ArrayList<String>();
         fotoHotel = new ArrayList<Bitmap>();
         ratingArray = new ArrayList<>();
+        categorie = new ArrayList<String>();
         nessunPunto = view.findViewById(R.id.textNessunViaggio);
 
         for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
@@ -71,6 +73,10 @@ public class HotelBBFragmentViaggi extends Fragment {
 
         for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
             ratingArray.add(cittaHotel.getString(1));
+        }
+
+        for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
+            categorie.add(cittaHotel.getString(2));
         }
 
         if(hotel.size()==0){
@@ -106,13 +112,14 @@ public class HotelBBFragmentViaggi extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
         ArrayList<String> ratingAdapterArray;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> ratingAdapterArray) {
+        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> ratingAdapterArray, ArrayList<String> categorie) {
             super(c, R.layout.row_i_miei_viaggi, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
-            this.ratingAdapterArray =ratingAdapterArray;;
-
+            this.ratingAdapterArray =ratingAdapterArray;
+            this.categorie = categorie;
         }
 
         @NonNull
@@ -122,19 +129,22 @@ public class HotelBBFragmentViaggi extends Fragment {
             View row = layoutInflater.inflate(R.layout.row_i_miei_viaggi, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             RatingBar ratingBar = row.findViewById(R.id.ratingbar);
             button = row.findViewById(R.id.id);
             images.setImageBitmap(fotoHotel.get(position));
             nome.setText(nomePunto.get(position));
+            categoria.setText(categorie.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             ratingBar.setRating(Float.valueOf(ratingAdapterArray.get(position)));
             cittaNome.setText(citta);
             final String hotel = nomePunto.get(position);
+            final String categori = categorie.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final CancellaDialogHotelViaggio cancellaDialogMonumento = new CancellaDialogHotelViaggio(getActivity(), context, citta, email, hotel);
+                    final CancellaDialogHotelViaggio cancellaDialogMonumento = new CancellaDialogHotelViaggio(getActivity(), context, citta, email, hotel, categori);
                     cancellaDialogMonumento.startLoadingDialog();
                 }
             });
@@ -148,7 +158,7 @@ public class HotelBBFragmentViaggi extends Fragment {
                     String ratingChanged = "";
                     ratingChanged=(String.valueOf(rating));
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, hotel, "Hotel",ratingChanged);
+                    backgroudWorker.execute(type, email, citta, hotel,ratingChanged, categori);
                     BackgroudWorker backgroundWorkerOne = new BackgroudWorker(getContext());
                     backgroundWorkerOne.execute(type1);
                 }
@@ -177,7 +187,7 @@ public class HotelBBFragmentViaggi extends Fragment {
                 for (int i = 0; i < nomiHotel.size(); i = i + 1) {
                     String nomeHotel =  nomiHotel.get(i).replaceAll(" ","%20");
                     citta.replaceAll(" ","%20");
-                    url = url_photoGHotel + citta +nomeHotel+ "JPG";
+                    url = url_photoGHotel + citta + nomeHotel + "JPG";
                     InputStream inputStream = new java.net.URL(url).openStream();
                     immagine = BitmapFactory.decodeStream(inputStream);
                     if (!(immagine == null)) {
@@ -203,7 +213,7 @@ public class HotelBBFragmentViaggi extends Fragment {
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.fotoHotel.addAll(foto);
-        adapter = new MyAdapter(getContext(),hotel,ratingArray);
+        adapter = new MyAdapter(getContext(),hotel,ratingArray, categorie);
         myList.setAdapter(adapter);
 
     }
@@ -211,14 +221,24 @@ public class HotelBBFragmentViaggi extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaHotel = db.getAllViaggiHotel(citta, email,"Hotel");
+                cittaHotel = db.getAllViaggiHotel(citta, email, "Hotel");
                 hotel = new ArrayList<String>();
+                categorie = new ArrayList<String>();
+                ratingArray = new ArrayList<>();
 
                 for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()) {
                     hotel.add(cittaHotel.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), hotel,ratingArray);
+                for(cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
+                    ratingArray.add(cittaHotel.getString(1));
+                }
+
+                for (cittaHotel.moveToFirst(); !cittaHotel.isAfterLast(); cittaHotel.moveToNext()){
+                    categorie.add(cittaHotel.getString(2));
+                }
+
+                final MyAdapter adapter = new MyAdapter(getContext(), hotel,ratingArray, categorie);
                 myList.setAdapter(adapter);
                 break;
         }

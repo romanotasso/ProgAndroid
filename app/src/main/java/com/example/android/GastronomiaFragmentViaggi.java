@@ -45,6 +45,7 @@ public class GastronomiaFragmentViaggi extends Fragment {
     int refresh_count = 0;
     ArrayList<String> ratingArray;
     TextView nessunPunto;
+    ArrayList<String> categorie;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,10 +61,11 @@ public class GastronomiaFragmentViaggi extends Fragment {
         nessunPunto = view.findViewById(R.id.textNessunViaggio);
         myList = view.findViewById(R.id.listaGastronomiaViaggi);
         myList.setVisibility(View.VISIBLE);
-        cittaRist = db.getAllViaggiGastronomia(citta, email,"Gastronomia");
+        cittaRist = db.getAllViaggiGastronomia(citta, email, "Cibo");
         gastronomia = new ArrayList<String>();
         fotoGastronomia = new ArrayList<Bitmap>();
         ratingArray = new ArrayList<>();
+        categorie = new ArrayList<String>();
 
         for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
             gastronomia.add(cittaRist.getString(0));
@@ -71,6 +73,10 @@ public class GastronomiaFragmentViaggi extends Fragment {
 
         for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
             ratingArray.add(cittaRist.getString(1));
+        }
+
+        for (cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+            categorie.add(cittaRist.getString(2));
         }
 
         if(gastronomia.size()==0){
@@ -111,12 +117,14 @@ public class GastronomiaFragmentViaggi extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
         ArrayList<String> ratingAdapterArray;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> monumento,ArrayList<String> ratingAdapterArray) {
+        MyAdapter(Context c, ArrayList<String> monumento,ArrayList<String> ratingAdapterArray, ArrayList<String> categorie) {
             super(c, R.layout.row_i_miei_viaggi, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
             this.ratingAdapterArray=ratingAdapterArray;
+            this.categorie = categorie;
         }
 
         @NonNull
@@ -126,19 +134,22 @@ public class GastronomiaFragmentViaggi extends Fragment {
             View row = layoutInflater.inflate(R.layout.row_i_miei_viaggi, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             RatingBar ratingBar = row.findViewById(R.id.ratingbar);
             button = row.findViewById(R.id.id);
             images.setImageBitmap(fotoGastronomia.get(position));
             nome.setText(nomePunto.get(position));
+            categoria.setText(categorie.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             ratingBar.setRating(Float.valueOf(ratingAdapterArray.get(position)));
             cittaNome.setText(citta);
             final String gastronomia = nomePunto.get(position);
+            final String categori = categorie.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final CancellaDialogGastronomiaViaggio cancellaDialogMonumento = new CancellaDialogGastronomiaViaggio(getActivity(), context, citta, email, gastronomia);
+                    final CancellaDialogGastronomiaViaggio cancellaDialogMonumento = new CancellaDialogGastronomiaViaggio(getActivity(), context, citta, email, gastronomia, categori);
                     cancellaDialogMonumento.startLoadingDialog();
                 }
             });
@@ -152,7 +163,7 @@ public class GastronomiaFragmentViaggi extends Fragment {
                     String ratingChanged = "";
                     ratingChanged=(String.valueOf(rating));
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, gastronomia, "Gastronomia",ratingChanged);
+                    backgroudWorker.execute(type, email, citta, gastronomia,ratingChanged, categori);
                     BackgroudWorker backgroundWorkerOne = new BackgroudWorker(getContext());
                     backgroundWorkerOne.execute(type1);
                 }
@@ -206,7 +217,7 @@ public class GastronomiaFragmentViaggi extends Fragment {
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.fotoGastronomia.addAll(foto);
-        adapter = new MyAdapter(getContext(),gastronomia,ratingArray);
+        adapter = new MyAdapter(getContext(),gastronomia,ratingArray, categorie);
         myList.setAdapter(adapter);
 
     }
@@ -214,14 +225,24 @@ public class GastronomiaFragmentViaggi extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaRist = db.getAllViaggiGastronomia(citta, email,"Gastronomia");
+                cittaRist = db.getAllViaggiGastronomia(citta, email, "Cibo");
                 gastronomia = new ArrayList<String>();
+                categorie = new ArrayList<String>();
+                ratingArray = new ArrayList<>();
 
                 for (cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()) {
                     gastronomia.add(cittaRist.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), gastronomia,ratingArray);
+                for(cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                    ratingArray.add(cittaRist.getString(1));
+                }
+
+                for (cittaRist.moveToFirst(); !cittaRist.isAfterLast(); cittaRist.moveToNext()){
+                    categorie.add(cittaRist.getString(2));
+                }
+
+                final MyAdapter adapter = new MyAdapter(getContext(), gastronomia,ratingArray, categorie);
                 myList.setAdapter(adapter);
                 break;
         }

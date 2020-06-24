@@ -34,18 +34,21 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
     final static int VALORE_NOME_CITTA = 0;
     final static int VALORE_NOME_MHG = 0;
     final static int VALORE_CITTA_MHG = 1;
+    final static int VALORE_CATEGORIA_MHG = 2;
     final static int VALORE_EMAIL_VIAGGIO = 0;
     final static int VALORE_CITTA_VIAGGIO = 1;
     final static int VALORE_NOME_VIAGGIO = 2;
-    final static int VALORE_TIPOLOGIA_VIAGGIO = 3;
-    final static int VALORE_RATING_VIAGGIO = 4;
-    final static int VALORE_CATEGORIA_MHG = 2;
+    final static int VALORE_RATING_VIAGGIO = 3;
+    final static int VALORE_CATEGORIA_VIAGGIO = 4;
+    final static int VALORE_TIPOLOGIA_VIAGGIO = 5;
+
 
     String emailDati;
     String cittaDati;
     String nomeDati;
-    String tipologiaDati;
     String ratingdati;
+    String categoriaDati;
+    String tipologiaDati;
 
     Context context;
     AlertDialog alertDialog;
@@ -443,7 +446,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String result = "";
                 String line = "";
                 int i = 0;
-                String valori[] = new String[5];
+                String valori[] = new String[6];
                 d.updateDatiViaggio();
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
@@ -456,12 +459,15 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                     } else if (i == VALORE_NOME_VIAGGIO) {
                         valori[i] = line;
                         i = i + 1;
-                    } else if (i == VALORE_TIPOLOGIA_VIAGGIO) {
-                        valori[i] = line;
-                        i=i+1;
                     }else if(i==VALORE_RATING_VIAGGIO){
                         valori[i] = line;
-                        d.inserisciViaggio(valori[0], valori[1], valori[2], valori[3],valori[4]);
+                        i = i+1;
+                    } else  if (i == VALORE_CATEGORIA_VIAGGIO) {
+                        valori[i] = line;
+                        i = i + 1;
+                    } else if (i == VALORE_TIPOLOGIA_VIAGGIO){
+                        valori[i] = line;
+                        d.inserisciViaggio(valori[0], valori[1], valori[2], valori[3],valori[4],valori[5]);
                         i = 0;
                     }
                 }
@@ -725,10 +731,12 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 cittaDati = params[2];
                 String nome = params[3];
                 nomeDati = params[3];
-                String tipologia = params[4];
-                tipologiaDati = params[4];
-                String rating = params[5];
-                ratingdati = params[5];
+                String rating = params[4];
+                ratingdati = params[4];
+                String categoria = params[5];
+                categoriaDati = params[5];
+                String tipologia = params[6];
+                tipologiaDati = params[6];
                 URL url = new URL(inserisciViaggio);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -739,8 +747,9 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String post_data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" +
                         URLEncoder.encode("citta", "UTF-8") + "=" + URLEncoder.encode(citta, "UTF-8") + "&" +
                         URLEncoder.encode("nome", "UTF-8") + "=" + URLEncoder.encode(nome, "UTF-8") + "&" +
-                        URLEncoder.encode("tipologia", "UTF-8") + "=" + URLEncoder.encode(tipologia, "UTF-8")+ "&" +
-                        URLEncoder.encode("rating", "UTF-8") + "=" + URLEncoder.encode(rating, "UTF-8");
+                        URLEncoder.encode("categoria", "UTF-8") + "=" + URLEncoder.encode(categoria, "UTF-8")+ "&" +
+                        URLEncoder.encode("rating", "UTF-8") + "=" + URLEncoder.encode(rating, "UTF-8") + "&" +
+                        URLEncoder.encode("tipologia","UTF-8") + "=" + URLEncoder.encode(tipologia, "UTF-8");
                 bufferedWriter.write(post_data);
                 //d.inserisciViaggio(email,citta,nome,tipologia,rating);
                 bufferedWriter.flush();
@@ -768,7 +777,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String email = params[1];
                 String citta = params[2];
                 String nome = params[3];
-                String tipologia = params[4];
+                String categoria = params[4];
                 URL url = new URL(deleteViaggio);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -779,7 +788,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String post_data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" +
                         URLEncoder.encode("citta", "UTF-8") + "=" + URLEncoder.encode(citta, "UTF-8") + "&" +
                         URLEncoder.encode("nome", "UTF-8") + "=" + URLEncoder.encode(nome, "UTF-8") + "&" +
-                        URLEncoder.encode("tipologia", "UTF-8") + "=" + URLEncoder.encode(tipologia, "UTF-8");
+                        URLEncoder.encode("categoria", "UTF-8") + "=" + URLEncoder.encode(categoria, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -806,8 +815,8 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String email = params[1];
                 String citta = params[2];
                 String nome = params[3];
-                String tipologia = params[4];
-                String rating = params[5];
+                String rating = params[4];
+                String categoria = params[5];
                 URL url = new URL(updateRating);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -818,7 +827,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
                 String post_data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8") + "&" +
                         URLEncoder.encode("citta", "UTF-8") + "=" + URLEncoder.encode(citta, "UTF-8") + "&" +
                         URLEncoder.encode("nome", "UTF-8") + "=" + URLEncoder.encode(nome, "UTF-8") + "&" +
-                        URLEncoder.encode("tipologia", "UTF-8") + "=" + URLEncoder.encode(tipologia, "UTF-8")+ "&" +
+                        URLEncoder.encode("categoria", "UTF-8") + "=" + URLEncoder.encode(categoria, "UTF-8")+ "&" +
                         URLEncoder.encode("rating", "UTF-8") + "=" + URLEncoder.encode(rating, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
@@ -898,7 +907,7 @@ public class BackgroudWorker extends AsyncTask<String, Void, String> {
             Toast.makeText(context.getApplicationContext(), "Viaggia già inserito", Toast.LENGTH_SHORT).show();
         } else if (result.equals("Inseriemento avvento con successo")) {
             Toast.makeText(context.getApplicationContext(), "Inseriemento avvento con successo", Toast.LENGTH_SHORT).show();
-            d.inserisciViaggio(emailDati, cittaDati, nomeDati, tipologiaDati,ratingdati);
+            d.inserisciViaggio(emailDati, cittaDati, nomeDati, ratingdati, categoriaDati, tipologiaDati);
         } else if (result.equals("Impossibile aggiungere viaggio")) {
             Toast.makeText(context.getApplicationContext(), "Impossibile aggiungere viaggio", Toast.LENGTH_SHORT).show();
         }

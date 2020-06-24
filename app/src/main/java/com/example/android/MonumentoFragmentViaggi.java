@@ -48,6 +48,7 @@ public class MonumentoFragmentViaggi extends Fragment {
     MyAdapter adapter;
     TextView nessunPunto;
     ArrayList<String> ratingArray;
+    ArrayList<String> categorie;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,8 +63,9 @@ public class MonumentoFragmentViaggi extends Fragment {
 
         myList = view.findViewById(R.id.listaMonumentoViaggi);
         myList.setVisibility(View.VISIBLE);
-        cittaMonu = db.getAllViaggiMonumento(citta, email,"Monumento");
+        cittaMonu = db.getAllViaggiMonumento(citta, email,"Luoghi");
         monumento = new ArrayList<String>();
+        categorie = new ArrayList<String>();
         fotoMonumenti = new ArrayList<Bitmap>();
         ratingArray = new ArrayList<>();
 
@@ -73,6 +75,10 @@ public class MonumentoFragmentViaggi extends Fragment {
 
         for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
             ratingArray.add(cittaMonu.getString(1));
+        }
+
+        for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+            categorie.add(cittaMonu.getString(2));
         }
 
         if(monumento.size()==0){
@@ -109,12 +115,14 @@ public class MonumentoFragmentViaggi extends Fragment {
         Context context;
         ArrayList<String> nomePunto;
         ArrayList<String> ratingAdapterArray;
+        ArrayList<String> categorie;
 
-        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> ratingAdapterArray) {
+        MyAdapter(Context c, ArrayList<String> monumento, ArrayList<String> ratingAdapterArray, ArrayList<String> categorie) {
             super(c, R.layout.row_i_miei_viaggi, R.id.textViewDatiCitta, monumento);
             this.context = c;
             this.nomePunto = monumento;
             this.ratingAdapterArray = ratingAdapterArray;
+            this.categorie = categorie;
         }
 
         @NonNull
@@ -124,19 +132,22 @@ public class MonumentoFragmentViaggi extends Fragment {
             View row = layoutInflater.inflate(R.layout.row_i_miei_viaggi, parent, false);
             ImageView images = row.findViewById(R.id.image);
             TextView nome = row.findViewById(R.id.textViewDatiCitta);
+            TextView categoria = row.findViewById(R.id.textViewCategoria);
             RatingBar ratingBar = row.findViewById(R.id.ratingbar);
             button = row.findViewById(R.id.id);
             images.setImageBitmap(fotoMonumenti.get(position));
             nome.setText(nomePunto.get(position));
+            categoria.setText(categorie.get(position));
             TextView cittaNome = row.findViewById(R.id.textViewCitta);
             cittaNome.setText(citta);
             ratingBar.setRating(Float.valueOf(ratingAdapterArray.get(position)));
             final String monumento = nomePunto.get(position);
+            final String categori = categorie.get(position);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final CancellaDialogMonumentoViaggio cancellaDialogMonumento = new CancellaDialogMonumentoViaggio(getActivity(), context, citta, email, monumento);
+                    final CancellaDialogMonumentoViaggio cancellaDialogMonumento = new CancellaDialogMonumentoViaggio(getActivity(), context, citta, email, monumento, categori);
                     cancellaDialogMonumento.startLoadingDialog();
                 }
             });
@@ -150,7 +161,7 @@ public class MonumentoFragmentViaggi extends Fragment {
                     String ratingChanged = "";
                     ratingChanged=(String.valueOf(rating));
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
-                    backgroudWorker.execute(type, email, citta, monumento, "Monumento",ratingChanged);
+                    backgroudWorker.execute(type, email, citta, monumento,ratingChanged,categori);
                     BackgroudWorker backgroundWorkerOne = new BackgroudWorker(getContext());
                     backgroundWorkerOne.execute(type1);
                 }
@@ -178,7 +189,7 @@ public class MonumentoFragmentViaggi extends Fragment {
                 for (int i = 0; i < nomeMonumenti.size(); i = i + 1) {
                     String nomeMonumento =  nomeMonumenti.get(i).replaceAll(" ","%20");
                     citta.replaceAll(" ","%20");
-                    url = url_photoMonumento + citta +nomeMonumento+ "JPG";
+                    url = url_photoMonumento + citta + nomeMonumento + "JPG";
                     InputStream inputStream = new java.net.URL(url).openStream();
                     immagine = BitmapFactory.decodeStream(inputStream);
                     if (!(immagine == null)) {
@@ -204,7 +215,7 @@ public class MonumentoFragmentViaggi extends Fragment {
     public void returnFoto(ArrayList<Bitmap> foto){
 
         this.fotoMonumenti.addAll(foto);
-        adapter = new MyAdapter(getContext(),monumento,ratingArray);
+        adapter = new MyAdapter(getContext(),monumento,ratingArray,categorie);
         myList.setAdapter(adapter);
 
     }
@@ -212,14 +223,24 @@ public class MonumentoFragmentViaggi extends Fragment {
     public void refreshItems() {
         switch (refresh_count) {
             default:
-                cittaMonu = db.getAllViaggiMonumento(citta, email,"Monumento");
+                cittaMonu = db.getAllViaggiMonumento(citta, email, "Luoghi");
                 monumento = new ArrayList<String>();
+                categorie = new ArrayList<String>();
+                ratingArray = new ArrayList<>();
 
                 for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()) {
                     monumento.add(cittaMonu.getString(0));
                 }
 
-                final MyAdapter adapter = new MyAdapter(getContext(), monumento,ratingArray);
+                for(cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                    ratingArray.add(cittaMonu.getString(1));
+                }
+
+                for (cittaMonu.moveToFirst(); !cittaMonu.isAfterLast(); cittaMonu.moveToNext()){
+                    categorie.add(cittaMonu.getString(2));
+                }
+
+                final MyAdapter adapter = new MyAdapter(getContext(), monumento,ratingArray,categorie);
                 myList.setAdapter(adapter);
                 break;
         }

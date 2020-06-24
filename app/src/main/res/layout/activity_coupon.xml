@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".CouponActivity"
-    android:background="@color/white">
+    tools:context=".CouponActivity">
 
     <include
         layout="@layout/drawer_toolbar_nome"
@@ -40,7 +39,7 @@
                 android:id="@+id/inserisci_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Riscatta Coupon"
+                android:hint="@string/riscatta_coupon"
                 android:inputType="textCapCharacters"
                 android:textColorHint="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -51,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:background="@color/verde"
-            android:text="Riscatta"
+            android:text="@string/riscatta"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.61"></ImageView>
+            app:layout_constraintVertical_bias="0.61"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

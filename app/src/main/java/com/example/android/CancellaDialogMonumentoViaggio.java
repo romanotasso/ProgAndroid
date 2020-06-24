@@ -11,14 +11,15 @@ public class CancellaDialogMonumentoViaggio {
     private Activity activity;
     private AlertDialog dialog;
     private Context context;
-    String citta, email, nome;
+    String citta, email, nome, categoria;
 
-    CancellaDialogMonumentoViaggio (Activity activity, Context context, String citta, String email, String nome) {
+    CancellaDialogMonumentoViaggio (Activity activity, Context context, String citta, String email, String nome, String categoria) {
         this.activity = activity;
         this.context = context;
         this.citta = citta;
         this.email = email;
         this.nome = nome;
+        this.categoria = categoria;
     }
 
     void startLoadingDialog () {
@@ -41,8 +42,8 @@ public class CancellaDialogMonumentoViaggio {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String type = "cancellaViaggio";
                 BackgroudWorker backgroudWorker = new BackgroudWorker(context);
-                backgroudWorker.execute(type, email, citta, nome, "Monumento");
-                db.deleteViaggio(citta, email, nome, "Monumento");
+                backgroudWorker.execute(type, email, citta, nome, categoria);
+                db.deleteViaggio(citta, email, nome, categoria);
             }
         });
 

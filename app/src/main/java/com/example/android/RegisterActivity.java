@@ -83,6 +83,8 @@ public class RegisterActivity extends AppCompatActivity {
         radioButtonSesso = findViewById(radioID);
         String str_sesso = radioButtonSesso.getText().toString();
         String str_data = mTextDataNascita.getText().toString();
+        String str_pass = getIntent().getExtras().getString("password");
+        String str_email = getIntent().getExtras().getString("email");
         //String type = "register";
 
         if (str_nome.trim().isEmpty() || str_cognome.trim().isEmpty() || str_citta.trim().isEmpty() || str_sesso.trim().isEmpty() || str_data.trim().isEmpty()) {
@@ -112,12 +114,14 @@ public class RegisterActivity extends AppCompatActivity {
                         , str_sesso,
                         str_data);
 */
-            Intent intent = new Intent(getApplicationContext(),RegisterEmailPassActivity.class);
+            Intent intent = new Intent(getApplicationContext(),RegisterPhotoActivity.class);
             intent.putExtra("nome",str_nome);
             intent.putExtra("cognome",str_cognome);
             intent.putExtra("sesso",str_sesso);
             intent.putExtra("data_nascita",str_data);
             intent.putExtra("citta",str_citta);
+            intent.putExtra("password", str_pass);
+            intent.putExtra("email", str_email);
             startActivity(intent);
         }
     }

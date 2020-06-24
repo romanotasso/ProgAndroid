@@ -26,13 +26,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/monumentiAmministatore"
-            android:text="Luoghi"/>
+            android:text="@string/luoghi"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/gastronomiaAmministatore"
-            android:text="Cibo"/>
+            android:text="@string/cibo"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

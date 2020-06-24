@@ -102,9 +102,6 @@ public class MonumentoFragmentUtente extends Fragment{
             backgroudWorkerPhoto.execute();
         }
 
-
-
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -283,7 +280,7 @@ public class MonumentoFragmentUtente extends Fragment{
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), getContext(), citta, email, nomePunto.get(position));
+                    AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), getContext(), citta, email, nomePunto.get(position),categorie.get(position));
                     viaggioMonumento.startLoadingDialog();
                 }
             });

@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".ProfiloActivity"
-    android:background="@color/white">
+    tools:context=".ProfiloActivity">
 
     <include
         layout="@layout/drawer_toolbar_nome"
@@ -211,7 +210,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.86"
             tools:ignore="MissingConstraints" />
-
 
         <EditText
             android:id="@+id/coupon"

@@ -103,9 +103,9 @@ public class GastronomiaCouponFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final AggiungiViaggioGastronomia viaggioGastronomia = new AggiungiViaggioGastronomia(getActivity(), context, coupon, email, monumento);
+                    /*final AggiungiViaggioGastronomia viaggioGastronomia = new AggiungiViaggioGastronomia(getActivity(), context, coupon, email, monumento);
                     viaggioGastronomia.startLoadingDialog();
-                    /*String type = "inserisciViaggio";
+                    String type = "inserisciViaggio";
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                     backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");
                     db.inserisciViaggio(email, citta, nomePunto.get(position), "Monumento");*/

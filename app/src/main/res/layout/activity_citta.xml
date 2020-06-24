@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".CittaActivity"
-    android:background="@color/white">
+    tools:context=".CittaActivity">
 
     <include
         layout="@layout/drawer_toolbar_nome"
@@ -48,13 +47,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/monumenti"
-                android:text="Luoghi"/>
+                android:text="@string/luoghi"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/gastronomia"
-                android:text="cibo"/>
+                android:text="@string/cibo"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -109,6 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/drawer_menu">

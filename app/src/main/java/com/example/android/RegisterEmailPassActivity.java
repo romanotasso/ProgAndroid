@@ -44,11 +44,11 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
 
     public void nextStepRegistation(View view) {
 
-        String nome = getIntent().getExtras().getString("nome");
+        /*String nome = getIntent().getExtras().getString("nome");
         String cognome = getIntent().getExtras().getString("cognome");
         String sesso = getIntent().getExtras().getString("sesso");
         String data = getIntent().getExtras().getString("data_nascita");
-        String citta = getIntent().getExtras().getString("citta");
+        String citta = getIntent().getExtras().getString("citta");*/
         String str_pass = password.getText().toString();
         String str_confpass = confPassword.getText().toString();
 
@@ -59,14 +59,14 @@ public class RegisterEmailPassActivity extends AppCompatActivity {
                 if(!str_pass.isEmpty()){
                     passwordUp.setPasswordVisibilityToggleEnabled(true);
                     if(str_pass.equals(str_confpass)){
-                        Intent intent = new Intent(getApplicationContext(),RegisterPhotoActivity.class);
+                        Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
                         intent.putExtra("email", email.getText().toString());
                         intent.putExtra("password", str_pass);
-                        intent.putExtra("nome",nome);
+                        /*intent.putExtra("nome",nome);
                         intent.putExtra("cognome",cognome);
                         intent.putExtra("sesso",sesso);
                         intent.putExtra("data_nascita",data);
-                        intent.putExtra("citta",citta);
+                        intent.putExtra("citta",citta);*/
                         startActivity(intent);
                     }else {
                         confPassword.setError("Password non corrispondenti");

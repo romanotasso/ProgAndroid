@@ -255,7 +255,7 @@ public class GastronomiaFragmentUtente extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AggiungiViaggioGastronomia viaggioGastronomia = new AggiungiViaggioGastronomia(getActivity(), context, citta, email, gastronomia);
+                    AggiungiViaggioGastronomia viaggioGastronomia = new AggiungiViaggioGastronomia(getActivity(), context, citta, email, gastronomia, categorie.get(position));
                     viaggioGastronomia.startLoadingDialog();
                 }
             });

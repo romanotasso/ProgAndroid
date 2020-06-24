@@ -77,6 +77,20 @@
     <string name="registrazione_successo">Registration was successfully</string>
     <string name="inserisci_aggiornamento">Enter the data for the update</string>
     <string name="Gastronomia">Gastronomy</string>
+    <string name="aggiungi">Add</string>
+    <string name="visualizza_dati">Show data</string>
+    <string name="luoghi">Places</string>
+    <string name="cibo">Food</string>
+    <string name="riscatta_coupon">Redeem Coupon</string>
+    <string name="riscatta">Redeem</string>
+    <string name="cerca_una_citta">Search for a city</string>
+    <string name="visualizza_luoghi">View places</string>
+    <string name="visualizza_utenti">View users</string>
+    <string name="luogo">Place:</string>
+    <string name="nome_luogo">Place Name:</string>
+    <string name="categoria">Category</string>
+    <string name="aggiungi_a_visitati">Add to Visited</string>
+    <string name="vedi_su_mappa">View on map</string>
 
     <plurals
         name="le_citt_da_te_visitate" >

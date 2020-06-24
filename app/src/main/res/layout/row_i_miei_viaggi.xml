@@ -8,7 +8,7 @@
     android:background="@color/gray_chiaro">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="190dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/radius"
@@ -91,7 +91,7 @@
                 android:layout_marginBottom="9dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="Nome Luogo:"
+                android:text="@string/nome_luogo"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +106,7 @@
                 android:layout_width="239dp"
                 android:layout_height="36dp"
                 android:gravity="center"
-                android:text="Città"
+                android:text="@string/citta"
                 android:textAlignment="center"
                 android:textSize="15dp"
                 android:textStyle="normal"
@@ -179,7 +179,7 @@
             app:layout_constraintHorizontal_bias="0.71"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.96"></RatingBar>
+            app:layout_constraintVertical_bias="0.96"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

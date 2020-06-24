@@ -76,11 +76,26 @@
     <string name="registrazione_successo">Registrazione avvenuta con successo</string>
     <string name="inserisci_aggiornamento">Inserisci i dati per l\'aggiornamento</string>
     <string name="Gastronomia">Gastronomia</string>
+    <string name="aggiungi">Aggiungi</string>
+    <string name="visualizza_dati">Visualizza Dati</string>
+    <string name="luoghi">Luoghi</string>
+    <string name="cibo">cibo</string>
+    <string name="riscatta_coupon">Riscatta Coupon</string>
+    <string name="riscatta">Riscatta</string>
+    <string name="cerca_una_citta">Cerca una citta</string>
+    <string name="visualizza_luoghi">Visualizza luoghi</string>
+    <string name="visualizza_utenti">Visualizza Utenti</string>
+    <string name="luogo">Luogo:</string>
+    <string name="nome_luogo">Nome Luogo:</string>
+    <string name="categoria">Categoria</string>
+    <string name="aggiungi_a_visitati">Aggiungi a Visitati</string>
+    <string name="vedi_su_mappa">Vedi su mappa</string>
 
 
 
     <plurals
-        name="le_citt_da_te_visitate" >
+        name="le_citt_da_te_visitate">
+            <item quantity="zero">Nessuna città visitata</item>
             <item quantity="one">La città da te visitata:</item>
             <item quantity="other">Le città da te visitate:</item>
     </plurals>

@@ -130,7 +130,7 @@ public class CouponActivity extends AppCompatActivity implements NavigationView.
                         smallerdimension = smallerdimension*3/4;
                         new AlertDialog.Builder(CouponActivity.this)
                                 .setTitle("Uso")
-                                .setMessage("Presenta il codice in casso per avere lo sconto del 20%")
+                                .setMessage("Presenta il codice in cassa per avere lo sconto del 20%")
                                 .setNegativeButton("ok", null)
                                 .show();
                         qrgEncoder = new QRGEncoder(inserisci.getText().toString(),null, QRGContents.Type.TEXT,smallerdimension);

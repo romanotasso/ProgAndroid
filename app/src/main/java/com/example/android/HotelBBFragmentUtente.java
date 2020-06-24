@@ -234,7 +234,7 @@ public class HotelBBFragmentUtente extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AggiungiViaggioHotel viaggioHotel = new AggiungiViaggioHotel(getActivity(), context, citta, email, hotel);
+                    AggiungiViaggioHotel viaggioHotel = new AggiungiViaggioHotel(getActivity(), context, citta, email, hotel, categorie.get(position));
                     viaggioHotel.startLoadingDialog();
                 }
             });

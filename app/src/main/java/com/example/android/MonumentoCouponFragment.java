@@ -102,8 +102,8 @@ public class MonumentoCouponFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), context, coupon, email, monumento);
-                    viaggioMonumento.startLoadingDialog();
+                    /*final AggiungiViaggioMonumento viaggioMonumento = new AggiungiViaggioMonumento(getActivity(), context, coupon, email, monumento);
+                    viaggioMonumento.startLoadingDialog();*/
                     /*String type = "inserisciViaggio";
                     BackgroudWorker backgroudWorker = new BackgroudWorker(getContext());
                     backgroudWorker.execute(type, email, citta, nomePunto.get(position), "Monumento");

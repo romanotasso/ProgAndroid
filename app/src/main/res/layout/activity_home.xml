@@ -8,8 +8,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".HomeActivity"
-    android:background="@color/white">
+    tools:context=".HomeActivity">
 
 
     <include
@@ -31,7 +30,7 @@
             android:layout_width="232dp"
             android:layout_height="38dp"
             android:gravity="center"
-            android:text="Cerca una citta"
+            android:text="@string/cerca_una_citta"
             android:textAlignment="center"
             android:textColor="#e46a37"
             android:textSize="25dp"
@@ -66,7 +65,7 @@
                 android:layout_gravity="center"
                 android:elevation="100dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/search"></ImageView>
+                android:src="@drawable/search"/>
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -74,7 +73,7 @@
             android:layout_width="232dp"
             android:layout_height="38dp"
             android:gravity="center"
-            android:text="I miei Viaggi"
+            android:text="@string/i_miei_viaggi"
             android:textAlignment="center"
             android:textColor="#e46a37"
             android:textSize="25dp"
@@ -105,7 +104,7 @@
                 android:layout_gravity="center"
                 android:elevation="100dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/geography"></ImageView>
+                android:src="@drawable/geography"/>
         </androidx.cardview.widget.CardView>
 
 
@@ -114,7 +113,7 @@
             android:layout_width="232dp"
             android:layout_height="38dp"
             android:gravity="center"
-            android:text="Coupon"
+            android:text="@string/coupon"
             android:textAlignment="center"
             android:textColor="#e46a37"
             android:textSize="25dp"
@@ -145,7 +144,7 @@
                 android:layout_gravity="center"
                 android:elevation="100dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_cash_register"></ImageView>
+                android:src="@drawable/ic_cash_register"/>
         </androidx.cardview.widget.CardView>
         <!--
         <Button
