@@ -57,7 +57,7 @@ public class HotelBBFragmentAmministratoreVisualizza extends Fragment {
         db = new DatabaseHelper(getContext());
         myList = view.findViewById(R.id.listaHotelBBVisualizza);
         myList.setVisibility(View.VISIBLE);
-        cittaHotel = db.getAllDataHotelBB();
+        cittaHotel = db.ordinaPerCittaHotel();
         foto = new ArrayList<>();
         refreshLayout = view.findViewById(R.id.swipe);
         hotel = new ArrayList<String>();

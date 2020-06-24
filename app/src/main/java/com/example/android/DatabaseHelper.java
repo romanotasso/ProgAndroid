@@ -401,7 +401,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String codice ="";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT codiceFoto FROM " + TABELLA_UTENTE + " WHERE email = ?", new String[]{email});
+        Cursor res = db.rawQuery("SELECT codiceFoto FROM " + TABELLA_UTENTE + " ORDER BY citta = ?", new String[]{email});
         if(res!=null && res.getCount()>0){
             res.moveToFirst();
             codice = res.getString(0);
@@ -411,7 +411,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public Cursor ordinaPerCittaMonumento(){
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_MONUMENTI + " ORDER BY citta", null);
+        return res;
+    }
+
+    public Cursor ordinaPerCittaCibo(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_GASTRONOMIA + " ORDER BY citta", null);
+        return res;
+    }
+
+    public Cursor ordinaPerCittaHotel(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABELLA_HOTELEBB + " ORDER BY citta", null);
+        return res;
+    }
 
 
 }
